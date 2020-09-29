@@ -1,6 +1,32 @@
 # Glootie
 
-Peoples:
+## Installation
+
+Install the following:
+
+- [nodejs](https://nodejs.org/en/download/)
+  - This will install node (which runs javascript on your computer) and [npm](https://docs.npmjs.com/about-npm/) a tool for installing javascript libraries.
+
+Then run the following to install all the libraries for the frontend and backend:
+
+```
+npm install
+npm run bootstrap
+```
+
+**Note:** This setup is using lerna to manage multiple packages (known as a monorepo). Learn more [here](https://github.com/lerna/lerna).
+
+## Running
+
+Then in this root folder run the following to run both the frontend and backend.
+
+```
+npm start
+```
+
+Then open up `localhost:3000` in the browser for the frontend or `localhost:4000` for the backend!
+
+# People
 
 - RJ Sampson
 - Kyle Pfromer
