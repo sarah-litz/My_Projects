@@ -26,6 +26,10 @@ npm start
 
 Then open up `localhost:3000` in the browser for the frontend or `localhost:4000` for the backend!
 
+## DB Credentials
+
+The default name assigned to the database is 'glootie' where the username is 'rick' and the password is 'morty'.
+
 # People
 
 - RJ Sampson
