@@ -1,13 +1,17 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import SleepDatum from './SleepDatum';
 
 @Entity()
 export default class User {
   @PrimaryGeneratedColumn()
-  id: number = 0;
+  public id!: number;
 
   @Column()
-  email: string = '';
+  public email!: string;
 
   @Column()
-  password: string = '';
+  public password!: string;
+
+  @OneToMany(() => SleepDatum, (datum) => datum.user)
+  public sleepData!: SleepDatum[];
 }

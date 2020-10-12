@@ -1,4 +1,5 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import SleepDatum from './models/SleepDatum';
 
 import User from './models/User';
 
@@ -11,7 +12,7 @@ const typeOrmConfig: PostgresConnectionOptions = {
   database: 'glootie',
   synchronize: true,
   logging: false,
-  entities: [User]
+  entities: [User, SleepDatum]
 };
 
 export { typeOrmConfig };

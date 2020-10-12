@@ -1,15 +1,10 @@
 // Must be at top
 import 'reflect-metadata';
-
 import express from 'express';
-
-import { createConnection } from 'typeorm';
-import { typeOrmConfig } from './config';
-
 // Import entities
-import User from './models/User';
-
-const { ApolloServer, gql } = require('apollo-server');
+import { superCreateConnection } from './helper/create-connection';
+import { ApolloServer, gql } from 'apollo-server-express';
+import chalk from 'chalk';
 
 const typeDefs = gql`
   # Basic login option
@@ -30,7 +25,6 @@ const users = [
     passWord: 'pass'
   }
 ];
-////
 
 const resolvers = {
   Query: {
@@ -38,18 +32,28 @@ const resolvers = {
   }
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
-
-server.listen(4000, () => {
-  console.log(`Starting backend on port 4000.`);
-});
-
 (async () => {
-  const conn = await createConnection(typeOrmConfig);
-  console.log('PG connected.');
+  const app = express();
 
-  // Main config goes here
+  // Create connection to postgresql
+  const conn = await superCreateConnection();
+  console.log(chalk.green('PG connected.'));
 
-  await conn.close();
-  console.log('PG connection closed.');
+  // Create apollo graphql server
+  const apolloServer = new ApolloServer({ typeDefs, resolvers });
+  // Attach apollo graphql to express http server
+  await apolloServer.applyMiddleware({ app });
+
+  // Start Express server on port.
+  app.listen(() => {
+    console.log(chalk.green('Starting backend on port 4000.'));
+  });
+
+  // Listen to kill command
+  process.on('SIGTERM', async () => {
+    console.info(chalk.blue('SIGTERM signal received.'));
+    console.log(chalk.red('Closing PG server.'));
+    await conn.close();
+    console.log(chalk.red('PG connection closed.'));
+  });
 })();
