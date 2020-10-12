@@ -5,6 +5,7 @@ import express from 'express';
 import { superCreateConnection } from './helper/create-connection';
 import { ApolloServer, gql } from 'apollo-server-express';
 import chalk from 'chalk';
+import { config } from './config';
 
 const typeDefs = gql`
   # Basic login option
@@ -45,8 +46,8 @@ const resolvers = {
   await apolloServer.applyMiddleware({ app });
 
   // Start Express server on port.
-  app.listen(() => {
-    console.log(chalk.green('Starting backend on port 4000.'));
+  app.listen(config.get('port'), () => {
+    console.log(chalk.green(`Starting backend on port ${config.get('port')}.`));
   });
 
   // Listen to kill command
