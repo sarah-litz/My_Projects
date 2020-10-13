@@ -1,6 +1,7 @@
 import React from 'react';
 import './Login.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import { Link } from 'react-router-dom';
 // *note: put any other imports below so that CSS from your components takes precedence over default styles.
 
 function Login() {
@@ -25,7 +26,7 @@ function Login() {
 
     //   Email Validation:
 
-    if (emailInput == '') {
+    if (emailInput === '') {
       //empty email field
       document.getElementById('error-message')!.innerText =
         'Please enter your email. \n';
@@ -37,7 +38,7 @@ function Login() {
 
     //   Password Validation:
 
-    if (passwordInput == '') {
+    if (passwordInput === '') {
       //empty pswd field
       document.getElementById('error-message')!.innerText +=
         'Please enter a password.';
@@ -56,7 +57,7 @@ function Login() {
 
     //   Returns True if there were no errors found in email/password input fields, else returns False
 
-    if (document.getElementById('error-message')!.innerText == '') {
+    if (document.getElementById('error-message')!.innerText === '') {
       return true;
     } else {
       return false;
@@ -122,9 +123,9 @@ function Login() {
           </button>
           &nbsp;
           <br></br>
-          <a className="button btn btn-sm btn-primary" href="#">
+          <Link className="button btn btn-sm btn-primary" to="/register">
             Create Account
-          </a>
+          </Link>
         </form>
       </div>
       // end username and password boxes
