@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <title>Bed Buddy | My Habits</title>
+    <!-- Bootstrap core CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+        <!--Must Track: Hours Slept and Quality of Sleep-->
+        <h1>My Habits</h1>
+        <p class="lead">Here are the metrics you're currently tracking:</p>
+        <div class="container">
+        <form>
+            <p class= "h2">We'll always try to track a couple of items:</p>
+            <div class="contatiner">
+                <div class="form-group">
+                    <label for="hoursSlept">Hours of sleep in a night</label>
+                </div>
+                <!--QUESTION: Have everything here, ts will hide according to add/remove selection?-->
+                <div class="form-group">
+                    <label for="Quality">How well did you sleep last night?</label>
+                </div>
+            </div>
+            <!--Optional, Track: Maybe separate this into section? 
+            Caffeine intake, Alcohol, Custom (RX Drugs, Red Light Therapy,), Bed Time, Wake Time,
+            Dreams, times woken up, Emotions, Stress, Exercise, Sleep Aids (further customize this), -->
+            <p class= "h2">Here are the other metrics you've opted into:</p>
+            <div class="container">
+                <div class="form-check form-check-inline">
+                    <label for="caffiene">Caffeine intake</label>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitchCaffeine">
+                        <label class="custom-control-label" for="customSwitchCaffeine">Stop Tracking</label>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="form-check form-check-inline">
+                    <label for="bedTime">What time did you go to sleep?</label>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitchbedTime">
+                        <label class="custom-control-label" for="customSwitchbedTime">Stop Tracking</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <a href="#" class="btn btn-info" ;="button">Add More</a>
+        </div>
+
+
+    <!--These will have to change for TS-->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
