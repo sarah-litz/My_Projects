@@ -1,7 +1,8 @@
 import convict from 'convict';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import SleepDatum from './models/SleepDatum';
-import User from './models/User';
+import { User } from './models/User';
+
 
 interface Config {
   environment: 'production' | 'development';
