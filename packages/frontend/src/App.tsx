@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { HomePage } from './pages/Home';
+import { UserDataSettings } from './pages/user_data_settings';
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
         {/* Like a regular switch statement for routes */}
         <Switch>
           <Route exact path="/">
-            <HomePage />
+            {/* <HomePage /> */}
+            <UserDataSettings />
           </Route>
 
           {/* Default route when is not found above (404 page) */}
