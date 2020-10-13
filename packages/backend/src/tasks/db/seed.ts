@@ -1,10 +1,16 @@
 // Must be at top
+
+/*
+
 import 'reflect-metadata';
 
 import { createConnection } from 'typeorm';
 
 import { typeOrmConfig } from '../../config';
-import User from '../../models/User';
+import { User } from '../../models/User';
+
+
+
 
 (async () => {
   console.log('Beginning dbseed task.');
@@ -27,3 +33,6 @@ import User from '../../models/User';
 
   console.log('Finished dbseed task.');
 })();
+
+
+*/

@@ -1,55 +1,25 @@
 // Must be at top
 import 'reflect-metadata';
-
 import express from 'express';
-
 import { createConnection } from 'typeorm';
 import { typeOrmConfig } from './config';
+import { ApolloServer } from 'apollo-server-express';
 
-// Import entities
-import User from './models/User';
+// Importing typeDefs and resolvers
+import { typeDefs } from './typeDefs';
+import { resolvers } from './resolvers';
 
-const { ApolloServer, gql } = require('apollo-server');
+const startServer = async () => {
+  const server = new ApolloServer({ typeDefs, resolvers });
 
-const typeDefs = gql`
-  # Basic login option
-  type Login {
-    userName: String
-    passWord: String
-  }
+  const conn = await createConnection(typeOrmConfig);
 
-  type Query {
-    users: [Login]
-  }
-`;
+  const app = express();
+  server.applyMiddleware({ app });
 
-// for test purposes
-const users = [
-  {
-    userName: 'user1',
-    passWord: 'pass'
-  }
-];
-////
-
-const resolvers = {
-  Query: {
-    users: () => users
-  }
+  app.listen({ port: 4000 }, () =>
+    console.log(`🚀 Server ready at http://localhost:4000/graphql`)
+  );
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
-
-server.listen(4000, () => {
-  console.log(`Starting backend on port 4000.`);
-});
-
-(async () => {
-  const conn = await createConnection(typeOrmConfig);
-  console.log('PG connected.');
-
-  // Main config goes here
-
-  await conn.close();
-  console.log('PG connection closed.');
-})();
+startServer();
