@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
+import Login from './components/Login';
 import { HomePage } from './pages/Home';
 
 function App() {
@@ -11,6 +12,10 @@ function App() {
         <Switch>
           <Route exact path="/">
             <HomePage />
+          </Route>
+
+          <Route exact path="/login">
+            <Login />
           </Route>
 
           {/* Default route when is not found above (404 page) */}
