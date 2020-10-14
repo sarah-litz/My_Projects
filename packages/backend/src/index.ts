@@ -6,8 +6,8 @@ import { superCreateConnection } from './helper/create-connection';
 import { ApolloServer } from 'apollo-server-express';
 import chalk from 'chalk';
 import { config } from './config';
-import { typeDefs } from './typeDefs';
-import { resolvers } from './resolvers';
+import { buildSchema } from 'type-graphql';
+import { UserResolver } from './resolvers/UserResolver';
 
 const startServer = async () => {
   const app = express();
@@ -16,7 +16,11 @@ const startServer = async () => {
   const conn = await superCreateConnection();
   console.log(chalk.green('PG connected.'));
 
-  const apolloServer = new ApolloServer({ typeDefs, resolvers });
+  const apolloServer = new ApolloServer({
+    schema: await buildSchema({
+      resolvers: [UserResolver]
+    })
+  });
   // Attach apollo graphql to express http server
   await apolloServer.applyMiddleware({ app });
 
