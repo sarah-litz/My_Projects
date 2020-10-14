@@ -47,10 +47,6 @@ export const UserDataSettings: React.FC<{
   );
 };
 
-{
-  /* for loop to */
-}
-
 class SettingsCard extends React.Component<{
   toggle?: boolean;
   qOne?: string;
