@@ -4,6 +4,7 @@ import express from 'express';
 import { createConnection } from 'typeorm';
 import { typeOrmConfig } from './config';
 import { ApolloServer } from 'apollo-server-express';
+import cors from 'cors';
 
 // Importing typeDefs and resolvers
 import { typeDefs } from './typeDefs';
@@ -15,7 +16,15 @@ const startServer = async () => {
   const conn = await createConnection(typeOrmConfig);
 
   const app = express();
-  server.applyMiddleware({ app });
+  app.use(
+    cors({
+      // TODO: production
+      origin: 'http://localhost:3000',
+      credentials: true
+    })
+  );
+
+  server.applyMiddleware({ app, cors: false });
 
   app.listen({ port: 4000 }, () =>
     console.log(`🚀 Server ready at http://localhost:4000/graphql`)
