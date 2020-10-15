@@ -1,18 +1,28 @@
 import { User } from './models/User';
+import bcrypt from 'bcryptjs';
+import { IResolvers } from 'graphql-tools';
+import { sign } from 'jsonwebtoken';
+import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from './constants';
 
-export const resolvers = {
+export const resolvers: IResolvers = {
   Query: {
-    getUser: async (_: any, args: any) => {
-      const { id } = args;
-
+    getUser: async (_: any, { id }: any) => {
+      // will output the user based on id
       return await User.findOne({ where: { id: id } });
+    },
+
+    currUser: (_: any, __: any, { req }: any) => {
+      // will output the user currently logged in
+      if (!req.userId) {
+        return 'No user with this id';
+      }
+
+      return User.findOne(req.userId);
     }
   },
-
   Mutation: {
-    addUser: async (_: any, args: any) => {
+    addUser: async (_: any, { email, password }: any) => {
       // this will be used to register a user
-      const { email, password } = args;
       try {
         const alreadyExists = await User.findOne({ email }); // make sure users arent duplicated
         if (alreadyExists) {
@@ -20,31 +30,53 @@ export const resolvers = {
           throw new Error('A user with that email already exists!');
         }
 
-        const user = User.create({
+        const hashedPassword = await bcrypt.hash(password, 10); // encrypting password
+        const userReg = User.create({
           email,
-          password
+          password: hashedPassword // encrypted
         });
 
-        await user.save();
-        console.log(`User saved. id = ${user.id}`);
+        await userReg.save();
+        console.log(`User saved. id = ${userReg.id}`);
 
-        return Buffer.from(email).toString('base64'); // return 'access token'
+        return true;
       } catch (error) {
         return 'Error, no user registered.';
       }
     },
-    loginUser: async (_: any, args: any) => {
+    loginUser: async (_: any, { email, password }: any, { res }: any) => {
       // this will check if a user has an account and give a user a login token
-      const { email, password } = args;
       try {
-        const user = await User.findOne({ email, password });
+        const user = await User.findOne({ where: { email } });
 
         if (!user) {
-          console.log('Invalid email or password.');
-          throw new Error('Invalid email or password.');
+          console.log('No user registered with that email.');
+          return null;
         }
 
-        return Buffer.from(email).toString('base64'); // should return an 'access token' (need to store this somewhere for frontend to use?)
+        const passValid = await bcrypt.compare(password, user.password);
+
+        if (!passValid) {
+          console.log('Invalid password.');
+          return null;
+        }
+
+        const refreshToken = sign(
+          { userId: user.id, count: user.count },
+          REFRESH_TOKEN_SECRET,
+          {
+            expiresIn: '10d'
+          }
+        );
+
+        const accessToken = sign({ userId: user.id }, ACCESS_TOKEN_SECRET, {
+          expiresIn: '30min'
+        });
+
+        res.cookie('refresh-token', refreshToken); // returns refresh token
+        res.cookie('access-token', accessToken); // returns access token
+
+        return user; // return id and email (password is encrypted)
       } catch (error) {
         return 'Invalid email or password';
       }
