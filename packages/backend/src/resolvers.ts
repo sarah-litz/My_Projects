@@ -1,20 +1,20 @@
 import { User } from './models/User';
 import bcrypt from 'bcryptjs';
-import { IResolvers } from "graphql-tools";
-import { sign } from "jsonwebtoken";
-import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from "./constants";
-
+import { IResolvers } from 'graphql-tools';
+import { sign } from 'jsonwebtoken';
+import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from './constants';
 
 export const resolvers: IResolvers = {
-  
   Query: {
-    getUser: async (_: any, {id} : any) => {  // will output the user based on id
+    getUser: async (_: any, { id }: any) => {
+      // will output the user based on id
       return await User.findOne({ where: { id: id } });
     },
 
-    currUser: (_: any,__: any, {req}: any) => {  // will output the user currently logged in
+    currUser: (_: any, __: any, { req }: any) => {
+      // will output the user currently logged in
       if (!req.userId) {
-        return("No user with this id");
+        return 'No user with this id';
       }
 
       return User.findOne(req.userId);
@@ -39,7 +39,7 @@ export const resolvers: IResolvers = {
         await userReg.save();
         console.log(`User saved. id = ${userReg.id}`);
 
-        return true; 
+        return true;
       } catch (error) {
         return 'Error, no user registered.';
       }
@@ -47,7 +47,7 @@ export const resolvers: IResolvers = {
     loginUser: async (_: any, { email, password }: any, { res }: any) => {
       // this will check if a user has an account and give a user a login token
       try {
-        const user = await User.findOne({ where: {email} });
+        const user = await User.findOne({ where: { email } });
 
         if (!user) {
           console.log('No user registered with that email.');
@@ -56,27 +56,25 @@ export const resolvers: IResolvers = {
 
         const passValid = await bcrypt.compare(password, user.password);
 
-        if (!passValid){
+        if (!passValid) {
           console.log('Invalid password.');
           return null;
         }
 
-        const refreshToken = sign({userId: user.id, count: user.count},
+        const refreshToken = sign(
+          { userId: user.id, count: user.count },
           REFRESH_TOKEN_SECRET,
           {
-            expiresIn: "10d"
+            expiresIn: '10d'
           }
         );
 
-        const accessToken = sign({ userId: user.id },
-          ACCESS_TOKEN_SECRET,
-          {
-            expiresIn: "30min"
-          }
-        );
-        
-        res.cookie("refresh-token", refreshToken); // returns refresh token
-        res.cookie("access-token", accessToken);  // returns access token
+        const accessToken = sign({ userId: user.id }, ACCESS_TOKEN_SECRET, {
+          expiresIn: '30min'
+        });
+
+        res.cookie('refresh-token', refreshToken); // returns refresh token
+        res.cookie('access-token', accessToken); // returns access token
 
         return user; // return id and email (password is encrypted)
       } catch (error) {

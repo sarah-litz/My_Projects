@@ -4,8 +4,8 @@ import express from 'express';
 import { createConnection } from 'typeorm';
 import { typeOrmConfig } from './config';
 import { ApolloServer } from 'apollo-server-express';
-import cookieParser from "cookie-parser"
-import { verify } from "jsonwebtoken";
+import cookieParser from 'cookie-parser';
+import { verify } from 'jsonwebtoken';
 
 // Importing typeDefs and resolvers
 import { typeDefs } from './typeDefs';
@@ -13,7 +13,11 @@ import { resolvers } from './resolvers';
 import { ACCESS_TOKEN_SECRET } from './constants';
 
 const startServer = async () => {
-  const server = new ApolloServer({ typeDefs, resolvers, context: ({ req, res }: any) => ({ req, res }) });
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: ({ req, res }: any) => ({ req, res })
+  });
 
   await createConnection(typeOrmConfig);
 
@@ -25,13 +29,10 @@ const startServer = async () => {
     try {
       const data = verify(accessToken, ACCESS_TOKEN_SECRET) as any;
       (req as any).userId = data.userId;
-    } catch (error) {
-      return "Invalid access token";
-    }
+    } catch{}
     next();
   });
 
-  
   server.applyMiddleware({ app });
 
   app.listen({ port: 4000 }, () =>
