@@ -3,8 +3,8 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import Login from './components/Login';
-import { HomePage } from './pages/Home';
 import { client } from './store/apollo';
+import { UserDataSettings } from './pages/user_data_settings';
 
 function App() {
   return (
@@ -14,7 +14,8 @@ function App() {
           {/* Like a regular switch statement for routes */}
           <Switch>
             <Route exact path="/">
-              <HomePage />
+              {/* <HomePage /> */}
+              <UserDataSettings />
             </Route>
 
             <Route exact path="/login">
