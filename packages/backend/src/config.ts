@@ -3,7 +3,6 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
 import SleepDatum from './models/SleepDatum';
 import { User } from './models/User';
 
-
 interface Config {
   environment: 'production' | 'development';
   port: number;

@@ -1,0 +1,35 @@
+# Local
+
+query loginToken {
+  token @client
+}
+
+# User
+
+mutation login(
+  $email: String!
+  $password: String! # ,$rememberMe: Boolean
+) {
+  loginUser(email: $email, password: $password)
+  # login(email: $email, password: $password, rememberMe: $rememberMe)
+}
+
+# mutation register($email: String!, $password: String!) {
+#   createUser(email: $email, password: $password)
+# }
+
+# Sleep Data
+# fragment SleepDatumFields on SleepDatum {
+#   id
+#   totalHours
+#   didDream
+#   anxiety
+#   feltRested
+#   date
+# }
+
+# query getSleepData {
+#   sleepData {
+#     ...SleepDatumFields
+#   }
+# }
