@@ -9,6 +9,7 @@ const typeOrmConfig: PostgresConnectionOptions = {
   username: 'rick',
   password: 'morty',
   database: 'glootie',
+  //dropSchema : true,  //this will clear the database vals
   synchronize: true,
   logging: false,
   entities: [User]
