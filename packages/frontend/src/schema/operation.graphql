@@ -10,7 +10,9 @@ mutation login(
   $email: String!
   $password: String! # ,$rememberMe: Boolean
 ) {
-  loginUser(email: $email, password: $password)
+  loginUser(email: $email, password: $password) {
+    email
+  }
   # login(email: $email, password: $password, rememberMe: $rememberMe)
 }
 

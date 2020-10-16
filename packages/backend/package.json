@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon",
     "build": "tsc",
-    "dbseed": "npm run build && node lib/tasks/db/seed.js"
+    "dbseed": "ts-node src/tasks/db/seed.ts"
   },
   "author": "",
   "license": "ISC",
