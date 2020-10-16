@@ -18,6 +18,7 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
+  currUser?: Maybe<User>;
   getUser?: Maybe<User>;
   token: Scalars['String'];
 };
@@ -29,7 +30,7 @@ export type QueryGetUserArgs = {
 export type Mutation = {
   __typename?: 'Mutation';
   addUser: Scalars['String'];
-  loginUser: Scalars['String'];
+  loginUser?: Maybe<User>;
 };
 
 export type MutationAddUserArgs = {
@@ -44,9 +45,8 @@ export type MutationLoginUserArgs = {
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['Int'];
+  id: Scalars['String'];
   email: Scalars['String'];
-  password: Scalars['String'];
 };
 
 export enum CacheControlScope {
@@ -63,10 +63,9 @@ export type LoginMutationVariables = Exact<{
   password: Scalars['String'];
 }>;
 
-export type LoginMutation = { __typename?: 'Mutation' } & Pick<
-  Mutation,
-  'loginUser'
->;
+export type LoginMutation = { __typename?: 'Mutation' } & {
+  loginUser?: Maybe<{ __typename?: 'User' } & Pick<User, 'email'>>;
+};
 
 export const LoginTokenDocument = gql`
   query loginToken {
@@ -121,7 +120,9 @@ export type LoginTokenQueryResult = ApolloReactCommon.QueryResult<
 >;
 export const LoginDocument = gql`
   mutation login($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password)
+    loginUser(email: $email, password: $password) {
+      email
+    }
   }
 `;
 export type LoginMutationFn = ApolloReactCommon.MutationFunction<

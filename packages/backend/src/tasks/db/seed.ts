@@ -1,11 +1,10 @@
 import chalk from 'chalk';
 // Must be at top
-
-/*
 import 'reflect-metadata';
 import { typeOrmConfig } from '../../config';
 import { superCreateConnection } from '../../helper/create-connection';
 import { User } from '../../models/User';
+import bcrypt from 'bcryptjs';
 
 (async () => {
   console.log('Beginning dbseed task.');
@@ -22,8 +21,7 @@ import { User } from '../../models/User';
   // Create seed data.
   let user = new User();
   user.email = 'john@doe.com';
-  user.password = 'johndoe';
-  user.sleepData = [];
+  user.password = await bcrypt.hash('johndoe', 8);
 
   const userRepository = connection.getRepository(User);
   user = await userRepository.save(user); // re-assign to know assigned id
@@ -35,6 +33,3 @@ import { User } from '../../models/User';
 
   console.log('Finished dbseed task.');
 })();
-
-
-*/

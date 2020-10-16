@@ -59,7 +59,8 @@ function Login() {
     if (!error) {
       const { data } = await login({ variables: { email, password } });
       if (data?.loginUser) {
-        token(data.loginUser);
+        // TODO: auth token
+        token(data.loginUser.email);
         history.push('/');
       } else {
         token(undefined);
