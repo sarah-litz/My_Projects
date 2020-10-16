@@ -1,16 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import SleepDatum from './SleepDatum';
 
 @Entity('users')
-export class User extends BaseEntity {
+export class User {
   @PrimaryGeneratedColumn()
-  id!: number;
+  public id!: number;
 
-  @Column('int', { default: 0 })
-  count!: number;
+  @Column({ type: 'text', unique: true })
+  public email!: string;
 
-  @Column('text')
-  email!: string;
+  @Column({ type: 'text' })
+  public password!: string;
 
-  @Column('text')
-  password!: string;
+  @Column({ type: 'int', default: 0 })
+  public count!: number;
+
+  @OneToMany(() => SleepDatum, (datum) => datum.user)
+  public sleepData!: SleepDatum[];
 }

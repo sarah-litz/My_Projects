@@ -1,28 +1,24 @@
 // Must be at top
 import 'reflect-metadata';
 import express from 'express';
-import { createConnection } from 'typeorm';
-import { typeOrmConfig } from './config';
+// Import entities
+import { superCreateConnection } from './helper/create-connection';
 import { ApolloServer } from 'apollo-server-express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { verify } from 'jsonwebtoken';
-
-// Importing typeDefs and resolvers
-import { typeDefs } from './typeDefs';
-import { resolvers } from './resolvers';
 import { ACCESS_TOKEN_SECRET } from './constants';
+import chalk from 'chalk';
+import { config } from './config';
+import { buildSchema } from 'type-graphql';
+import { UserResolver } from './resolvers/UserResolver';
 
 const startServer = async () => {
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    context: ({ req, res }: any) => ({ req, res })
-  });
-
-  await createConnection(typeOrmConfig);
-
   const app = express();
+
+  // Create connection to postgresql
+  const conn = await superCreateConnection();
+  console.log(chalk.green('PG connected.'));
 
   app.use(
     cors({
@@ -42,11 +38,27 @@ const startServer = async () => {
     next();
   });
 
-  server.applyMiddleware({ app, cors: false });
+  const apolloServer = new ApolloServer({
+    schema: await buildSchema({
+      resolvers: [UserResolver]
+    }),
+    context: ({ req, res }: any) => ({ req, res })
+  });
+  // Attach apollo graphql to express http server
+  await apolloServer.applyMiddleware({ app, cors: false });
 
-  app.listen({ port: 4000 }, () =>
-    console.log(`🚀 Server ready at http://localhost:4000/graphql`)
-  );
+  // Start Express server on port.
+  app.listen(config.get('port'), () => {
+    console.log(chalk.green(`🚀 Server ready at ${config.get('port')}.`));
+  });
+
+  // Listen to kill command
+  process.on('SIGTERM', async () => {
+    console.info(chalk.blue('SIGTERM signal received.'));
+    console.log(chalk.red('Closing PG server.'));
+    await conn.close();
+    console.log(chalk.red('PG connection closed.'));
+  });
 };
 
 startServer();

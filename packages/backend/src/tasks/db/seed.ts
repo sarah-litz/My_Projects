@@ -1,15 +1,21 @@
+import chalk from 'chalk';
 // Must be at top
-
 import 'reflect-metadata';
-import { createConnection } from 'typeorm';
 import { typeOrmConfig } from '../../config';
+import { superCreateConnection } from '../../helper/create-connection';
 import { User } from '../../models/User';
 import bcrypt from 'bcryptjs';
 
 (async () => {
   console.log('Beginning dbseed task.');
 
-  const conn = await createConnection(typeOrmConfig);
+  console.log(
+    chalk.blue(
+      `Creating '${typeOrmConfig.database}' database if not already created.`
+    )
+  );
+  const connection = await superCreateConnection();
+
   console.log('PG connected.');
 
   // Create seed data.
@@ -17,12 +23,12 @@ import bcrypt from 'bcryptjs';
   user.email = 'john@doe.com';
   user.password = await bcrypt.hash('johndoe', 8);
 
-  const userRepo = conn.getRepository(User);
-  user = await userRepo.save(user); // re-assign to know assigned id
+  const userRepository = connection.getRepository(User);
+  user = await userRepository.save(user); // re-assign to know assigned id
   console.log(`User saved. id = ${user.id}`);
 
   // Close connection
-  await conn.close();
+  await connection.close();
   console.log('PG connection closed.');
 
   console.log('Finished dbseed task.');
