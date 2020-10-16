@@ -1,68 +1,71 @@
-import React from 'react';
+import React, { FormEvent, useState } from 'react';
 import './Login.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useLoginMutation } from '../generated/types-and-hooks';
+import { token } from '../store/cache';
 // *note: put any other imports below so that CSS from your components takes precedence over default styles.
 
 function Login() {
   //          REACT COMPONENT : LOGIN PAGE
 
-  function validateInput() {
+  const [login] = useLoginMutation();
+  const history = useHistory();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const validateInput = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     //          VALIDATEINPUT() called from RETURN() function below
     /*  Function Description: triggered by onClick event. When user clicks "sign in" this checks to make sure the user entered valid values into both the email and password fields. */
+    //  Initialize constiables
 
-    //  Initialize Variables
+    //empty error message from any past messages
+    setError('');
 
-    document.getElementById('error-message')!.innerText = ''; //empty error message from any past messages
-
-    var emailAddressRX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; //var for regex to validate email
-    var minLength = 6; //var for regex to validate password;  check minimum 6 characters    //(note for sarah) var lowerCaseLetters = /[a-z]/g; // regex for lowerCaseLetters, g=global
-
-    var emailInput = (document.getElementById('email') as HTMLInputElement)
-      .value;
-    var passwordInput = (document.getElementById(
-      'inputPassword'
-    ) as HTMLInputElement).value;
+    const emailAddressRX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; //const for regex to validate email
+    const minLength = 6; //const for regex to validate password;  check minimum 6 characters    //(note for sarah) const lowerCaseLetters = /[a-z]/g; // regex for lowerCaseLetters, g=global
 
     //   Email Validation:
 
-    if (emailInput === '') {
+    if (email === '') {
       //empty email field
-      document.getElementById('error-message')!.innerText =
-        'Please enter your email. \n';
-    } else if (!emailInput.match(emailAddressRX)) {
+      setError('Please enter your email.');
+    } else if (!email.match(emailAddressRX)) {
       //entered an invalid email
-      document.getElementById('error-message')!.innerText =
-        'Please enter a valid email. \n';
+      setError('Please enter a valid email.');
     }
 
     //   Password Validation:
 
-    if (passwordInput === '') {
+    if (password === '') {
       //empty pswd field
-      document.getElementById('error-message')!.innerText +=
-        'Please enter a password.';
-    } else if (passwordInput.length < minLength) {
+      setError('Please enter a password.');
+    } else if (password.length < minLength) {
       //entered an invalid pswrd field
-      document.getElementById('error-message')!.innerText +=
-        'Please enter a password containing at least 6 characters.';
+      setError('Please enter a password containing at least 6 characters.');
     }
 
     /*-----------------  
 
-        if (emailInput is valid)
+        if (email is valid)
                 backend stuff to make sure that the user entered the correct password that is linked with their email. 
                 
         -------------------*/
 
-    //   Returns True if there were no errors found in email/password input fields, else returns False
-
-    if (document.getElementById('error-message')!.innerText === '') {
-      return true;
-    } else {
-      return false;
+    // logins in user and saves their token
+    if (!error) {
+      const { data } = await login({ variables: { email, password } });
+      if (data?.loginUser) {
+        token(data.loginUser);
+        history.push('/');
+      } else {
+        token(undefined);
+      }
     }
-  }
+  };
 
   /*Checklist
     1. visual stuff in general
@@ -89,9 +92,9 @@ function Login() {
       }}
       className="main-area"
     >
-      // USERNAME AND PASSWORD BOXES
+      {/* USERNAME AND PASSWORD BOXES */}
       <div className="mycard card col-12 col-lg-4 login-card mt-2 hv-center">
-        <form>
+        <form onSubmit={validateInput}>
           <div className="form-group text-center">
             <h3>Welcome Back!</h3>
             <label>Sign in below to access your Bed Buddy account.</label>
@@ -101,6 +104,8 @@ function Login() {
               id="email"
               aria-describedby="emailHelp"
               placeholder="Enter email"
+              onChange={(event) => setEmail(event.target.value)}
+              value={email}
             />
             <label htmlFor="inputPassword" className="sr-only">
               Password
@@ -111,14 +116,16 @@ function Login() {
               className="form-control"
               placeholder="Password"
               required
-            ></input>
+              onChange={(event) => setPassword(event.target.value)}
+              value={password}
+            />
           </div>
-          <label id="error-message" style={{ color: 'red' }}></label>
-          <button
-            onClick={validateInput}
-            className="button btn btn-md btn-primary"
-            type="submit"
-          >
+          {error && (
+            <label id="error-message" style={{ color: 'red' }}>
+              {error}
+            </label>
+          )}
+          <button className="button btn btn-md btn-primary" type="submit">
             Sign in
           </button>
           &nbsp;
@@ -128,7 +135,7 @@ function Login() {
           </Link>
         </form>
       </div>
-      // end username and password boxes
+      {/* end username and password boxes */}
     </div>
   );
 }
