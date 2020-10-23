@@ -3,6 +3,8 @@ import './Login.css';
 import { Link, useHistory } from 'react-router-dom';
 import { useLoginMutation } from '../generated/types-and-hooks';
 import { token } from '../store/cache';
+import { Layout } from '../components/Layout';
+
 // *note: put any other imports below so that CSS from your components takes precedence over default styles.
 
 function Login() {
@@ -83,18 +85,9 @@ function Login() {
   return (
     //              HTML (always goes inside of return statement)
 
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0
-      }}
-      className="main-area"
-    >
-      {/* USERNAME AND PASSWORD BOXES */}
-      <div className="mycard card col-12 col-lg-4 login-card mt-2 hv-center">
+      //{/* USERNAME AND PASSWORD BOXES */}  
+  <Layout>
+      <div className="mycard card col-12 col-lg-4 login-card hv-center">
         <form onSubmit={validateInput}>
           <div className="form-group text-center">
             <h3>Welcome Back!</h3>
@@ -126,19 +119,44 @@ function Login() {
               {error}
             </label>
           )}
-          <button className="button btn btn-md btn-primary" type="submit">
-            Sign in
-          </button>
-          &nbsp;
-          <br></br>
-          <Link className="button btn btn-sm btn-primary" to="/register">
-            Create Account
-          </Link>
+          <div id="idParent"> 
+
+            <div id="idChild">
+              <button className="button btn btn-md btn-primary" type="submit">
+                Sign in
+              </button>
+            </div>
+
+            <div id="idChild">
+              <Link className="button btn btn-sm btn-primary" to="/register">
+                Create Account
+              </Link>
+            </div>
+            
+          </div>
         </form>
       </div>
-      {/* end username and password boxes */}
-    </div>
+
+  </Layout>
+  
+
   );
 }
 
 export default Login;
+
+
+   
+/*<div
+style={{
+  position: 'absolute',
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0
+}}
+
+className="main-area"
+> 
+      {// end username and password boxes }
+  </div>*/
