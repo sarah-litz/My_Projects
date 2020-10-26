@@ -22,7 +22,7 @@
   "dependencies": {
     "apollo-server-express": "2.18.2",
     "bootstrap": "4.5.3",
-    "graphql": "15.3.0",
+    "graphql": "15.4.0",
     "react-bootstrap": "1.4.0"
   }
 }
