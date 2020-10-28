@@ -12,7 +12,7 @@
     "husky": "4.3.0",
     "lerna": "3.22.1",
     "prettier": "2.1.2",
-    "typescript": "4.0.3"
+    "typescript": "4.0.5"
   },
   "husky": {
     "hooks": {
@@ -22,7 +22,7 @@
   "dependencies": {
     "apollo-server-express": "2.18.2",
     "bootstrap": "4.5.3",
-    "graphql": "15.3.0",
+    "graphql": "15.4.0",
     "react-bootstrap": "1.4.0"
   }
 }
