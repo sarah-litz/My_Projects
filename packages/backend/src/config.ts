@@ -1,5 +1,6 @@
 import convict from 'convict';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import Preferences from './models/Preferences'
 import SleepDatum from './models/SleepDatum';
 import { User } from './models/User';
 
@@ -74,5 +75,5 @@ export const typeOrmConfig: PostgresConnectionOptions = {
   database: config.get('db.database'),
   synchronize: true,
   logging: false,
-  entities: [User, SleepDatum]
+  entities: [User, Preferences, SleepDatum]
 };
