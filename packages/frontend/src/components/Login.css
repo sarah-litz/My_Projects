@@ -53,11 +53,11 @@
     rgba(148, 187, 233, 0.7) 100%
   );
 
-  position: relative !important; 
-  left: 50%; 
-  transform: translateX(-50%); 
-  max-width: 80% !important; 
-  margin-top: 20rem !important; 
+  position: relative !important;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 80% !important;
+  margin-top: 20rem !important;
 }
 
 .button {
@@ -65,6 +65,3 @@
   opacity: 0.6;
   border-color: gray !important;
 }
-
-
-

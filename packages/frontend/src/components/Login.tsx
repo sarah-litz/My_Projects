@@ -85,8 +85,8 @@ function Login() {
   return (
     //              HTML (always goes inside of return statement)
 
-      //{/* USERNAME AND PASSWORD BOXES */}  
-  <Layout>
+    //{/* USERNAME AND PASSWORD BOXES */}
+    <Layout>
       <div className="mycard card col-12 col-lg-4 login-card hv-center">
         <form onSubmit={validateInput}>
           <div className="form-group text-center">
@@ -119,8 +119,7 @@ function Login() {
               {error}
             </label>
           )}
-          <div id="idParent"> 
-
+          <div id="idParent">
             <div id="idChild">
               <button className="button btn btn-md btn-primary" type="submit">
                 Sign in
@@ -132,21 +131,15 @@ function Login() {
                 Create Account
               </Link>
             </div>
-            
           </div>
         </form>
       </div>
-
-  </Layout>
-  
-
+    </Layout>
   );
 }
 
 export default Login;
 
-
-   
 /*<div
 style={{
   position: 'absolute',
