@@ -1,15 +1,15 @@
 import React, { FormEvent, useState } from 'react';
 import './../App.css';
 import './../components/Login.css';
-import { Link, useHistory } from 'react-router-dom';
-import { useLoginMutation } from '../generated/types-and-hooks';
-import { Container, Form, Button, FormGroup, Col } from 'react-bootstrap';
+//import { useHistory } from 'react-router-dom';
+//import { useLoginMutation } from '../generated/types-and-hooks';
+import { Form, Col } from 'react-bootstrap';
 import { Layout } from './Layout';
-import { token } from '../store/cache';
+//import { token } from '../store/cache';
 
 function Register() {
-  const [login] = useLoginMutation();
-  const history = useHistory();
+  //const [login] = useLoginMutation();
+  //const history = useHistory();
 
   const [newEmail, setEmail] = useState('');
   const [newPassword, setPassword] = useState('');
@@ -48,7 +48,7 @@ function Register() {
     } else if (newPassword.length < minLength) {
       //entered an invalid pswrd field
       setError('Please enter a password containing at least 6 characters.');
-    } else if (newPassword != passwordCheck) {
+    } else if (newPassword !== passwordCheck) {
       //reentered password does not match
       setError('The passwords you entered do not match.');
     }
