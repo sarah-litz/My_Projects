@@ -1,15 +1,11 @@
 import React, { FormEvent, useState } from 'react';
-import { Container, Form, Button, FormGroup } from 'react-bootstrap';
 import './Login.css';
-import { Link, useHistory } from 'react-router-dom';
-//import { useLoginMutation } from '../generated/types-and-hooks';
-import { token } from '../store/cache';
 import { Layout } from '../components/Layout';
 import ReactBootstrapSlider from 'react-bootstrap-slider';
-import { render } from '@testing-library/react';
+import { useGetSleepDataQuery } from '../generated/types-and-hooks';
 
 const UserData: React.FC = () => {
-  const [getData] = useGetDataMutation();
+  const { data } = useGetSleepDataQuery();
 
   const [caffeine, setCaffeine] = useState('');
   const [sleepHours, setSleep] = useState('');

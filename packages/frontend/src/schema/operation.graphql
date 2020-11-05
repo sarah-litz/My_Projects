@@ -10,14 +10,12 @@ mutation login(
   $email: String!
   $password: String! # ,$rememberMe: Boolean
 ) {
-  loginUser(email: $email, password: $password) {
-    email
-  }
+  loginUser(email: $email, password: $password)
   # login(email: $email, password: $password, rememberMe: $rememberMe)
 }
 
 mutation register($email: String!, $password: String!) {
-  createUser(email: $email, password: $password)
+  addUser(email: $email, password: $password)
 }
 
 fragment SleepDataFields on SleepDatum {
@@ -29,30 +27,30 @@ fragment SleepDataFields on SleepDatum {
   feltRested
 }
 
-query getData {
+query getSleepData {
   sleepData {
     ...SleepDataFields
   }
 }
 
-mutation createSleepData($sleepHours: Number!, $caffeine: Number) {
-  getUserData(options: { sleepHours: $sleepHours, caffeine: $caffeine }) {
+mutation createSleepData(
+  $totalHours: Float
+  $didDream: Boolean
+  $anxiety: Float
+  $feltRested: Boolean
+  $caffeine: Float
+  $date: DateTime!
+) {
+  createSleepData(
+    options: {
+      totalHours: $totalHours
+      didDream: $didDream
+      anxiety: $anxiety
+      feltRested: $feltRested
+      caffeine: $caffeine
+      date: $date
+    }
+  ) {
     ...SleepDataFields
   }
 }
-
-# Sleep Data
-# fragment SleepDatumFields on SleepDatum {
-#   id
-#   totalHours
-#   didDream
-#   anxiety
-#   feltRested
-#   date
-# }
-
-# query getSleepData {
-#   sleepData {
-#     ...SleepDatumFields
-#   }
-# }
