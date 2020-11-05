@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { Container, Form, Button, FormGroup, Submit } from 'react-bootstrap';
+import { Container, Form, Button, FormGroup } from 'react-bootstrap';
 import './Login.css';
 import { Link, useHistory } from 'react-router-dom';
 //import { useLoginMutation } from '../generated/types-and-hooks';
@@ -8,9 +8,7 @@ import { Layout } from '../components/Layout';
 import ReactBootstrapSlider from 'react-bootstrap-slider';
 import { render } from '@testing-library/react';
 
-//const [email, setEmail] = useState('');
-
-function getUserData() {
+const UserData: React.FC = () => {
   const [getData] = useGetDataMutation();
 
   const [caffeine, setCaffeine] = useState('');
@@ -62,9 +60,9 @@ function getUserData() {
       </div>
     </Layout>
   );
-}
+};
 
-export default getUserData;
+export default UserData;
 
 // class Slider extends React.Component<{
 //     currentValue?: number;
