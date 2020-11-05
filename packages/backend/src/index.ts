@@ -6,14 +6,35 @@ import { superCreateConnection } from './helper/create-connection';
 import { ApolloServer } from 'apollo-server-express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import { verify } from 'jsonwebtoken';
-import { ACCESS_TOKEN_SECRET } from './constants';
 import chalk from 'chalk';
 import { config } from './config';
 import { buildSchema } from 'type-graphql';
 import { UserResolver } from './resolvers/UserResolver';
+import { getMe } from './helper/auth/get-me';
+import { SleepDatumResolver } from './resolvers/SleepDatumResolver';
+import { authChecker } from './helper/auth/auth-checker';
+import { refreshAuth } from './helper/auth/refresh-auth';
+
+const createApolloServer = async () => {
+  return new ApolloServer({
+    schema: await buildSchema({
+      resolvers: [UserResolver, SleepDatumResolver],
+      authChecker,
+      validate: true,
+      dateScalarMode: 'isoDate'
+    }),
+    context: async ({ req, res }) => {
+      const me = await getMe(req);
+      return { me, req, res };
+    },
+    introspection: true
+  });
+};
 
 const startServer = async () => {
+  // Avoid timezone issues
+  process.env.TZ = 'UTC';
+
   const app = express();
 
   // Create connection to postgresql
@@ -29,23 +50,11 @@ const startServer = async () => {
   );
 
   app.use(cookieParser()); //utilizing cookie parser to make distinguishing access and refresh tokens easy
-  app.use((req, _, next) => {
-    const accessToken = req.cookies['access-token'];
-    try {
-      const data = verify(accessToken, ACCESS_TOKEN_SECRET) as any;
-      (req as any).userId = data.userId;
-    } catch {}
-    next();
-  });
+  app.post('/refresh_token', refreshAuth);
 
-  const apolloServer = new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [UserResolver]
-    }),
-    context: ({ req, res }: any) => ({ req, res })
-  });
+  const apolloServer = await createApolloServer();
   // Attach apollo graphql to express http server
-  await apolloServer.applyMiddleware({ app, cors: false });
+  apolloServer.applyMiddleware({ app, cors: false });
 
   // Start Express server on port.
   app.listen(config.get('port'), () => {
