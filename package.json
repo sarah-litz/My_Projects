@@ -23,6 +23,7 @@
     "apollo-server-express": "2.19.0",
     "bootstrap": "4.5.3",
     "graphql": "15.4.0",
-    "react-bootstrap": "1.4.0"
+    "react-bootstrap": "1.4.0",
+    "victory": "^35.3.2"
   }
 }

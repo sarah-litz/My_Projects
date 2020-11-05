@@ -62,7 +62,7 @@ function Login() {
       const { data } = await login({ variables: { email, password } });
       if (data?.loginUser) {
         // TODO: auth token
-        token(data.loginUser.email);
+        //token(data.loginUser.email);
         history.push('/');
       } else {
         token(undefined);

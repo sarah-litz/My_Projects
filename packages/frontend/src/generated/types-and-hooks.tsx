@@ -2,9 +2,7 @@ import { gql } from '@apollo/client';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -12,66 +10,57 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: any;
 };
 
 export type Query = {
   __typename?: 'Query';
-  currUser?: Maybe<User>;
-  getUser?: Maybe<User>;
+  helloWorld: Scalars['String'];
   token: Scalars['String'];
-};
-
-export type QueryGetUserArgs = {
-  id: Scalars['Int'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addUser: Scalars['String'];
-  loginUser?: Maybe<User>;
+  addUser: Scalars['Boolean'];
+  loginUser?: Maybe<Scalars['String']>;
 };
+
 
 export type MutationAddUserArgs = {
-  email: Scalars['String'];
   password: Scalars['String'];
+  email: Scalars['String'];
 };
+
 
 export type MutationLoginUserArgs = {
-  email: Scalars['String'];
   password: Scalars['String'];
-};
-
-export type User = {
-  __typename?: 'User';
-  id: Scalars['String'];
   email: Scalars['String'];
 };
 
-export enum CacheControlScope {
-  Public = 'PUBLIC',
-  Private = 'PRIVATE'
-}
+export type LoginTokenQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type LoginTokenQueryVariables = Exact<{ [key: string]: never }>;
 
-export type LoginTokenQuery = { __typename?: 'Query' } & Pick<Query, 'token'>;
+export type LoginTokenQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'token'>
+);
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
 
-export type LoginMutation = { __typename?: 'Mutation' } & {
-  loginUser?: Maybe<{ __typename?: 'User' } & Pick<User, 'email'>>;
-};
+
+export type LoginMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'loginUser'>
+);
+
 
 export const LoginTokenDocument = gql`
-  query loginToken {
-    token @client
-  }
-`;
+    query loginToken {
+  token @client
+}
+    `;
 
 /**
  * __useLoginTokenQuery__
@@ -88,47 +77,21 @@ export const LoginTokenDocument = gql`
  *   },
  * });
  */
-export function useLoginTokenQuery(
-  baseOptions?: ApolloReactHooks.QueryHookOptions<
-    LoginTokenQuery,
-    LoginTokenQueryVariables
-  >
-) {
-  return ApolloReactHooks.useQuery<LoginTokenQuery, LoginTokenQueryVariables>(
-    LoginTokenDocument,
-    baseOptions
-  );
-}
-export function useLoginTokenLazyQuery(
-  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
-    LoginTokenQuery,
-    LoginTokenQueryVariables
-  >
-) {
-  return ApolloReactHooks.useLazyQuery<
-    LoginTokenQuery,
-    LoginTokenQueryVariables
-  >(LoginTokenDocument, baseOptions);
-}
+export function useLoginTokenQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LoginTokenQuery, LoginTokenQueryVariables>) {
+        return ApolloReactHooks.useQuery<LoginTokenQuery, LoginTokenQueryVariables>(LoginTokenDocument, baseOptions);
+      }
+export function useLoginTokenLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LoginTokenQuery, LoginTokenQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LoginTokenQuery, LoginTokenQueryVariables>(LoginTokenDocument, baseOptions);
+        }
 export type LoginTokenQueryHookResult = ReturnType<typeof useLoginTokenQuery>;
-export type LoginTokenLazyQueryHookResult = ReturnType<
-  typeof useLoginTokenLazyQuery
->;
-export type LoginTokenQueryResult = ApolloReactCommon.QueryResult<
-  LoginTokenQuery,
-  LoginTokenQueryVariables
->;
+export type LoginTokenLazyQueryHookResult = ReturnType<typeof useLoginTokenLazyQuery>;
+export type LoginTokenQueryResult = ApolloReactCommon.QueryResult<LoginTokenQuery, LoginTokenQueryVariables>;
 export const LoginDocument = gql`
-  mutation login($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password) {
-      email
-    }
-  }
-`;
-export type LoginMutationFn = ApolloReactCommon.MutationFunction<
-  LoginMutation,
-  LoginMutationVariables
->;
+    mutation login($email: String!, $password: String!) {
+  loginUser(email: $email, password: $password)
+}
+    `;
+export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**
  * __useLoginMutation__
@@ -148,22 +111,9 @@ export type LoginMutationFn = ApolloReactCommon.MutationFunction<
  *   },
  * });
  */
-export function useLoginMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<
-    LoginMutation,
-    LoginMutationVariables
-  >
-) {
-  return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(
-    LoginDocument,
-    baseOptions
-  );
-}
+export function useLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, baseOptions);
+      }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
-export type LoginMutationResult = ApolloReactCommon.MutationResult<
-  LoginMutation
->;
-export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  LoginMutation,
-  LoginMutationVariables
->;
+export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
+export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
