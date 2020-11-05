@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, Component } from 'react';
+import React, { Component } from 'react';
 import './../App.css';
 import '../components/Login.css';
 import './datavis.css';
