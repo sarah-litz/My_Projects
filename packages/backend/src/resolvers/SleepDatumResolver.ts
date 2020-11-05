@@ -57,7 +57,7 @@ export class SleepDatumResolver {
       throw new AuthenticationError('Invalid user!');
     }
 
-    const data = await repository.create({
+    const data = repository.create({
       ...options,
       date: options.date.toISOString(),
       user
