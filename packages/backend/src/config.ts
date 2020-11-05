@@ -14,6 +14,10 @@ interface Config {
     password: string;
     database: string;
   };
+  jwt: {
+    access: { secret: string; duration: string };
+    refresh: { secret: string; duration: string };
+  };
 }
 
 export const config = convict<Config>({
@@ -62,6 +66,38 @@ export const config = convict<Config>({
       format: String,
       default: 'glootie',
       env: 'POSTGRESQL_DATABASE'
+    }
+  },
+  jwt: {
+    refresh: {
+      secret: {
+        doc: 'The secret for the jwt tokens.',
+        format: String,
+        default: 'refresh-secret',
+        sensitive: true,
+        env: 'REFRESH_JWT_SECRET'
+      },
+      duration: {
+        doc: 'How long the access token lasts for.',
+        format: String,
+        default: '7d',
+        env: 'REFRESH_JWT_DURATION'
+      }
+    },
+    access: {
+      secret: {
+        doc: 'The secret for the jwt tokens.',
+        format: String,
+        default: 'access-secret',
+        sensitive: true,
+        env: 'ACCESS_JWT_SECRET'
+      },
+      duration: {
+        doc: 'How long the access token lasts for.',
+        format: String,
+        default: '15m',
+        env: 'ACCESS_JWT_DURATION'
+      }
     }
   }
 });
