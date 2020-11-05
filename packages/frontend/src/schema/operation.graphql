@@ -20,8 +20,25 @@ mutation register($email: String!, $password: String!) {
   createUser(email: $email, password: $password)
 }
 
-mutation getData($sleepHours: Number!, $caffeine: Number) {
-  getUserData(sleepHours: $sleepHours, caffeine: $caffeine)
+fragment SleepDataFields on SleepDatum {
+  id
+  totalHours
+  didDream
+  anxiety
+  caffeine
+  feltRested
+}
+
+query getData {
+  sleepData {
+    ...SleepDataFields
+  }
+}
+
+mutation createSleepData($sleepHours: Number!, $caffeine: Number) {
+  getUserData(options: { sleepHours: $sleepHours, caffeine: $caffeine }) {
+    ...SleepDataFields
+  }
 }
 
 # Sleep Data
