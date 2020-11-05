@@ -26,6 +26,12 @@ export default class SleepDatum {
   @Column({ type: 'int', nullable: true })
   public anxiety?: number;
 
+  @Min(0)
+  @Max(10)
+  @Field(() => Int, { nullable: true })
+  @Column({ type: 'int', nullable: true })
+  public caffeine?: number;
+
   @Field({ nullable: true })
   @Column({ nullable: true })
   public feltRested?: boolean;

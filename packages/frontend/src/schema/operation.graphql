@@ -16,9 +16,13 @@ mutation login(
   # login(email: $email, password: $password, rememberMe: $rememberMe)
 }
 
-# mutation register($email: String!, $password: String!) {
-#   createUser(email: $email, password: $password)
-# }
+mutation register($email: String!, $password: String!) {
+  createUser(email: $email, password: $password)
+}
+
+mutation getData($sleepHours: Number!, $caffeine: Number) {
+  getUserData(sleepHours: $sleepHours, caffeine: $caffeine)
+}
 
 # Sleep Data
 # fragment SleepDatumFields on SleepDatum {

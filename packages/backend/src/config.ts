@@ -1,6 +1,6 @@
 import convict from 'convict';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import Preferences from './models/Preferences'
+import Preferences from './models/Preferences';
 import SleepDatum from './models/SleepDatum';
 import { User } from './models/User';
 
