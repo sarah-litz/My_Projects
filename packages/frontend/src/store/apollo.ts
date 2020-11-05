@@ -12,7 +12,9 @@ import { token } from './cache';
 
 const getAccessToken = async () => {
   // TODO: production url
-  const res = await fetch('http://localhost:4000/refresh_token');
+  const res = await fetch('http://localhost:4000/refresh_token', {
+    method: 'POST'
+  });
 
   const data = await res.json();
 
@@ -31,8 +33,8 @@ const refreshTokenLink = onError(({ forward, operation, graphQLErrors }) => {
     for (const error of graphQLErrors) {
       if (
         error.message ===
-          'Access denied! You need to be authorized to perform this action!' ||
-        error.extensions?.code === 'UNAUTHENTICATED'
+        'Access denied! You need to be authorized to perform this action!' //||
+        // error.extensions?.code === 'UNAUTHENTICATED'
       ) {
         return (
           fromPromise(getAccessToken())
