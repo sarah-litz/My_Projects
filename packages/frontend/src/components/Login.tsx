@@ -4,13 +4,16 @@ import { Link, useHistory } from 'react-router-dom';
 import { useLoginMutation } from '../generated/types-and-hooks';
 import { token } from '../store/cache';
 import { Layout } from '../components/Layout';
+import { Alert } from 'react-bootstrap';
 
 // *note: put any other imports below so that CSS from your components takes precedence over default styles.
 
 function Login() {
   //          REACT COMPONENT : LOGIN PAGE
 
-  const [login] = useLoginMutation();
+  const [login, { error: loginError }] = useLoginMutation({
+    errorPolicy: 'all'
+  });
   const history = useHistory();
 
   const [email, setEmail] = useState('');
@@ -60,9 +63,10 @@ function Login() {
     // logins in user and saves their token
     if (!error) {
       const { data } = await login({ variables: { email, password } });
+
       if (data?.loginUser) {
         // TODO: auth token
-        token(data.loginUser.email);
+        token(data.loginUser);
         history.push('/');
       } else {
         token(undefined);
@@ -90,6 +94,7 @@ function Login() {
       <div className="mycard card col-12 col-lg-4 login-card hv-center">
         <form onSubmit={validateInput}>
           <div className="form-group text-center">
+            {loginError && <Alert variant="danger">{loginError.message}</Alert>}
             <h3>Welcome Back!</h3>
             <label>Sign in below to access your Bed Buddy account.</label>
             <input
