@@ -9,7 +9,7 @@
     "clean": "lerna clean --yes && rm package-lock.json && rm packages/frontend/package-lock.json && rm packages/backend/package-lock.json"
   },
   "devDependencies": {
-    "@types/ms": "^0.7.31",
+    "@types/ms": "0.7.31",
     "husky": "4.3.0",
     "lerna": "3.22.1",
     "prettier": "2.1.2",
@@ -24,9 +24,9 @@
     "apollo-server-express": "2.19.0",
     "bootstrap": "4.5.3",
     "graphql": "15.4.0",
-    "moment": "^2.29.1",
-    "ms": "^2.1.2",
+    "moment": "2.29.1",
+    "ms": "2.1.2",
     "react-bootstrap": "1.4.0",
-    "react-bootstrap-slider": "^3.0.0"
+    "react-bootstrap-slider": "3.0.0"
   }
 }
