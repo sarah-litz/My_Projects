@@ -1,14 +1,16 @@
 import React, { FormEvent, useState } from 'react';
 import './../App.css';
 import './../components/Login.css';
-import { Form } from 'react-bootstrap';
+import { Alert, Form } from 'react-bootstrap';
 import { Layout } from './Layout';
 import { useHistory } from 'react-router-dom';
 import { useRegisterMutation } from '../generated/types-and-hooks';
 import { token } from '../store/cache';
 
 const Register: React.FC = () => {
-  const [register] = useRegisterMutation({ errorPolicy: 'all' });
+  const [register, { error: backendError }] = useRegisterMutation({
+    errorPolicy: 'all'
+  });
   const history = useHistory();
 
   const [email, setEmail] = useState('');
@@ -18,7 +20,6 @@ const Register: React.FC = () => {
 
   // checks all fields that the user fills out, and if there are no errors, updates backend
   const validateInput = async (event: FormEvent<HTMLFormElement>) => {
-    console.log('creating');
     event.preventDefault();
 
     //empty error message from any past messages
@@ -80,6 +81,9 @@ const Register: React.FC = () => {
       <div className="register mycard card col-12 col-lg-4 login-card hv-center">
         <Form className="form-group text-center" onSubmit={validateInput}>
           <h3> New User </h3> <br></br>
+          {backendError?.graphQLErrors.map((error) => (
+            <Alert variant="danger">{error.message}</Alert>
+          ))}
           {/*Enter first and last name fields*/}
           {/* <Form.Row className="row vertical-middle">
               <Col>
