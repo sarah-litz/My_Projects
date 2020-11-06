@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 import './../App.css';
 import './../components/Login.css';
-import { Form, Col } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { Layout } from './Layout';
 import { useHistory } from 'react-router-dom';
 import { useRegisterMutation } from '../generated/types-and-hooks';
@@ -18,6 +18,7 @@ const Register: React.FC = () => {
 
   // checks all fields that the user fills out, and if there are no errors, updates backend
   const validateInput = async (event: FormEvent<HTMLFormElement>) => {
+    console.log('creating');
     event.preventDefault();
 
     //empty error message from any past messages
@@ -45,12 +46,15 @@ const Register: React.FC = () => {
     if (password === '') {
       //empty pswd field
       setError('Please enter a password.');
+      return;
     } else if (password.length < minLength) {
       //entered an invalid pswrd field
       setError('Please enter a password containing at least 6 characters.');
+      return;
     } else if (password !== passwordCheck) {
       //reentered password does not match
       setError('The passwords you entered do not match.');
+      return;
     }
 
     /* ---------------------------------------------------------------------------------
@@ -74,11 +78,10 @@ const Register: React.FC = () => {
   return (
     <Layout>
       <div className="register mycard card col-12 col-lg-4 login-card hv-center">
-        <form onSubmit={validateInput}>
-          <Form className="form-group text-center">
-            <h3> New User </h3> <br></br>
-            {/*Enter first and last name fields*/}
-            {/* <Form.Row className="row vertical-middle">
+        <Form className="form-group text-center" onSubmit={validateInput}>
+          <h3> New User </h3> <br></br>
+          {/*Enter first and last name fields*/}
+          {/* <Form.Row className="row vertical-middle">
               <Col>
                 <Form.Control placeholder="First name" />
               </Col>
@@ -87,62 +90,61 @@ const Register: React.FC = () => {
               </Col>
             </Form.Row>
             <br></br> */}
-            {/*Enter email field*/}
-            <Form.Group controlId="formGroupEmail">
-              <Form.Label htmlFor="emailAddress" srOnly>
-                Email Address
-              </Form.Label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                aria-describedby="emailHelp"
-                placeholder="Enter email"
-                onChange={(event) => setEmail(event.target.value)}
-                value={email}
-              />
-            </Form.Group>
-            {/*Password Fields*/}
-            <Form.Group controlId="formGroupPassword">
-              <Form.Label htmlFor="password" srOnly>
-                Password
-              </Form.Label>
-              <input
-                type="password"
-                placeholder="Enter password (6 or more characters)"
-                id="password"
-                className="form-control"
-                required
-                onChange={(event) => setPassword(event.target.value)}
-                value={password}
-              />
-            </Form.Group>
-            <Form.Group controlId="formGroupPasswordCheck">
-              <Form.Label htmlFor="passwordCheck" srOnly>
-                Confirm password
-              </Form.Label>
-              <input
-                type="password"
-                placeholder="Reenter password"
-                id="passwordCheck"
-                className="form-control"
-                required
-                onChange={(event) => setPasswordCheck(event.target.value)}
-                value={passwordCheck}
-              />
-            </Form.Group>
-            {error && (
-              <label id="error-message" style={{ color: 'red' }}>
-                {error}
-              </label>
-            )}
-            <div id="createAccount">
-              <button className="button btn btn-md btn-primary" type="submit">
-                Create Account
-              </button>
-            </div>
-          </Form>
-        </form>
+          {/*Enter email field*/}
+          <Form.Group controlId="formGroupEmail">
+            <Form.Label htmlFor="emailAddress" srOnly>
+              Email Address
+            </Form.Label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+              onChange={(event) => setEmail(event.target.value)}
+              value={email}
+            />
+          </Form.Group>
+          {/*Password Fields*/}
+          <Form.Group controlId="formGroupPassword">
+            <Form.Label htmlFor="password" srOnly>
+              Password
+            </Form.Label>
+            <input
+              type="password"
+              placeholder="Enter password (6 or more characters)"
+              id="password"
+              className="form-control"
+              required
+              onChange={(event) => setPassword(event.target.value)}
+              value={password}
+            />
+          </Form.Group>
+          <Form.Group controlId="formGroupPasswordCheck">
+            <Form.Label htmlFor="passwordCheck" srOnly>
+              Confirm password
+            </Form.Label>
+            <input
+              type="password"
+              placeholder="Reenter password"
+              id="passwordCheck"
+              className="form-control"
+              required
+              onChange={(event) => setPasswordCheck(event.target.value)}
+              value={passwordCheck}
+            />
+          </Form.Group>
+          {error && (
+            <label id="error-message" style={{ color: 'red' }}>
+              {error}
+            </label>
+          )}
+          <div id="createAccount">
+            <button className="button btn btn-md btn-primary" type="submit">
+              Create Account
+            </button>
+          </div>
+        </Form>
       </div>
     </Layout>
   );
