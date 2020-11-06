@@ -15,6 +15,7 @@ var SometimesAsk = {
   qTwo: 'What time did you go to sleep last night?',
   qThree: 'Did you have dreams?',
   qFour: 'Did you take melatonin?',
+  qFive: 'Rate your stress.',
   toggle: true
 };
 
@@ -53,6 +54,7 @@ class SettingsCard extends React.Component<{
   qTwo?: string;
   qThree?: string;
   qFour?: string;
+  qFive?: string;
   prompt?: string;
 }> {
   render() {
@@ -72,6 +74,9 @@ class SettingsCard extends React.Component<{
             </SleepMetrics>
             <SleepMetrics toggle={this.props.toggle}>
               {this.props.qFour}
+            </SleepMetrics>
+            <SleepMetrics toggle={this.props.toggle}>
+              {this.props.qFive}
             </SleepMetrics>
           </Form>
         </div>
