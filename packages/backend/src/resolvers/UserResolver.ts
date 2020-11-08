@@ -1,4 +1,13 @@
-import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
+import {
+  Arg,
+  Authorized,
+  Ctx,
+  Field,
+  Mutation,
+  ObjectType,
+  Query,
+  Resolver
+} from 'type-graphql';
 import { getConnection } from 'typeorm';
 import { User } from '../models/User';
 import bcrypt from 'bcryptjs';
@@ -9,6 +18,12 @@ import {
   createAccessToken
 } from '../helper/auth/auth';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
+
+@ObjectType()
+class SafeUser {
+  @Field()
+  public email!: string;
+}
 
 @Resolver()
 export class UserResolver {
@@ -71,5 +86,18 @@ export class UserResolver {
     // }
 
     return createAccessToken(user);
+  }
+
+  @Authorized()
+  @Query(() => SafeUser)
+  async me(@Ctx() context: ContextType): Promise<SafeUser> {
+    const repository = getConnection().getRepository(User);
+    const user = await repository.findOne(context.me!.id);
+    if (!user) {
+      throw new AuthenticationError('Invalid user.');
+    }
+    return {
+      email: user.email
+    };
   }
 }
