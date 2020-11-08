@@ -59,7 +59,6 @@ const startServer = async () => {
 
   const apolloServer = await createApolloServer();
   // Attach apollo graphql to express http server
-  // await apolloServer.applyMiddleware({ app, cors: false });
   apolloServer.applyMiddleware({ app, cors: false });
 
   // Start Express server on port.

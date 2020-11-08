@@ -27,6 +27,7 @@
     "moment": "2.29.1",
     "ms": "2.1.2",
     "react-bootstrap": "1.4.0",
-    "react-bootstrap-slider": "3.0.0"
+    "react-bootstrap-slider": "3.0.0",
+    "victory": "^35.3.2"
   }
 }

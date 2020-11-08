@@ -6,6 +6,7 @@ import Login from './components/Login';
 import { client } from './store/apollo';
 import { UserDataSettings } from './pages/user_data_settings';
 import Register from './components/Register';
+import Visualize from './pages/datavis';
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
 
             <Route exact path="/register">
               <Register />
+            </Route>
+
+            <Route exact path="/visual">
+              <Visualize />
             </Route>
 
             {/* Default route when is not found above (404 page) */}
