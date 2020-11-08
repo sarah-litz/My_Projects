@@ -54,3 +54,25 @@ mutation createSleepData(
     ...SleepDataFields
   }
 }
+
+mutation editSleepData(
+  $totalHours: Float
+  $didDream: Boolean
+  $anxiety: Float
+  $feltRested: Boolean
+  $caffeine: Float
+  $date: DateTime!
+) {
+  editSleepData(
+    options: {
+      totalHours: $totalHours
+      didDream: $didDream
+      anxiety: $anxiety
+      feltRested: $feltRested
+      caffeine: $caffeine
+      date: $date
+    }
+  ) {
+    ...SleepDataFields
+  }
+}

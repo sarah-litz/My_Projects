@@ -83,4 +83,32 @@ export class SleepDataResolver {
     //save to database
     return await repository.save(data);
   }
+
+  @Authorized()
+  @Mutation(() => SleepDatum, { nullable: true })
+  async editSleepData(
+    @Arg('options', () => SleepDatumCreateInput) options: SleepDatumCreateInput,
+    @Ctx() context: ContextType // who is current user
+  ): Promise<SleepDatum> {
+    //What to change here? --check if date already submitted?
+    // TODO: extract to auth middleware
+    const userRepository = getConnection().getRepository(User);
+    const user = await userRepository.findOne(context.me!.id);
+    //get user by id: if not, throw error
+    if (!user) {
+      throw new AuthenticationError('User not found ahhhh!');
+    }
+
+    //link user to sleep data)
+    //make sleepdata
+    const repository = getConnection().getRepository(SleepDatum);
+    const data = repository.update({
+      ...options,
+      date: options.date.toISOString(),
+      user
+    });
+
+    //save to database
+    return await repository.save(data);
+  }
 }
