@@ -74,7 +74,7 @@ export class SleepDataResolver {
       throw new AuthenticationError('User not found ahhhh!');
     }
 
-    console.log(options.date)
+    console.log(options.date);
 
     //link user to sleep data)
     //make sleepdata
@@ -89,18 +89,18 @@ export class SleepDataResolver {
     return await repository.save(data);
   }
 
-    // Converts date string from postgres to Date for graphql
-    @Authorized()
-    @FieldResolver()
-    date(@Root() sleepDatum: SleepDatum): string {
-      // For some reason the date is not a Date, but a string (https://github.com/typeorm/typeorm/issues/2176)
-      return moment(
-        (sleepDatum.date as unknown) as string,
-        'YYYY-MM-DD'
-      ).toISOString();
-    }
+  // Converts date string from postgres to Date for graphql
+  @Authorized()
+  @FieldResolver()
+  date(@Root() sleepDatum: SleepDatum): string {
+    // For some reason the date is not a Date, but a string (https://github.com/typeorm/typeorm/issues/2176)
+    return moment(
+      (sleepDatum.date as unknown) as string,
+      'YYYY-MM-DD'
+    ).toISOString();
+  }
 
-/*
+  /*
   @Authorized()
   @Mutation(() => SleepDatum, { nullable: true })
   async editSleepData(

@@ -12,221 +12,224 @@ import {
   VictoryLegend,
   VictoryLabel
 } from 'victory';
-import moment from 'moment'
+import moment from 'moment';
 
 //export default class dataVisuals extends Component {
 const Visualization: React.FC = () => {
-  const { data, error: backendError} = useGetSleepDataQuery();
+  const { data, error: backendError } = useGetSleepDataQuery();
 
-  if (!data){
-    return (<p>no data</p>)
+  if (!data) {
+    return <p>no data</p>;
   }
   const sleepData = data.sleepData;
 
-  console.log(sleepData)
+  // console.log(sleepData);
 
   const currentTime = moment();
-  const pastWeek = sleepData.filter((day) => currentTime.diff(moment(day.date, )) > -6);
-  pastWeek.sort((a, b) => moment(a.date, ).diff(moment(b.date, )));
-  
-  console.log(pastWeek)
+  const pastWeek = sleepData.filter(
+    (day) => currentTime.diff(moment(day.date), 'day') < 7
+  );
+  pastWeek.sort((a, b) => moment(a.date).diff(moment(b.date)));
 
-  const result = pastWeek.map(day => ({
-    x: moment(day.date, ).format('ddd'),
+  // console.log(pastWeek);
+
+  // console.log(sleepData.map(day => currentTime.diff(moment(day.date), 'day')))
+
+  const result = pastWeek.map((day) => ({
+    x: moment(day.date).format('ddd'),
     y: day.totalHours ?? 0
-  }))
-  
-  // const 
+  }));
+
+  // const
 
   //render() {
-    return (
-      <Layout>
-        <Container>
-          <h1 className="headercent">Sleep Data:</h1>
+  return (
+    <Layout>
+      <Container>
+        <h1 className="headercent">Sleep Data:</h1>
 
-          <div className="topleft">
-            <VictoryChart domain={{ y: [0, 12] }}>
-              <VictoryLabel
-                text="Hours Slept"
-                x={225}
-                y={30}
-                textAnchor="middle"
-              />
-              <VictoryLine
-                interpolation="natural" // can make the plot smooth
-                labels={({ datum }) => datum.y} //label points
-                data={result}
-                style={{
-                  data: {
-                    stroke: '#02B875', // this can change line color
-                    strokeWidth: 5 // width of line
-                  }
-                }}
-              />
-            </VictoryChart>
-          </div>
+        <div className="topleft">
+          <VictoryChart domain={{ y: [0, 12] }}>
+            <VictoryLabel
+              text="Hours Slept"
+              x={225}
+              y={30}
+              textAnchor="middle"
+            />
+            <VictoryLine
+              interpolation="natural" // can make the plot smooth
+              labels={({ datum }) => datum.y} //label points
+              data={result}
+              style={{
+                data: {
+                  stroke: '#02B875', // this can change line color
+                  strokeWidth: 5 // width of line
+                }
+              }}
+            />
+          </VictoryChart>
+        </div>
 
-          <div className="topright">
-            <VictoryChart domain={{ y: [0, 12] }}>
-              <VictoryLabel
-                text="Cups of Coffee vs Hours of Sleep"
-                x={225}
-                y={30}
-                textAnchor="middle"
-              />
-              <VictoryScatter
-                data={[
-                  { x: '1', y: 5 },
-                  { x: '1', y: 4 },
-                  { x: '1', y: 6 },
-                  { x: '2', y: 3 },
-                  { x: '3', y: 2 }
-                ]}
-                style={{
-                  data: {
-                    stroke: '#02B875', // this can change line color
-                    strokeWidth: 5 // width of line
-                  }
-                }}
-              />
-            </VictoryChart>
-          </div>
+        <div className="topright">
+          <VictoryChart domain={{ y: [0, 12] }}>
+            <VictoryLabel
+              text="Cups of Coffee vs Hours of Sleep"
+              x={225}
+              y={30}
+              textAnchor="middle"
+            />
+            <VictoryScatter
+              data={[
+                { x: '1', y: 5 },
+                { x: '1', y: 4 },
+                { x: '1', y: 6 },
+                { x: '2', y: 3 },
+                { x: '3', y: 2 }
+              ]}
+              style={{
+                data: {
+                  stroke: '#02B875', // this can change line color
+                  strokeWidth: 5 // width of line
+                }
+              }}
+            />
+          </VictoryChart>
+        </div>
 
-          <div className="bottomleft">
-            <VictoryChart domain={{ y: [0, 12] }}>
-              <VictoryLabel
-                text="Dreaming vs Average Hours of Sleep"
-                x={225}
-                y={30}
-                textAnchor="middle"
-              />
+        <div className="bottomleft">
+          <VictoryChart domain={{ y: [0, 12] }}>
+            <VictoryLabel
+              text="Dreaming vs Average Hours of Sleep"
+              x={225}
+              y={30}
+              textAnchor="middle"
+            />
 
-              <VictoryLegend
-                x={125}
-                y={50}
-                centerTitle
-                orientation="horizontal"
-                gutter={20}
-                style={{
-                  border: { stroke: 'black' },
-                  title: { fontSize: 10 }
-                }}
-                data={[
-                  { name: 'Dream', symbol: { fill: '#02B875' } },
-                  { name: 'No Dream', symbol: { fill: '#A5685B' } }
-                ]}
-              />
-              <VictoryLine
-                interpolation="natural" // can make the plot smooth
-                labels={({ datum }) => datum.y} //label points
-                data={[
-                  { x: 'Sun', y: 7 },
-                  { x: 'Mon', y: 2 },
-                  { x: 'Tues', y: 3 },
-                  { x: 'Wed', y: 5 },
-                  { x: 'Thurs', y: 4 },
-                  { x: 'Fri', y: 6 },
-                  { x: 'Sat', y: 6 }
-                ]}
-                style={{
-                  data: {
-                    stroke: '#02B875', // this can change line color
-                    strokeWidth: 1 // width of line
-                  }
-                }}
-              />
+            <VictoryLegend
+              x={125}
+              y={50}
+              centerTitle
+              orientation="horizontal"
+              gutter={20}
+              style={{
+                border: { stroke: 'black' },
+                title: { fontSize: 10 }
+              }}
+              data={[
+                { name: 'Dream', symbol: { fill: '#02B875' } },
+                { name: 'No Dream', symbol: { fill: '#A5685B' } }
+              ]}
+            />
+            <VictoryLine
+              interpolation="natural" // can make the plot smooth
+              labels={({ datum }) => datum.y} //label points
+              data={[
+                { x: 'Sun', y: 7 },
+                { x: 'Mon', y: 2 },
+                { x: 'Tues', y: 3 },
+                { x: 'Wed', y: 5 },
+                { x: 'Thurs', y: 4 },
+                { x: 'Fri', y: 6 },
+                { x: 'Sat', y: 6 }
+              ]}
+              style={{
+                data: {
+                  stroke: '#02B875', // this can change line color
+                  strokeWidth: 1 // width of line
+                }
+              }}
+            />
 
-              <VictoryLine
-                interpolation="natural" // can make the plot smooth
-                labels={({ datum }) => datum.y} //label points
-                data={[
-                  { x: 'Sun', y: 8 },
-                  { x: 'Mon', y: 9 },
-                  { x: 'Tues', y: 7 },
-                  { x: 'Wed', y: 5 },
-                  { x: 'Thurs', y: 8 },
-                  { x: 'Fri', y: 10 },
-                  { x: 'Sat', y: 9 }
-                ]}
-                style={{
-                  data: {
-                    stroke: '#A5685B', // this can change line color
-                    strokeWidth: 1 // width of line
-                  }
-                }}
-              />
-            </VictoryChart>
-          </div>
+            <VictoryLine
+              interpolation="natural" // can make the plot smooth
+              labels={({ datum }) => datum.y} //label points
+              data={[
+                { x: 'Sun', y: 8 },
+                { x: 'Mon', y: 9 },
+                { x: 'Tues', y: 7 },
+                { x: 'Wed', y: 5 },
+                { x: 'Thurs', y: 8 },
+                { x: 'Fri', y: 10 },
+                { x: 'Sat', y: 9 }
+              ]}
+              style={{
+                data: {
+                  stroke: '#A5685B', // this can change line color
+                  strokeWidth: 1 // width of line
+                }
+              }}
+            />
+          </VictoryChart>
+        </div>
 
-          <div className="bottomright">
-            <VictoryChart domain={{ y: [0, 12] }}>
-              <VictoryLabel
-                text="Melatonin vs Average Hours of Sleep"
-                x={225}
-                y={30}
-                textAnchor="middle"
-              />
+        <div className="bottomright">
+          <VictoryChart domain={{ y: [0, 12] }}>
+            <VictoryLabel
+              text="Melatonin vs Average Hours of Sleep"
+              x={225}
+              y={30}
+              textAnchor="middle"
+            />
 
-              <VictoryLegend
-                x={125}
-                y={50}
-                centerTitle
-                orientation="horizontal"
-                gutter={20}
-                style={{
-                  border: { stroke: 'black' },
-                  title: { fontSize: 10 }
-                }}
-                data={[
-                  { name: 'Melatonin', symbol: { fill: '#02B875' } },
-                  { name: 'No Melatonin', symbol: { fill: '#A5685B' } }
-                ]}
-              />
-              <VictoryLine
-                interpolation="natural" // can make the plot smooth
-                labels={({ datum }) => datum.y} //label points
-                data={[
-                  { x: 'Sun', y: 10 },
-                  { x: 'Mon', y: 8 },
-                  { x: 'Tues', y: 6 },
-                  { x: 'Wed', y: 8 },
-                  { x: 'Thurs', y: 7 },
-                  { x: 'Fri', y: 7 },
-                  { x: 'Sat', y: 6 }
-                ]}
-                style={{
-                  data: {
-                    stroke: '#02B875', // this can change line color
-                    strokeWidth: 1 // width of line
-                  }
-                }}
-              />
+            <VictoryLegend
+              x={125}
+              y={50}
+              centerTitle
+              orientation="horizontal"
+              gutter={20}
+              style={{
+                border: { stroke: 'black' },
+                title: { fontSize: 10 }
+              }}
+              data={[
+                { name: 'Melatonin', symbol: { fill: '#02B875' } },
+                { name: 'No Melatonin', symbol: { fill: '#A5685B' } }
+              ]}
+            />
+            <VictoryLine
+              interpolation="natural" // can make the plot smooth
+              labels={({ datum }) => datum.y} //label points
+              data={[
+                { x: 'Sun', y: 10 },
+                { x: 'Mon', y: 8 },
+                { x: 'Tues', y: 6 },
+                { x: 'Wed', y: 8 },
+                { x: 'Thurs', y: 7 },
+                { x: 'Fri', y: 7 },
+                { x: 'Sat', y: 6 }
+              ]}
+              style={{
+                data: {
+                  stroke: '#02B875', // this can change line color
+                  strokeWidth: 1 // width of line
+                }
+              }}
+            />
 
-              <VictoryLine
-                interpolation="natural" // can make the plot smooth
-                labels={({ datum }) => datum.y} //label points
-                data={[
-                  { x: 'Sun', y: 7 },
-                  { x: 'Mon', y: 2 },
-                  { x: 'Tues', y: 3 },
-                  { x: 'Wed', y: 5 },
-                  { x: 'Thurs', y: 4 },
-                  { x: 'Fri', y: 6 },
-                  { x: 'Sat', y: 6 }
-                ]}
-                style={{
-                  data: {
-                    stroke: '#A5685B', // this can change line color
-                    strokeWidth: 1 // width of line
-                  }
-                }}
-              />
-            </VictoryChart>
-          </div>
-        </Container>
-      </Layout>
-    );
-  };
+            <VictoryLine
+              interpolation="natural" // can make the plot smooth
+              labels={({ datum }) => datum.y} //label points
+              data={[
+                { x: 'Sun', y: 7 },
+                { x: 'Mon', y: 2 },
+                { x: 'Tues', y: 3 },
+                { x: 'Wed', y: 5 },
+                { x: 'Thurs', y: 4 },
+                { x: 'Fri', y: 6 },
+                { x: 'Sat', y: 6 }
+              ]}
+              style={{
+                data: {
+                  stroke: '#A5685B', // this can change line color
+                  strokeWidth: 1 // width of line
+                }
+              }}
+            />
+          </VictoryChart>
+        </div>
+      </Container>
+    </Layout>
+  );
+};
 
 export default Visualization;
-
