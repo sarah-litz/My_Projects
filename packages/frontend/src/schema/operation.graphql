@@ -25,6 +25,7 @@ fragment SleepDataFields on SleepDatum {
   anxiety
   caffeine
   feltRested
+  date
 }
 
 query getSleepData {
@@ -55,24 +56,24 @@ mutation createSleepData(
   }
 }
 
-mutation editSleepData(
-  $totalHours: Float
-  $didDream: Boolean
-  $anxiety: Float
-  $feltRested: Boolean
-  $caffeine: Float
-  $date: DateTime!
-) {
-  editSleepData(
-    options: {
-      totalHours: $totalHours
-      didDream: $didDream
-      anxiety: $anxiety
-      feltRested: $feltRested
-      caffeine: $caffeine
-      date: $date
-    }
-  ) {
-    ...SleepDataFields
-  }
-}
+# mutation editSleepData(
+#   $totalHours: Float
+#   $didDream: Boolean
+#   $anxiety: Float
+#   $feltRested: Boolean
+#   $caffeine: Float
+#   $date: DateTime!
+# ) {
+#   editSleepData(
+#     options: {
+#       totalHours: $totalHours
+#       didDream: $didDream
+#       anxiety: $anxiety
+#       feltRested: $feltRested
+#       caffeine: $caffeine
+#       date: $date
+#     }
+#   ) {
+#     ...SleepDataFields
+#   }
+# }

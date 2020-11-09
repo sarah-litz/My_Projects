@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './../App.css';
 import '../components/Login.css';
 import './datavis.css';
 import { Container } from 'react-bootstrap';
 import { Layout } from '../components/Layout';
+import { useGetSleepDataQuery } from '../generated/types-and-hooks';
 import {
   VictoryChart,
   VictoryScatter,
@@ -11,9 +12,33 @@ import {
   VictoryLegend,
   VictoryLabel
 } from 'victory';
+import moment from 'moment'
 
-export default class dataVisuals extends Component {
-  render() {
+//export default class dataVisuals extends Component {
+const Visualization: React.FC = () => {
+  const { data, error: backendError} = useGetSleepDataQuery();
+
+  if (!data){
+    return (<p>no data</p>)
+  }
+  const sleepData = data.sleepData;
+
+  console.log(sleepData)
+
+  const currentTime = moment();
+  const pastWeek = sleepData.filter((day) => currentTime.diff(moment(day.date, )) > -6);
+  pastWeek.sort((a, b) => moment(a.date, ).diff(moment(b.date, )));
+  
+  console.log(pastWeek)
+
+  const result = pastWeek.map(day => ({
+    x: moment(day.date, ).format('ddd'),
+    y: day.totalHours ?? 0
+  }))
+  
+  // const 
+
+  //render() {
     return (
       <Layout>
         <Container>
@@ -30,15 +55,7 @@ export default class dataVisuals extends Component {
               <VictoryLine
                 interpolation="natural" // can make the plot smooth
                 labels={({ datum }) => datum.y} //label points
-                data={[
-                  { x: 'Sun', y: 7 },
-                  { x: 'Mon', y: 2 },
-                  { x: 'Tues', y: 3 },
-                  { x: 'Wed', y: 5 },
-                  { x: 'Thurs', y: 4 },
-                  { x: 'Fri', y: 6 },
-                  { x: 'Sat', y: 6 }
-                ]}
+                data={result}
                 style={{
                   data: {
                     stroke: '#02B875', // this can change line color
@@ -209,5 +226,7 @@ export default class dataVisuals extends Component {
         </Container>
       </Layout>
     );
-  }
-}
+  };
+
+export default Visualization;
+

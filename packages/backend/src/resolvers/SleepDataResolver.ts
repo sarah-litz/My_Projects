@@ -6,7 +6,9 @@ import {
   Resolver,
   InputType,
   Field,
-  Authorized
+  Authorized,
+  FieldResolver,
+  Root
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
 import SleepDatum from '../models/SleepDatum';
@@ -14,6 +16,7 @@ import { User } from '../models/User';
 import { ContextType } from '../type';
 import { AuthenticationError } from 'apollo-server-express';
 import { Min, Max } from 'class-validator';
+import moment from 'moment';
 
 // Used to create in sleep data (notice this does not the id and user since we handle creating that)
 @InputType()
@@ -40,7 +43,7 @@ class SleepDatumCreateInput {
   public date!: Date;
 }
 
-@Resolver()
+@Resolver(() => SleepDatum)
 export class SleepDataResolver {
   @Authorized()
   @Query(() => [SleepDatum])
@@ -71,6 +74,8 @@ export class SleepDataResolver {
       throw new AuthenticationError('User not found ahhhh!');
     }
 
+    console.log(options.date)
+
     //link user to sleep data)
     //make sleepdata
     const repository = getConnection().getRepository(SleepDatum);
@@ -84,6 +89,18 @@ export class SleepDataResolver {
     return await repository.save(data);
   }
 
+    // Converts date string from postgres to Date for graphql
+    @Authorized()
+    @FieldResolver()
+    date(@Root() sleepDatum: SleepDatum): string {
+      // For some reason the date is not a Date, but a string (https://github.com/typeorm/typeorm/issues/2176)
+      return moment(
+        (sleepDatum.date as unknown) as string,
+        'YYYY-MM-DD'
+      ).toISOString();
+    }
+
+/*
   @Authorized()
   @Mutation(() => SleepDatum, { nullable: true })
   async editSleepData(
@@ -109,6 +126,7 @@ export class SleepDataResolver {
     });
 
     //save to database
-    return await repository.save(data);
+    return await repository.update();
   }
+*/
 }
