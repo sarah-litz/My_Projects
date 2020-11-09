@@ -16,7 +16,7 @@ import moment from 'moment';
 
 //export default class dataVisuals extends Component {
 const Visualization: React.FC = () => {
-  const { data, error: backendError } = useGetSleepDataQuery();
+  const { data } = useGetSleepDataQuery();
 
   if (!data) {
     return <p>no data</p>;
