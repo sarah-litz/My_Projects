@@ -14,7 +14,6 @@ import {
 } from 'victory';
 import moment from 'moment';
 
-//export default class dataVisuals extends Component {
 const Visualization: React.FC = () => {
   const { data } = useGetSleepDataQuery();
 
@@ -23,30 +22,29 @@ const Visualization: React.FC = () => {
   }
   const sleepData = data.sleepData;
 
-  // console.log(sleepData);
-
   const currentTime = moment();
   const pastWeek = sleepData.filter(
     (day) => currentTime.diff(moment(day.date), 'day') < 7
   );
   pastWeek.sort((a, b) => moment(a.date).diff(moment(b.date)));
 
-  // console.log(pastWeek);
-
-  // console.log(sleepData.map(day => currentTime.diff(moment(day.date), 'day')))
-
   const result = pastWeek.map((day) => ({
     x: moment(day.date).format('ddd'),
     y: day.totalHours ?? 0
   }));
 
-  // for comparing caffeine to hours slept
+  // Compares caffeine to hours slept
   const caffeineSleep = sleepData.map((val) => ({
     x: val.caffeine ?? 0,
     y: val.totalHours ?? 0
   }));
 
-  // TODO: needs more visualization changes below
+  const anxiety = sleepData.map((val) => ({
+    x: val.anxiety ?? 0,
+    y: val.totalHours ?? 0
+  }));
+
+  // Measure sleep quality
   const sleepQuality = sleepData.map((val) => ({
     x: val.sleepQuality ?? 0,
     y: val.totalHours ?? 0
@@ -70,33 +68,11 @@ const Visualization: React.FC = () => {
       y: noDreamStatus.totalHours ?? 0
     }));
 
-  /* NOTE: We may want to return to this later so I'm just going to leave it here */
-  // for comparing feeling rested to hours slept
-  /*const restedSleep = sleepData.filter(rested => rested.feltRested === true).map((restedStatus => ({
-    x: moment(restedStatus.date).format('ddd'),
-    y: restedStatus.totalHours ?? 0
-  })))
+  const melatonin = sleepData.map((val) => ({
+    x: val.melatonin ?? 0,
+    y: val.totalHours ?? 0
+  }));
 
-  const notRestedSleep = sleepData.filter(notRested => notRested.feltRested === false).map((notRestedStatus => ({
-    x: moment(notRestedStatus.date).format('ddd'),
-    y: notRestedStatus.totalHours ?? 0
-  })))*/
-
-  /*
-  // can be implemented once we incorporate utilizing melatonin into sleep data
-
-  const melatoninSleep = sleepData.filter(melatonin => melatonin.didMelatonin === true).map((melatoninStatus => ({
-    x: moment(melatoninStatus.date).format('ddd'),
-    y: melatoninStatus.totalHours ?? 0
-  })))
-
-  const noMelatoninSleep = sleepData.filter(noMelatonin => noMelatonin.didMelatonin === false).map((noMelatoninStatus => ({
-    x: moment(noMelatoninStatus.date).format('ddd'),
-    y: noMelatoninStatus.totalHours ?? 0
-  })))
-
-*/
-  //render() {
   return (
     <Layout>
       <Container>
@@ -118,6 +94,56 @@ const Visualization: React.FC = () => {
                 data: {
                   stroke: '#02B875', // this can change line color
                   strokeWidth: 5 // width of line
+                }
+              }}
+            />
+          </VictoryChart>
+        </div>
+
+        <div className="topmiddle">
+          <VictoryChart domain={{ y: [0, 12] }}>
+            <VictoryLabel
+              text="Sleep Quality vs Average Hours of Sleep"
+              x={225}
+              y={30}
+              textAnchor="middle"
+            />
+
+            <VictoryLegend
+              x={125}
+              y={50}
+              centerTitle
+              orientation="horizontal"
+              gutter={20}
+              style={{
+                border: { stroke: 'black' },
+                title: { fontSize: 10 }
+              }}
+              data={[
+                { name: 'Good sleep quality', symbol: { fill: '#02B875' } },
+                { name: 'Poor sleep quality', symbol: { fill: '#A5685B' } }
+              ]}
+            />
+            <VictoryLine
+              interpolation="natural" // can make the plot smooth
+              labels={({ datum }) => datum.y} //label points
+              data={sleepQuality}
+              style={{
+                data: {
+                  stroke: '#02B875', // this can change line color
+                  strokeWidth: 1 // width of line
+                }
+              }}
+            />
+
+            <VictoryLine
+              interpolation="natural" // can make the plot smooth
+              labels={({ datum }) => datum.y} //label points
+              data={sleepQuality}
+              style={{
+                data: {
+                  stroke: '#A5685B', // this can change line color
+                  strokeWidth: 1 // width of line
                 }
               }}
             />
@@ -194,6 +220,56 @@ const Visualization: React.FC = () => {
           </VictoryChart>
         </div>
 
+        <div className="bottommiddle">
+          <VictoryChart domain={{ y: [0, 12] }}>
+            <VictoryLabel
+              text="Anxiety vs Average Hours of Sleep"
+              x={225}
+              y={30}
+              textAnchor="middle"
+            />
+
+            <VictoryLegend
+              x={125}
+              y={50}
+              centerTitle
+              orientation="horizontal"
+              gutter={20}
+              style={{
+                border: { stroke: 'black' },
+                title: { fontSize: 10 }
+              }}
+              data={[
+                { name: 'Low anxiety', symbol: { fill: '#02B875' } },
+                { name: 'High anxiety', symbol: { fill: '#A5685B' } }
+              ]}
+            />
+            <VictoryLine
+              interpolation="natural" // can make the plot smooth
+              labels={({ datum }) => datum.y} //label points
+              data={anxiety}
+              style={{
+                data: {
+                  stroke: '#02B875', // this can change line color
+                  strokeWidth: 1 // width of line
+                }
+              }}
+            />
+
+            <VictoryLine
+              interpolation="natural" // can make the plot smooth
+              labels={({ datum }) => datum.y} //label points
+              data={anxiety}
+              style={{
+                data: {
+                  stroke: '#A5685B', // this can change line color
+                  strokeWidth: 1 // width of line
+                }
+              }}
+            />
+          </VictoryChart>
+        </div>
+
         <div className="bottomright">
           <VictoryChart domain={{ y: [0, 12] }}>
             <VictoryLabel
@@ -214,14 +290,14 @@ const Visualization: React.FC = () => {
                 title: { fontSize: 10 }
               }}
               data={[
-                { name: 'Good sleep quality', symbol: { fill: '#02B875' } },
-                { name: 'Poor sleep quality', symbol: { fill: '#A5685B' } }
+                { name: 'Longer sleep', symbol: { fill: '#02B875' } },
+                { name: 'Shorter sleep', symbol: { fill: '#A5685B' } }
               ]}
             />
             <VictoryLine
               interpolation="natural" // can make the plot smooth
               labels={({ datum }) => datum.y} //label points
-              data={sleepQuality}
+              data={melatonin}
               style={{
                 data: {
                   stroke: '#02B875', // this can change line color
@@ -233,7 +309,7 @@ const Visualization: React.FC = () => {
             <VictoryLine
               interpolation="natural" // can make the plot smooth
               labels={({ datum }) => datum.y} //label points
-              data={sleepQuality}
+              data={melatonin}
               style={{
                 data: {
                   stroke: '#A5685B', // this can change line color
