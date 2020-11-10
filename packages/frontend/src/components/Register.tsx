@@ -66,9 +66,9 @@ const Register: React.FC = () => {
     // Register/Login new user and save their token
     if (!error) {
       const { data } = await register({ variables: { email, password } });
-      if (data?.addUser) {
+      if (data?.registerUser) {
         // TODO: auth token
-        token(data.addUser);
+        token(data.registerUser);
         history.push('/');
       } else {
         token(undefined);

@@ -15,7 +15,7 @@ mutation login(
 }
 
 mutation register($email: String!, $password: String!) {
-  addUser(email: $email, password: $password)
+  registerUser(email: $email, password: $password)
 }
 
 fragment SleepDataFields on SleepDatum {

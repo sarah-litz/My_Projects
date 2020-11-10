@@ -28,7 +28,7 @@ class SafeUser {
 @Resolver()
 export class UserResolver {
   @Mutation(() => String)
-  async addUser(
+  async registerUser(
     @Arg('email') email: string,
     @Arg('password') password: string,
     @Ctx() context: ContextType
