@@ -21,7 +21,7 @@ export const Layout: React.FC = ({ children }) => {
           <LinkContainer to="/">
             <Nav.Link>Home</Nav.Link>
           </LinkContainer>
-
+        
           <LinkContainer to="/logdata">
             <Nav.Link>Log Data</Nav.Link>
           </LinkContainer>

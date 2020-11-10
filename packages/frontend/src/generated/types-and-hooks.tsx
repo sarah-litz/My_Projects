@@ -30,6 +30,7 @@ export type SleepDatum = {
   anxiety?: Maybe<Scalars['Int']>;
   caffeine?: Maybe<Scalars['Int']>;
   feltRested?: Maybe<Scalars['Boolean']>;
+  date: Scalars['DateTime'];
 };
 
 export type Mutation = {
@@ -88,7 +89,13 @@ export type RegisterMutation = { __typename?: 'Mutation' } & Pick<
 
 export type SleepDataFieldsFragment = { __typename?: 'SleepDatum' } & Pick<
   SleepDatum,
-  'id' | 'totalHours' | 'didDream' | 'anxiety' | 'caffeine' | 'feltRested'
+  | 'id'
+  | 'totalHours'
+  | 'didDream'
+  | 'anxiety'
+  | 'caffeine'
+  | 'feltRested'
+  | 'date'
 >;
 
 export type GetSleepDataQueryVariables = Exact<{ [key: string]: never }>;
@@ -120,6 +127,7 @@ export const SleepDataFieldsFragmentDoc = gql`
     anxiety
     caffeine
     feltRested
+    date
   }
 `;
 export const LoginTokenDocument = gql`
