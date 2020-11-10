@@ -2,7 +2,7 @@ import React from 'react';
 import './../App.css';
 import '../components/Login.css';
 import './DataVis.css';
-import { Container } from 'react-bootstrap';
+import { Button, Container, Jumbotron } from 'react-bootstrap';
 import { Layout } from '../components/Layout';
 import { useGetSleepDataQuery } from '../generated/types-and-hooks';
 import {
@@ -13,12 +13,23 @@ import {
   VictoryLabel
 } from 'victory';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 const Visualization: React.FC = () => {
   const { data } = useGetSleepDataQuery();
 
   if (!data) {
-    return <p>no data</p>;
+    return (
+      <Layout>
+        <Jumbotron>
+          <h1>Uh Oh!</h1>
+          <p>
+            Unfortunately we couldn't find any existing data. You must manually input data into our datalog here:
+          </p>
+          <Link to="/logdata"><Button variant="primary">Start logging your sleep!</Button></Link>
+        </Jumbotron>
+      </Layout>
+    );
   }
   const sleepData = data.sleepData;
 
