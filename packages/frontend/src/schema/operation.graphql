@@ -24,6 +24,7 @@ fragment SleepDataFields on SleepDatum {
   didDream
   anxiety
   caffeine
+  melatonin
   feltRested
   date
 }
@@ -40,6 +41,7 @@ mutation createSleepData(
   $anxiety: Float
   $feltRested: Boolean
   $caffeine: Float
+  $melatonin: Float
   $date: DateTime!
 ) {
   createSleepData(
@@ -49,6 +51,7 @@ mutation createSleepData(
       anxiety: $anxiety
       feltRested: $feltRested
       caffeine: $caffeine
+      melatonin: $melatonin
       date: $date
     }
   ) {
