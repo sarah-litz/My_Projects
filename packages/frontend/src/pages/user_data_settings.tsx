@@ -49,7 +49,7 @@ export const UserDataSettings: React.FC<{
 };
 
 const selectData = async (event: FormEvent<HTMLFormElement>) => {
-  event.preventDefault(); 
+  event.preventDefault();
 };
 
 class SettingsCard extends React.Component<{
