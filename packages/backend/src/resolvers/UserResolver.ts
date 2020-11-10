@@ -46,6 +46,7 @@ export class UserResolver {
     const userValues = repository.create({
       email,
       password: hashedPassword, // encrypted
+      preferences: [],
       sleepData: []
     });
 

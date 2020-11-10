@@ -8,15 +8,17 @@ export const HomePage: React.FC = () => {
     <Layout>
       <Jumbotron>
         <h1>Welcome to Bed Buddy!</h1>
+        <p>Register to get started:</p>
+        <Link to="/register">
+          <Button variant="primary">Register</Button>
+        </Link>
         <p>
-          Register to get started:
+          <br></br>
         </p>
-        <Link to="/register"><Button variant="primary">Register</Button></Link>
-        <p><br></br></p>
-        <p>
-          Or login:
-        </p>
-        <Link to="/login"><Button variant="primary">Login</Button></Link>
+        <p>Or login:</p>
+        <Link to="/login">
+          <Button variant="primary">Login</Button>
+        </Link>
       </Jumbotron>
     </Layout>
   );
