@@ -39,7 +39,7 @@ const Visualization: React.FC = () => {
     x: moment(day.date).format('ddd'),
     y: day.totalHours ?? 0
   }));
-  
+
   // for comparing caffeine to hours slept
   const caffeineSleep = sleepData.map((val) => ({
     x: val.caffeine ?? 0,
@@ -52,19 +52,23 @@ const Visualization: React.FC = () => {
     y: val.totalHours ?? 0
   }));
 
-  // would like to incorporate the average hours slept if two different values for hours slept fall on the 
+  // would like to incorporate the average hours slept if two different values for hours slept fall on the
   // same weekday, right now the graph is buggy if they store two vals for the same weekday but on different dates:
-  
-  // for comparing dreaming to hours slept
-  const dreamSleep = sleepData.filter(dream => dream.didDream === true).map((dreamStatus => ({
-    x: moment(dreamStatus.date).format('ddd'),
-    y: dreamStatus.totalHours ?? 0
-  })))
 
-  const noDreamSleep = sleepData.filter(dream => dream.didDream === false).map((noDreamStatus => ({
-    x: moment(noDreamStatus.date).format('ddd'),
-    y: noDreamStatus.totalHours ?? 0
-  })))
+  // for comparing dreaming to hours slept
+  const dreamSleep = sleepData
+    .filter((dream) => dream.didDream === true)
+    .map((dreamStatus) => ({
+      x: moment(dreamStatus.date).format('ddd'),
+      y: dreamStatus.totalHours ?? 0
+    }));
+
+  const noDreamSleep = sleepData
+    .filter((dream) => dream.didDream === false)
+    .map((noDreamStatus) => ({
+      x: moment(noDreamStatus.date).format('ddd'),
+      y: noDreamStatus.totalHours ?? 0
+    }));
 
   /* NOTE: We may want to return to this later so I'm just going to leave it here */
   // for comparing feeling rested to hours slept
@@ -78,7 +82,7 @@ const Visualization: React.FC = () => {
     y: notRestedStatus.totalHours ?? 0
   })))*/
 
-/*
+  /*
   // can be implemented once we incorporate utilizing melatonin into sleep data
 
   const melatoninSleep = sleepData.filter(melatonin => melatonin.didMelatonin === true).map((melatoninStatus => ({
