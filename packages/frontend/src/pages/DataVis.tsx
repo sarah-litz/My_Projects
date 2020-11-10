@@ -1,7 +1,7 @@
 import React from 'react';
 import './../App.css';
 import '../components/Login.css';
-import './datavis.css';
+import './DataVis.css';
 import { Container } from 'react-bootstrap';
 import { Layout } from '../components/Layout';
 import { useGetSleepDataQuery } from '../generated/types-and-hooks';
