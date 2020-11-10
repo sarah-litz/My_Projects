@@ -46,6 +46,12 @@ const Visualization: React.FC = () => {
     y: val.totalHours ?? 0
   }));
 
+  // TODO: needs more visualization changes below
+  const sleepQuality = sleepData.map((val) => ({
+    x: val.sleepQuality ?? 0,
+    y: val.totalHours ?? 0
+  }));
+
   // would like to incorporate the average hours slept if two different values for hours slept fall on the 
   // same weekday, right now the graph is buggy if they store two vals for the same weekday but on different dates:
   
@@ -60,8 +66,9 @@ const Visualization: React.FC = () => {
     y: noDreamStatus.totalHours ?? 0
   })))
 
+  /* NOTE: We may want to return to this later so I'm just going to leave it here */
   // for comparing feeling rested to hours slept
-  const restedSleep = sleepData.filter(rested => rested.feltRested === true).map((restedStatus => ({
+  /*const restedSleep = sleepData.filter(rested => rested.feltRested === true).map((restedStatus => ({
     x: moment(restedStatus.date).format('ddd'),
     y: restedStatus.totalHours ?? 0
   })))
@@ -69,9 +76,7 @@ const Visualization: React.FC = () => {
   const notRestedSleep = sleepData.filter(notRested => notRested.feltRested === false).map((notRestedStatus => ({
     x: moment(notRestedStatus.date).format('ddd'),
     y: notRestedStatus.totalHours ?? 0
-  })))
-
-
+  })))*/
 
 /*
   // can be implemented once we incorporate utilizing melatonin into sleep data
@@ -205,14 +210,14 @@ const Visualization: React.FC = () => {
                 title: { fontSize: 10 }
               }}
               data={[
-                { name: 'Felt Rested', symbol: { fill: '#02B875' } },
-                { name: 'Not Rested', symbol: { fill: '#A5685B' } }
+                { name: 'Good sleep quality', symbol: { fill: '#02B875' } },
+                { name: 'Poor sleep quality', symbol: { fill: '#A5685B' } }
               ]}
             />
             <VictoryLine
               interpolation="natural" // can make the plot smooth
               labels={({ datum }) => datum.y} //label points
-              data={restedSleep}
+              data={sleepQuality}
               style={{
                 data: {
                   stroke: '#02B875', // this can change line color
@@ -224,7 +229,7 @@ const Visualization: React.FC = () => {
             <VictoryLine
               interpolation="natural" // can make the plot smooth
               labels={({ datum }) => datum.y} //label points
-              data={notRestedSleep}
+              data={sleepQuality}
               style={{
                 data: {
                   stroke: '#A5685B', // this can change line color

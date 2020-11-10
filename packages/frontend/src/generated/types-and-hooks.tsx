@@ -34,7 +34,7 @@ export type SleepDatum = {
   anxiety?: Maybe<Scalars['Int']>;
   caffeine?: Maybe<Scalars['Int']>;
   melatonin?: Maybe<Scalars['Float']>;
-  feltRested?: Maybe<Scalars['Boolean']>;
+  sleepQuality?: Maybe<Scalars['Int']>;
   date: Scalars['String'];
 };
 
@@ -68,7 +68,7 @@ export type SleepDatumCreateInput = {
   anxiety?: Maybe<Scalars['Float']>;
   caffeine?: Maybe<Scalars['Float']>;
   melatonin?: Maybe<Scalars['Float']>;
-  feltRested?: Maybe<Scalars['Boolean']>;
+  sleepQuality?: Maybe<Scalars['Float']>;
   date: Scalars['DateTime'];
 };
 
@@ -105,7 +105,7 @@ export type RegisterMutation = (
 
 export type SleepDataFieldsFragment = (
   { __typename?: 'SleepDatum' }
-  & Pick<SleepDatum, 'id' | 'totalHours' | 'didDream' | 'anxiety' | 'caffeine' | 'melatonin' | 'feltRested' | 'date'>
+  & Pick<SleepDatum, 'id' | 'totalHours' | 'didDream' | 'anxiety' | 'caffeine' | 'melatonin' | 'sleepQuality' | 'date'>
 );
 
 export type GetSleepDataQueryVariables = Exact<{ [key: string]: never; }>;
@@ -123,7 +123,7 @@ export type CreateSleepDataMutationVariables = Exact<{
   totalHours?: Maybe<Scalars['Float']>;
   didDream?: Maybe<Scalars['Boolean']>;
   anxiety?: Maybe<Scalars['Float']>;
-  feltRested?: Maybe<Scalars['Boolean']>;
+  sleepQuality?: Maybe<Scalars['Float']>;
   caffeine?: Maybe<Scalars['Float']>;
   melatonin?: Maybe<Scalars['Float']>;
   date: Scalars['DateTime'];
@@ -146,7 +146,7 @@ export const SleepDataFieldsFragmentDoc = gql`
   anxiety
   caffeine
   melatonin
-  feltRested
+  sleepQuality
   date
 }
     `;
@@ -275,9 +275,9 @@ export type GetSleepDataQueryHookResult = ReturnType<typeof useGetSleepDataQuery
 export type GetSleepDataLazyQueryHookResult = ReturnType<typeof useGetSleepDataLazyQuery>;
 export type GetSleepDataQueryResult = ApolloReactCommon.QueryResult<GetSleepDataQuery, GetSleepDataQueryVariables>;
 export const CreateSleepDataDocument = gql`
-    mutation createSleepData($totalHours: Float, $didDream: Boolean, $anxiety: Float, $feltRested: Boolean, $caffeine: Float, $melatonin: Float, $date: DateTime!) {
+    mutation createSleepData($totalHours: Float, $didDream: Boolean, $anxiety: Float, $sleepQuality: Float, $caffeine: Float, $melatonin: Float, $date: DateTime!) {
   createSleepData(
-    options: {totalHours: $totalHours, didDream: $didDream, anxiety: $anxiety, feltRested: $feltRested, caffeine: $caffeine, melatonin: $melatonin, date: $date}
+    options: {totalHours: $totalHours, didDream: $didDream, anxiety: $anxiety, sleepQuality: $sleepQuality, caffeine: $caffeine, melatonin: $melatonin, date: $date}
   ) {
     ...SleepDataFields
   }
@@ -301,7 +301,7 @@ export type CreateSleepDataMutationFn = ApolloReactCommon.MutationFunction<Creat
  *      totalHours: // value for 'totalHours'
  *      didDream: // value for 'didDream'
  *      anxiety: // value for 'anxiety'
- *      feltRested: // value for 'feltRested'
+ *      sleepQuality: // value for 'sleepQuality'
  *      caffeine: // value for 'caffeine'
  *      melatonin: // value for 'melatonin'
  *      date: // value for 'date'

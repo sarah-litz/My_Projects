@@ -38,9 +38,11 @@ export default class SleepDatum {
   @Column({ type: 'float', nullable: true })
   public melatonin?: number;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  public feltRested?: boolean;
+  @Min(0)
+  @Max(10)
+  @Field(() => Int, { nullable: true })
+  @Column({ type: 'int', nullable: true })
+  public sleepQuality?: number;
 
   @Column({ type: 'date' })
   public date!: Date;
