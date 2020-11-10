@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import './Login.css';
-import { Layout } from '../components/Layout';
+import { Layout } from './Layout';
 import ReactBootstrapSlider from 'react-bootstrap-slider';
 import { useGetSleepDataQuery } from '../generated/types-and-hooks';
 
