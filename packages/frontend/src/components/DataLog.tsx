@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 import './Login.css';
 import './../App.css';
-import { Layout } from '../components/Layout';
+import { Layout } from './Layout';
 import ReactBootstrapSlider from 'react-bootstrap-slider';
 import { useGetSleepDataQuery } from '../generated/types-and-hooks';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -11,8 +11,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const UserData: React.FC = () => {
-  const { data } = useGetSleepDataQuery();
-
+  // const { data } = useGetSleepDataQuery();
+  
   const [sleepHours, setSleep] = useState('');
   const [feltRested, setFeltRested] = useState('');
   const [didDream, setDidDream] = useState('');
@@ -73,12 +73,11 @@ const UserData: React.FC = () => {
                 <b>Did you dream?</b>
               </p>
               {/* TODO: is this right?? will this actually set "didDream" */}
-              <Test onOptionSelect={(didDream) => setDidDream(didDream)}>
+             <Test onOptionSelect={(didDream) => setDidDream(didDream)}>
+             {/* <Test value={didDream} onOptionSelect={(event) => setDidDream(event.target.value)}> */}
                 <QuestionGroup>
                   <Option value="0">No Dreams</Option>
-                  <Option value="1">Unsure</Option>
-                  <Option value="2">Yes, a little</Option>
-                  <Option value="3">Yes, a lot</Option>
+                  <Option value="1">Yes</Option>
                 </QuestionGroup>
               </Test>
             </div>

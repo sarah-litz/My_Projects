@@ -25,7 +25,7 @@ class SleepDatumCreateInput {
   @Field({ nullable: true })
   public totalHours?: number;
 
-  @Field({ nullable: true })
+   @Field({ nullable: true })
   public didDream?: boolean;
 
   @Min(0)
@@ -33,8 +33,10 @@ class SleepDatumCreateInput {
   @Field({ nullable: true })
   public anxiety?: number;
 
+  @Min(0)
+  @Max(10)
   @Field({ nullable: true })
-  public feltRested?: boolean;
+  public feltRested?: number;
 
   @Field({ nullable: true })
   public caffeine?: number;

@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import Login from './components/Login';
-import Data_Log from './components/Data_Log';
+import DataLog from './components/DataLog';
 import { client } from './store/apollo';
 import { UserDataSettings } from './pages/user_data_settings';
 import Register from './components/Register';
@@ -26,7 +26,7 @@ function App() {
             </Route>
 
             <Route exact path="/logdata">
-              <Data_Log />
+              <DataLog />
             </Route>
 
             <Route exact path="/register">
