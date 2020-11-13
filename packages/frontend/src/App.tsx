@@ -5,9 +5,10 @@ import { Layout } from './components/Layout';
 import Login from './components/Login';
 import DataLog from './components/DataLog';
 import { client } from './store/apollo';
-import { UserDataSettings } from './pages/user_data_settings';
+import { HomePage } from './pages/Home';
+import { UserDataSettings } from './pages/UserDataSettings';
 import Register from './components/Register';
-import Visualize from './pages/datavis';
+import Visualize from './pages/DataVis';
 
 function App() {
   return (
@@ -18,6 +19,11 @@ function App() {
           <Switch>
             <Route exact path="/">
               {/* <HomePage /> */}
+              <HomePage />
+            </Route>
+
+            <Route exact path="/preferences">
+              {/* <Preferences /> */}
               <UserDataSettings />
             </Route>
 

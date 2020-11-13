@@ -18,8 +18,14 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
+  me: SafeUser;
   sleepData: Array<SleepDatum>;
   token: Scalars['String'];
+};
+
+export type SafeUser = {
+  __typename?: 'SafeUser';
+  email: Scalars['String'];
 };
 
 export type SleepDatum = {
@@ -29,8 +35,9 @@ export type SleepDatum = {
   didDream?: Maybe<Scalars['Boolean']>;
   anxiety?: Maybe<Scalars['Int']>;
   caffeine?: Maybe<Scalars['Int']>;
-  feltRested?: Maybe<Scalars['Boolean']>;
-  date: Scalars['DateTime'];
+  melatonin?: Maybe<Scalars['Float']>;
+  sleepQuality?: Maybe<Scalars['Int']>;
+  date: Scalars['String'];
 };
 
 export type Mutation = {
@@ -58,8 +65,9 @@ export type SleepDatumCreateInput = {
   totalHours?: Maybe<Scalars['Float']>;
   didDream?: Maybe<Scalars['Boolean']>;
   anxiety?: Maybe<Scalars['Float']>;
-  feltRested?: Maybe<Scalars['Boolean']>;
   caffeine?: Maybe<Scalars['Float']>;
+  melatonin?: Maybe<Scalars['Float']>;
+  sleepQuality?: Maybe<Scalars['Float']>;
   date: Scalars['DateTime'];
 };
 
@@ -94,7 +102,8 @@ export type SleepDataFieldsFragment = { __typename?: 'SleepDatum' } & Pick<
   | 'didDream'
   | 'anxiety'
   | 'caffeine'
-  | 'feltRested'
+  | 'melatonin'
+  | 'sleepQuality'
   | 'date'
 >;
 
@@ -108,8 +117,9 @@ export type CreateSleepDataMutationVariables = Exact<{
   totalHours?: Maybe<Scalars['Float']>;
   didDream?: Maybe<Scalars['Boolean']>;
   anxiety?: Maybe<Scalars['Float']>;
-  feltRested?: Maybe<Scalars['Boolean']>;
+  sleepQuality?: Maybe<Scalars['Float']>;
   caffeine?: Maybe<Scalars['Float']>;
+  melatonin?: Maybe<Scalars['Float']>;
   date: Scalars['DateTime'];
 }>;
 
@@ -126,7 +136,8 @@ export const SleepDataFieldsFragmentDoc = gql`
     didDream
     anxiety
     caffeine
-    feltRested
+    melatonin
+    sleepQuality
     date
   }
 `;
@@ -336,8 +347,9 @@ export const CreateSleepDataDocument = gql`
     $totalHours: Float
     $didDream: Boolean
     $anxiety: Float
-    $feltRested: Boolean
+    $sleepQuality: Float
     $caffeine: Float
+    $melatonin: Float
     $date: DateTime!
   ) {
     createSleepData(
@@ -345,8 +357,9 @@ export const CreateSleepDataDocument = gql`
         totalHours: $totalHours
         didDream: $didDream
         anxiety: $anxiety
-        feltRested: $feltRested
+        sleepQuality: $sleepQuality
         caffeine: $caffeine
+        melatonin: $melatonin
         date: $date
       }
     ) {
@@ -376,8 +389,9 @@ export type CreateSleepDataMutationFn = ApolloReactCommon.MutationFunction<
  *      totalHours: // value for 'totalHours'
  *      didDream: // value for 'didDream'
  *      anxiety: // value for 'anxiety'
- *      feltRested: // value for 'feltRested'
+ *      sleepQuality: // value for 'sleepQuality'
  *      caffeine: // value for 'caffeine'
+ *      melatonin: // value for 'melatonin'
  *      date: // value for 'date'
  *   },
  * });

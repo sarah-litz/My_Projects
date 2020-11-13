@@ -12,7 +12,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const UserData: React.FC = () => {
   // const { data } = useGetSleepDataQuery();
-  
+
   const [sleepHours, setSleep] = useState('');
   const [feltRested, setFeltRested] = useState('');
   const [didDream, setDidDream] = useState('');
@@ -73,8 +73,8 @@ const UserData: React.FC = () => {
                 <b>Did you dream?</b>
               </p>
               {/* TODO: is this right?? will this actually set "didDream" */}
-             <Test onOptionSelect={(didDream) => setDidDream(didDream)}>
-             {/* <Test value={didDream} onOptionSelect={(event) => setDidDream(event.target.value)}> */}
+              <Test onOptionSelect={(didDream) => setDidDream(didDream)}>
+                {/* <Test value={didDream} onOptionSelect={(event) => setDidDream(event.target.value)}> */}
                 <QuestionGroup>
                   <Option value="0">No Dreams</Option>
                   <Option value="1">Yes</Option>
