@@ -14,11 +14,11 @@ const UserData: React.FC = () => {
   // const { data } = useGetSleepDataQuery();
 
   const [sleepHours, setSleep] = useState('');
-  const [feltRested, setFeltRested] = useState('');
+  const [sleepQuality, setSleepQuality] = useState('');
   const [didDream, setDidDream] = useState('');
   const [caffeine, setCaffeine] = useState('');
   const [anxiety, setAnxiety] = useState('');
-  // const [startDate, setStartDate] = useState(new Date());
+  const [melatonin, setMelatonin] = useState('');
   const [date, setLogDate] = useState('');
 
   const collectData = async (event: FormEvent<HTMLFormElement>) => {
@@ -63,8 +63,8 @@ const UserData: React.FC = () => {
               <ReactBootstrapSlider
                 min="0"
                 max="10"
-                value={feltRested}
-                slideStop={(event) => setFeltRested(event.target.value)}
+                value={sleepQuality}
+                slideStop={(event) => setSleepQuality(event.target.value)}
               ></ReactBootstrapSlider>
             </div>
             <br></br>
@@ -107,6 +107,20 @@ const UserData: React.FC = () => {
                 min="0"
                 max="12"
                 value={anxiety}
+                slideStop={(event) => setAnxiety(event.target.value)}
+              ></ReactBootstrapSlider>
+            </div>
+            <div className="form-group text-center">
+              <p>
+                <b>How much melatonin did you take?</b>
+              </p>
+              <p>
+                Units are milligrams.
+              </p>
+              <ReactBootstrapSlider
+                min="0.1"
+                max="12.0"
+                value={melatonin}
                 slideStop={(event) => setAnxiety(event.target.value)}
               ></ReactBootstrapSlider>
             </div>

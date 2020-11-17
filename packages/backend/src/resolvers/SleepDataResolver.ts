@@ -36,7 +36,12 @@ class SleepDatumCreateInput {
   @Min(0)
   @Max(10)
   @Field({ nullable: true })
-  public feltRested?: number;
+  public sleepQuality?: number;
+
+  @Min(0)
+  @Max(12)
+  @Field({ nullable: true })
+  public melatonin?: number;
 
   @Field({ nullable: true })
   public caffeine?: number;
