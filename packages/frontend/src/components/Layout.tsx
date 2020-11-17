@@ -22,13 +22,11 @@ export const Layout: React.FC = ({ children }) => {
             <Nav.Link>Home</Nav.Link>
           </LinkContainer>
 
-          {loggedIn ? (
-            <>
-              <LinkContainer to="/visual">
-                <Nav.Link href="/visual">View SleepData</Nav.Link>
-              </LinkContainer>
-            </>
-          ) : (
+          <LinkContainer to="/logdata">
+            <Nav.Link>Log Data</Nav.Link>
+          </LinkContainer>
+
+          {!loggedIn && (
             <>
               <LinkContainer to="/login">
                 <Nav.Link href="/login">Login</Nav.Link>

@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import Login from './components/Login';
+import DataLog from './components/DataLog';
 import { client } from './store/apollo';
 import { HomePage } from './pages/Home';
 import { UserDataSettings } from './pages/UserDataSettings';
@@ -28,6 +29,10 @@ function App() {
 
             <Route exact path="/login">
               <Login />
+            </Route>
+
+            <Route exact path="/logdata">
+              <DataLog />
             </Route>
 
             <Route exact path="/register">

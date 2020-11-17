@@ -24,9 +24,12 @@ const Visualization: React.FC = () => {
         <Jumbotron>
           <h1>Uh Oh!</h1>
           <p>
-            Unfortunately we couldn't find any existing data. You must manually input data into our datalog here:
+            Unfortunately we couldn't find any existing data. You must manually
+            input data into our datalog here:
           </p>
-          <Link to="/logdata"><Button variant="primary">Start logging your sleep!</Button></Link>
+          <Link to="/logdata">
+            <Button variant="primary">Start logging your sleep!</Button>
+          </Link>
         </Jumbotron>
       </Layout>
     );

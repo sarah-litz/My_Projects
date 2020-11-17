@@ -63,7 +63,7 @@ mutation createSleepData(
 #   $totalHours: Float
 #   $didDream: Boolean
 #   $anxiety: Float
-#   $feltRested: Boolean
+#   $sleepQuality: Boolean
 #   $caffeine: Float
 #   $date: DateTime!
 # ) {
@@ -72,7 +72,7 @@ mutation createSleepData(
 #       totalHours: $totalHours
 #       didDream: $didDream
 #       anxiety: $anxiety
-#       feltRested: $feltRested
+#       sleepQuality: $sleepQuality
 #       caffeine: $caffeine
 #       date: $date
 #     }

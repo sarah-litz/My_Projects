@@ -65,9 +65,9 @@ export type SleepDatumCreateInput = {
   totalHours?: Maybe<Scalars['Float']>;
   didDream?: Maybe<Scalars['Boolean']>;
   anxiety?: Maybe<Scalars['Float']>;
-  caffeine?: Maybe<Scalars['Float']>;
-  melatonin?: Maybe<Scalars['Float']>;
   sleepQuality?: Maybe<Scalars['Float']>;
+  melatonin?: Maybe<Scalars['Float']>;
+  caffeine?: Maybe<Scalars['Float']>;
   date: Scalars['DateTime'];
 };
 

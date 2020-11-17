@@ -24,10 +24,13 @@
     "apollo-server-express": "2.19.0",
     "bootstrap": "4.5.3",
     "graphql": "15.4.0",
-    "moment": "2.29.1",
+    "jquery": "^3.5.1",
+    "moment": "^2.29.1",
     "ms": "2.1.2",
     "react-bootstrap": "1.4.0",
-    "react-bootstrap-slider": "3.0.0",
-    "victory": "35.3.5"
+    "react-bootstrap-slider": "^3.0.0",
+    "react-datepicker": "^3.3.0",
+    "react-multiple-choice": "^2.0.2",
+    "victory": "35.3.4"
   }
 }
