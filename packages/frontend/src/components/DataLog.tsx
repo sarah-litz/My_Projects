@@ -22,11 +22,9 @@ const UserData: React.FC = () => {
   const [date, setLogDate] = useState('');
 
   const collectData = async (event: FormEvent<HTMLFormElement>) => {
-    // alert('Your data was recorded.');
     event.preventDefault(); //not sure what this does-- cpy paste from Login.tsx
   };
 
-  //follow login in Login.tsx
   return (
     <Layout>
       <div className="register mycard card col-12 col-lg-4 login-card hv-center">
@@ -147,22 +145,3 @@ const UserData: React.FC = () => {
 };
 
 export default UserData;
-
-// class Slider extends React.Component<{
-//     currentValue?: number;
-//     qOne?: string;
-//   }>{
-//     render() {}
-//         return (<ReactBootstrapSlider
-//             value={this.state.currentValue}
-//             change={this.changeValue}
-//             slideStop={this.changeValue}
-//             step={this.state.step}
-//             max={this.state.max}
-//             min={this.state.min}
-//             orientation="vertical"
-//             reversed={true}
-//             disabled="disabled" />
-//     );
-// }
-// }

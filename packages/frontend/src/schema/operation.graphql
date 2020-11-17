@@ -69,6 +69,40 @@ mutation createSleepData(
   }
 }
 
+fragment PreferenceFields on Preferences {
+  id
+  trackCaffeine
+  trackAnxiety
+  trackDreams
+  trackMelatonin
+}
+
+query getPreferences {
+  preferences {
+    ...PreferenceFields
+  }
+}
+
+mutation createPreferences(
+  $trackCaffeine: Boolean
+  $trackAnxiety: Boolean
+  $trackDreams: Boolean
+  $trackMelatonin: Boolean
+  
+) {
+  createPreferences(
+    options: {
+      trackCaffeine: $trackCaffeine
+      trackAnxiety: $trackAnxiety
+      trackDreams: $trackDreams
+      trackMelatonin: $trackMelatonin
+    }
+  ) {
+    ...PreferenceFields
+  }
+}
+
+
 # mutation editSleepData(
 #   $totalHours: Float
 #   $didDream: Boolean
