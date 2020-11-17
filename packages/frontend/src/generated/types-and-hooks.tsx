@@ -50,6 +50,8 @@ export type Mutation = {
 export type MutationAddUserArgs = {
   password: Scalars['String'];
   email: Scalars['String'];
+  lastname: Scalars['String'];
+  firstname: Scalars['String'];
 };
 
 export type MutationLoginUserArgs = {
@@ -86,6 +88,8 @@ export type LoginMutation = { __typename?: 'Mutation' } & Pick<
 >;
 
 export type RegisterMutationVariables = Exact<{
+  firstname: Scalars['String'];
+  lastname: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
@@ -240,8 +244,18 @@ export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LoginMutationVariables
 >;
 export const RegisterDocument = gql`
-  mutation register($email: String!, $password: String!) {
-    addUser(email: $email, password: $password)
+  mutation register(
+    $firstname: String!
+    $lastname: String!
+    $email: String!
+    $password: String!
+  ) {
+    addUser(
+      firstname: $firstname
+      lastname: $lastname
+      email: $email
+      password: $password
+    )
   }
 `;
 export type RegisterMutationFn = ApolloReactCommon.MutationFunction<
@@ -262,6 +276,8 @@ export type RegisterMutationFn = ApolloReactCommon.MutationFunction<
  * @example
  * const [registerMutation, { data, loading, error }] = useRegisterMutation({
  *   variables: {
+ *      firstname: // value for 'firstname'
+ *      lastname: // value for 'lastname'
  *      email: // value for 'email'
  *      password: // value for 'password'
  *   },
