@@ -3,10 +3,10 @@ import './Login.css';
 import './../App.css';
 import { Layout } from './Layout';
 import ReactBootstrapSlider from 'react-bootstrap-slider';
-import { useGetSleepDataQuery } from '../generated/types-and-hooks';
+// import { useGetSleepDataQuery } from '../generated/types-and-hooks';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-slider/dist/css/bootstrap-slider.css';
-import { Test, QuestionGroup, Question, Option } from 'react-multiple-choice';
+import { Test, QuestionGroup, Option } from 'react-multiple-choice';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -73,8 +73,9 @@ const UserData: React.FC = () => {
                 <b>Did you dream?</b>
               </p>
               {/* TODO: is this right?? will this actually set "didDream" */}
-              <Test onOptionSelect={(didDream) => setDidDream(didDream)}>
-                {/* <Test value={didDream} onOptionSelect={(event) => setDidDream(event.target.value)}> */}
+              <Test value={didDream} onOptionSelect={didDream => setDidDream(didDream)}>
+              {/* <Test onOptionSelect={(event) => setDidDream(event.target.value)}> */}
+              {/* <Test value={didDream} onOptionSelect={(event) => setDidDream(event.target.value)}> */}
                 <QuestionGroup>
                   <Option value="0">No Dreams</Option>
                   <Option value="1">Yes</Option>
@@ -114,14 +115,12 @@ const UserData: React.FC = () => {
               <p>
                 <b>How much melatonin did you take?</b>
               </p>
-              <p>
-                Units are milligrams.
-              </p>
+              <p>Units are milligrams.</p>
               <ReactBootstrapSlider
                 min="0.1"
                 max="12.0"
                 value={melatonin}
-                slideStop={(event) => setAnxiety(event.target.value)}
+                slideStop={(event) => setMelatonin(event.target.value)}
               ></ReactBootstrapSlider>
             </div>
             <div
