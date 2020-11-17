@@ -29,6 +29,8 @@ class SafeUser {
 export class UserResolver {
   @Mutation(() => String)
   async addUser(
+    @Arg('firstname') firstname: string,
+    @Arg('lastname') lastname: string,
     @Arg('email') email: string,
     @Arg('password') password: string,
     @Ctx() context: ContextType
@@ -44,6 +46,8 @@ export class UserResolver {
 
     const hashedPassword = await bcrypt.hash(password, 10); // encrypting password
     const userValues = repository.create({
+      firstname,
+      lastname,
       email,
       password: hashedPassword, // encrypted
       sleepData: []
