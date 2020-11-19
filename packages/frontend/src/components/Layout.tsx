@@ -18,16 +18,28 @@ export const Layout: React.FC = ({ children }) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
         <Nav className="ml-auto">
-          <LinkContainer to="/">
-            <Nav.Link>Home</Nav.Link>
-          </LinkContainer>
+          {loggedIn && (
+            <>
+              <LinkContainer to="/home">
+                <Nav.Link>Home</Nav.Link>
+              </LinkContainer>
 
-          <LinkContainer to="/logdata">
-            <Nav.Link>Log Data</Nav.Link>
-          </LinkContainer>
+              <LinkContainer to="/logdata">
+                <Nav.Link>Log Data</Nav.Link>
+              </LinkContainer>
+
+              <LinkContainer to="/visual">
+                <Nav.Link>Data Visualizations</Nav.Link>
+              </LinkContainer>
+            </>
+          )}
 
           {!loggedIn && (
             <>
+              <LinkContainer to="/">
+                <Nav.Link>Home</Nav.Link>
+              </LinkContainer>
+
               <LinkContainer to="/login">
                 <Nav.Link href="/login">Login</Nav.Link>
               </LinkContainer>
