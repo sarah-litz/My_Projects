@@ -34,10 +34,10 @@ class PreferencesCreateInput {
 }
 
 @Resolver(() => Preferences)
-export class SleepDataResolver {
+export class PreferencesResolver {
   @Authorized()
   @Query(() => [Preferences])
-  async sleepData(
+  async preferences(
     @Ctx() context: ContextType // who is current user
   ): Promise<Preferences[]> {
     const repository = getConnection().getRepository(Preferences);
@@ -51,7 +51,7 @@ export class SleepDataResolver {
 
   @Authorized()
   @Mutation(() => Preferences, { nullable: true })
-  async createSleepData(
+  async createPreferences(
     @Arg('options', () => PreferencesCreateInput)
     options: PreferencesCreateInput,
     @Ctx() context: ContextType // who is current user
@@ -67,22 +67,10 @@ export class SleepDataResolver {
     const repository = getConnection().getRepository(Preferences);
     const data = repository.create({
       ...options,
-      // date: options.date.toISOString(),
       user
     });
 
     //save to database
     return await repository.save(data);
   }
-
-  // Converts date string from postgres to Date for graphql
-  // @Authorized()
-  // // @FieldResolver()
-  // // date(@Root() Preferences: Preferences): string {
-  //   // For some reason the date is not a Date, but a string (https://github.com/typeorm/typeorm/issues/2176)
-  //   // return moment(
-  //   //   (Preferences.date as unknown) as string,
-  //   //   'YYYY-MM-DD'
-  //   // ).toISOString();
-  // }
 }
