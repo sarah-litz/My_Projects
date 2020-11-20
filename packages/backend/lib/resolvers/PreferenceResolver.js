@@ -24,7 +24,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SleepDataResolver = void 0;
+exports.PreferencesResolver = void 0;
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const Preferences_1 = __importDefault(require("../models/Preferences"));
@@ -51,8 +51,8 @@ __decorate([
 PreferencesCreateInput = __decorate([
     type_graphql_1.InputType()
 ], PreferencesCreateInput);
-let SleepDataResolver = class SleepDataResolver {
-    sleepData(context) {
+let PreferencesResolver = class PreferencesResolver {
+    preferences(context) {
         return __awaiter(this, void 0, void 0, function* () {
             const repository = typeorm_1.getConnection().getRepository(Preferences_1.default);
             return yield repository.find({
@@ -62,7 +62,7 @@ let SleepDataResolver = class SleepDataResolver {
             });
         });
     }
-    createSleepData(options, context) {
+    createPreferences(options, context) {
         return __awaiter(this, void 0, void 0, function* () {
             const userRepository = typeorm_1.getConnection().getRepository(User_1.User);
             const user = yield userRepository.findOne(context.me.id);
@@ -82,7 +82,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], SleepDataResolver.prototype, "sleepData", null);
+], PreferencesResolver.prototype, "preferences", null);
 __decorate([
     type_graphql_1.Authorized(),
     type_graphql_1.Mutation(() => Preferences_1.default, { nullable: true }),
@@ -91,8 +91,8 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [PreferencesCreateInput, Object]),
     __metadata("design:returntype", Promise)
-], SleepDataResolver.prototype, "createSleepData", null);
-SleepDataResolver = __decorate([
+], PreferencesResolver.prototype, "createPreferences", null);
+PreferencesResolver = __decorate([
     type_graphql_1.Resolver(() => Preferences_1.default)
-], SleepDataResolver);
-exports.SleepDataResolver = SleepDataResolver;
+], PreferencesResolver);
+exports.PreferencesResolver = PreferencesResolver;

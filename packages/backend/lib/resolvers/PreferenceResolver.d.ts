@@ -6,8 +6,8 @@ declare class PreferencesCreateInput {
     trackDreams?: boolean;
     trackMelatonin?: boolean;
 }
-export declare class SleepDataResolver {
-    sleepData(context: ContextType): Promise<Preferences[]>;
-    createSleepData(options: PreferencesCreateInput, context: ContextType): Promise<Preferences>;
+export declare class PreferencesResolver {
+    preferences(context: ContextType): Promise<Preferences[]>;
+    createPreferences(options: PreferencesCreateInput, context: ContextType): Promise<Preferences>;
 }
 export {};

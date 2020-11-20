@@ -3,16 +3,6 @@ import './../App.css';
 import { Container, Form, FormGroup } from 'react-bootstrap';
 import { Layout } from '../components/Layout';
 
-var SometimesAsk = {
-  prompt: "Here are the other metrics you've opted into:",
-  qOne: 'Caffeine intake during the day',
-  qTwo: 'What time did you go to sleep last night?',
-  qThree: 'Did you have dreams?',
-  qFour: 'Did you take melatonin?',
-  qFive: 'Rate your stress.',
-  toggle: true
-};
-
 const UserDataSettings: React.FC = () => {
   const [trackCaffeine, setTrackCaffeine] = useState('');
   const [trackBedtime, setTrackBedtime] = useState('');
