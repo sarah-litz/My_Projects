@@ -20,7 +20,6 @@ import moment from 'moment';
 // Used to create in sleep data (notice this does not the id and user since we handle creating that)
 @InputType()
 class PreferencesCreateInput {
-
   @Field({ nullable: true })
   public trackCaffeine?: boolean;
 
@@ -32,7 +31,6 @@ class PreferencesCreateInput {
 
   @Field({ nullable: true })
   public trackMelatonin?: boolean;
-
 }
 
 @Resolver(() => Preferences)
@@ -54,7 +52,8 @@ export class SleepDataResolver {
   @Authorized()
   @Mutation(() => Preferences, { nullable: true })
   async createSleepData(
-    @Arg('options', () => PreferencesCreateInput) options: PreferencesCreateInput,
+    @Arg('options', () => PreferencesCreateInput)
+    options: PreferencesCreateInput,
     @Ctx() context: ContextType // who is current user
   ): Promise<Preferences> {
     const userRepository = getConnection().getRepository(User);
@@ -64,7 +63,7 @@ export class SleepDataResolver {
       throw new AuthenticationError('User not found ahhhh!');
     }
 
-       //link user to preferences
+    //link user to preferences
     const repository = getConnection().getRepository(Preferences);
     const data = repository.create({
       ...options,
@@ -86,5 +85,4 @@ export class SleepDataResolver {
   //   //   'YYYY-MM-DD'
   //   // ).toISOString();
   // }
-
 }

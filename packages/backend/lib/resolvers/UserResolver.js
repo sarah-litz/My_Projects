@@ -41,7 +41,7 @@ SafeUser = __decorate([
     type_graphql_1.ObjectType()
 ], SafeUser);
 let UserResolver = class UserResolver {
-    addUser(email, password, context) {
+    addUser(firstname, lastname, email, password, context) {
         return __awaiter(this, void 0, void 0, function* () {
             const repository = typeorm_1.getConnection().getRepository(User_1.User);
             const alreadyExists = yield repository.findOne({ email });
@@ -51,6 +51,8 @@ let UserResolver = class UserResolver {
             }
             const hashedPassword = yield bcryptjs_1.default.hash(password, 10);
             const userValues = repository.create({
+                firstname,
+                lastname,
                 email,
                 password: hashedPassword,
                 sleepData: []
@@ -91,11 +93,13 @@ let UserResolver = class UserResolver {
 };
 __decorate([
     type_graphql_1.Mutation(() => String),
-    __param(0, type_graphql_1.Arg('email')),
-    __param(1, type_graphql_1.Arg('password')),
-    __param(2, type_graphql_1.Ctx()),
+    __param(0, type_graphql_1.Arg('firstname')),
+    __param(1, type_graphql_1.Arg('lastname')),
+    __param(2, type_graphql_1.Arg('email')),
+    __param(3, type_graphql_1.Arg('password')),
+    __param(4, type_graphql_1.Ctx()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, Object]),
+    __metadata("design:paramtypes", [String, String, String, String, Object]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "addUser", null);
 __decorate([

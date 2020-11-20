@@ -23,6 +23,14 @@ __decorate([
     __metadata("design:type", Number)
 ], User.prototype, "id", void 0);
 __decorate([
+    typeorm_1.Column({ type: 'text' }),
+    __metadata("design:type", String)
+], User.prototype, "firstname", void 0);
+__decorate([
+    typeorm_1.Column({ type: 'text' }),
+    __metadata("design:type", String)
+], User.prototype, "lastname", void 0);
+__decorate([
     typeorm_1.Column({ type: 'text', unique: true }),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);

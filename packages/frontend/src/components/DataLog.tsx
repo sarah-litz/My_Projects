@@ -71,9 +71,12 @@ const UserData: React.FC = () => {
                 <b>Did you dream?</b>
               </p>
               {/* TODO: is this right?? will this actually set "didDream" */}
-              <Test value={didDream} onOptionSelect={didDream => setDidDream(didDream)}>
-              {/* <Test onOptionSelect={(event) => setDidDream(event.target.value)}> */}
-              {/* <Test value={didDream} onOptionSelect={(event) => setDidDream(event.target.value)}> */}
+              <Test
+                value={didDream}
+                onOptionSelect={(didDream) => setDidDream(didDream)}
+              >
+                {/* <Test onOptionSelect={(event) => setDidDream(event.target.value)}> */}
+                {/* <Test value={didDream} onOptionSelect={(event) => setDidDream(event.target.value)}> */}
                 <QuestionGroup>
                   <Option value="0">No Dreams</Option>
                   <Option value="1">Yes</Option>
