@@ -3,7 +3,7 @@ import './../App.css';
 import { Container, Form, FormGroup } from 'react-bootstrap';
 import { Layout } from '../components/Layout';
 
-const UserDataSettings: React.FC = () => {
+export const UserDataSettings: React.FC = () => {
   const [trackCaffeine, setTrackCaffeine] = useState('');
   const [trackBedtime, setTrackBedtime] = useState('');
   const [trackDreams, setTrackDreams] = useState('');

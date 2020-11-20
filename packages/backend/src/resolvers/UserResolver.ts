@@ -50,6 +50,7 @@ export class UserResolver {
       lastname,
       email,
       password: hashedPassword, // encrypted
+      preferences: [],
       sleepData: []
     });
 

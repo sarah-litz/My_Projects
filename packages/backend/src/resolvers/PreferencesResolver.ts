@@ -6,16 +6,13 @@ import {
   Resolver,
   InputType,
   Field,
-  Authorized,
-  FieldResolver,
-  Root
+  Authorized
 } from 'type-graphql';
 import { getConnection } from 'typeorm';
 import Preferences from '../models/Preferences';
 import { User } from '../models/User';
 import { ContextType } from '../type';
 import { AuthenticationError } from 'apollo-server-express';
-import moment from 'moment';
 
 // Used to create in sleep data (notice this does not the id and user since we handle creating that)
 @InputType()

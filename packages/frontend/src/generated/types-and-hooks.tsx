@@ -19,6 +19,7 @@ export type Scalars = {
 export type Query = {
   __typename?: 'Query';
   me: SafeUser;
+  preferences: Array<Preferences>;
   sleepData: Array<SleepDatum>;
   token: Scalars['String'];
 };
@@ -26,6 +27,15 @@ export type Query = {
 export type SafeUser = {
   __typename?: 'SafeUser';
   email: Scalars['String'];
+};
+
+export type Preferences = {
+  __typename?: 'Preferences';
+  id: Scalars['ID'];
+  trackCaffeine?: Maybe<Scalars['Boolean']>;
+  trackAnxiety?: Maybe<Scalars['Boolean']>;
+  trackDreams?: Maybe<Scalars['Boolean']>;
+  trackMelatonin?: Maybe<Scalars['Boolean']>;
 };
 
 export type SleepDatum = {
@@ -44,6 +54,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addUser: Scalars['String'];
   loginUser: Scalars['String'];
+  createPreferences?: Maybe<Preferences>;
   createSleepData?: Maybe<SleepDatum>;
 };
 
@@ -59,8 +70,19 @@ export type MutationLoginUserArgs = {
   email: Scalars['String'];
 };
 
+export type MutationCreatePreferencesArgs = {
+  options: PreferencesCreateInput;
+};
+
 export type MutationCreateSleepDataArgs = {
   options: SleepDatumCreateInput;
+};
+
+export type PreferencesCreateInput = {
+  trackCaffeine?: Maybe<Scalars['Boolean']>;
+  trackAnxiety?: Maybe<Scalars['Boolean']>;
+  trackDreams?: Maybe<Scalars['Boolean']>;
+  trackMelatonin?: Maybe<Scalars['Boolean']>;
 };
 
 export type SleepDatumCreateInput = {
@@ -133,6 +155,30 @@ export type CreateSleepDataMutation = { __typename?: 'Mutation' } & {
   >;
 };
 
+export type PreferenceFieldsFragment = { __typename?: 'Preferences' } & Pick<
+  Preferences,
+  'id' | 'trackCaffeine' | 'trackAnxiety' | 'trackDreams' | 'trackMelatonin'
+>;
+
+export type GetPreferencesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetPreferencesQuery = { __typename?: 'Query' } & {
+  preferences: Array<{ __typename?: 'Preferences' } & PreferenceFieldsFragment>;
+};
+
+export type CreatePreferencesMutationVariables = Exact<{
+  trackCaffeine?: Maybe<Scalars['Boolean']>;
+  trackAnxiety?: Maybe<Scalars['Boolean']>;
+  trackDreams?: Maybe<Scalars['Boolean']>;
+  trackMelatonin?: Maybe<Scalars['Boolean']>;
+}>;
+
+export type CreatePreferencesMutation = { __typename?: 'Mutation' } & {
+  createPreferences?: Maybe<
+    { __typename?: 'Preferences' } & PreferenceFieldsFragment
+  >;
+};
+
 export const SleepDataFieldsFragmentDoc = gql`
   fragment SleepDataFields on SleepDatum {
     id
@@ -143,6 +189,15 @@ export const SleepDataFieldsFragmentDoc = gql`
     melatonin
     sleepQuality
     date
+  }
+`;
+export const PreferenceFieldsFragmentDoc = gql`
+  fragment PreferenceFields on Preferences {
+    id
+    trackCaffeine
+    trackAnxiety
+    trackDreams
+    trackMelatonin
   }
 `;
 export const LoginTokenDocument = gql`
@@ -432,4 +487,126 @@ export type CreateSleepDataMutationResult = ApolloReactCommon.MutationResult<
 export type CreateSleepDataMutationOptions = ApolloReactCommon.BaseMutationOptions<
   CreateSleepDataMutation,
   CreateSleepDataMutationVariables
+>;
+export const GetPreferencesDocument = gql`
+  query getPreferences {
+    preferences {
+      ...PreferenceFields
+    }
+  }
+  ${PreferenceFieldsFragmentDoc}
+`;
+
+/**
+ * __useGetPreferencesQuery__
+ *
+ * To run a query within a React component, call `useGetPreferencesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPreferencesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPreferencesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPreferencesQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    GetPreferencesQuery,
+    GetPreferencesQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<
+    GetPreferencesQuery,
+    GetPreferencesQueryVariables
+  >(GetPreferencesDocument, baseOptions);
+}
+export function useGetPreferencesLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    GetPreferencesQuery,
+    GetPreferencesQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    GetPreferencesQuery,
+    GetPreferencesQueryVariables
+  >(GetPreferencesDocument, baseOptions);
+}
+export type GetPreferencesQueryHookResult = ReturnType<
+  typeof useGetPreferencesQuery
+>;
+export type GetPreferencesLazyQueryHookResult = ReturnType<
+  typeof useGetPreferencesLazyQuery
+>;
+export type GetPreferencesQueryResult = ApolloReactCommon.QueryResult<
+  GetPreferencesQuery,
+  GetPreferencesQueryVariables
+>;
+export const CreatePreferencesDocument = gql`
+  mutation createPreferences(
+    $trackCaffeine: Boolean
+    $trackAnxiety: Boolean
+    $trackDreams: Boolean
+    $trackMelatonin: Boolean
+  ) {
+    createPreferences(
+      options: {
+        trackCaffeine: $trackCaffeine
+        trackAnxiety: $trackAnxiety
+        trackDreams: $trackDreams
+        trackMelatonin: $trackMelatonin
+      }
+    ) {
+      ...PreferenceFields
+    }
+  }
+  ${PreferenceFieldsFragmentDoc}
+`;
+export type CreatePreferencesMutationFn = ApolloReactCommon.MutationFunction<
+  CreatePreferencesMutation,
+  CreatePreferencesMutationVariables
+>;
+
+/**
+ * __useCreatePreferencesMutation__
+ *
+ * To run a mutation, you first call `useCreatePreferencesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePreferencesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPreferencesMutation, { data, loading, error }] = useCreatePreferencesMutation({
+ *   variables: {
+ *      trackCaffeine: // value for 'trackCaffeine'
+ *      trackAnxiety: // value for 'trackAnxiety'
+ *      trackDreams: // value for 'trackDreams'
+ *      trackMelatonin: // value for 'trackMelatonin'
+ *   },
+ * });
+ */
+export function useCreatePreferencesMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreatePreferencesMutation,
+    CreatePreferencesMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    CreatePreferencesMutation,
+    CreatePreferencesMutationVariables
+  >(CreatePreferencesDocument, baseOptions);
+}
+export type CreatePreferencesMutationHookResult = ReturnType<
+  typeof useCreatePreferencesMutation
+>;
+export type CreatePreferencesMutationResult = ApolloReactCommon.MutationResult<
+  CreatePreferencesMutation
+>;
+export type CreatePreferencesMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreatePreferencesMutation,
+  CreatePreferencesMutationVariables
 >;
