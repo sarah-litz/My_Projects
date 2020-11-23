@@ -7,6 +7,7 @@ import { client } from './store/apollo';
 import { UserDataSettings } from './pages/user_data_settings';
 import Register from './components/Register';
 import Visualize from './pages/datavis';
+import AccountSettings from './pages/AccountSettings'
 
 function App() {
   return (
@@ -26,6 +27,10 @@ function App() {
 
             <Route exact path="/register">
               <Register />
+            </Route>
+
+            <Route exact path="/AccountSettings">
+              <AccountSettings />
             </Route>
 
             <Route exact path="/visual">

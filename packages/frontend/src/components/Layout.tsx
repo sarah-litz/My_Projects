@@ -22,6 +22,10 @@ export const Layout: React.FC = ({ children }) => {
             <Nav.Link>Home</Nav.Link>
           </LinkContainer>
 
+          <LinkContainer to="/AccountSettings">
+                <Nav.Link href="/AccountSettings">Settings</Nav.Link>
+          </LinkContainer>
+
           {!loggedIn && (
             <>
               <LinkContainer to="/login">
@@ -31,6 +35,9 @@ export const Layout: React.FC = ({ children }) => {
               <LinkContainer to="/register">
                 <Nav.Link href="/register">Register</Nav.Link>
               </LinkContainer>
+
+              
+
             </>
           )}
         </Nav>
