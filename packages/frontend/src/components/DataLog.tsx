@@ -9,21 +9,36 @@ import 'bootstrap-slider/dist/css/bootstrap-slider.css';
 import { Test, QuestionGroup, Option } from 'react-multiple-choice';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useCreateSleepDataMutation } from '../generated/types-and-hooks';
 
 const UserData: React.FC = () => {
   // const { data } = useGetSleepDataQuery();
 
   const [sleepHours, setSleep] = useState('');
   const [sleepQuality, setSleepQuality] = useState('');
-  const [didDream, setDidDream] = useState('');
+  const [didDream, setDidDream] = useState<'0' | '1'>('0');
   const [caffeine, setCaffeine] = useState('');
   const [anxiety, setAnxiety] = useState('');
   const [melatonin, setMelatonin] = useState('');
   const [date, setLogDate] = useState('');
 
+  const [createData] = useCreateSleepDataMutation();
+
   const collectData = async (event: FormEvent<HTMLFormElement>) => {
     // alert('Your data was recorded.');
     event.preventDefault(); //not sure what this does-- cpy paste from Login.tsx
+
+    createData({
+      variables: {
+        totalHours: parseFloat(sleepHours),
+        sleepQuality: parseFloat(sleepQuality),
+        didDream: didDream === '1',
+        caffeine: parseFloat(caffeine),
+        anxiety: parseFloat(anxiety),
+        melatonin: parseFloat(melatonin),
+        date
+      }
+    });
   };
 
   //follow login in Login.tsx
@@ -72,14 +87,8 @@ const UserData: React.FC = () => {
               <p>
                 <b>Did you dream?</b>
               </p>
-              {/* TODO: is this right?? will this actually set "didDream" */}
-              <Test
-                value={didDream}
-                onOptionSelect={(didDream) => setDidDream(didDream)}
-              >
-                {/* <Test onOptionSelect={(event) => setDidDream(event.target.value)}> */}
-                {/* <Test value={didDream} onOptionSelect={(event) => setDidDream(event.target.value)}> */}
-                <QuestionGroup>
+              <Test onOptionSelect={({ didDream }) => setDidDream(didDream)}>
+                <QuestionGroup questionNumber="didDream">
                   <Option value="0">No Dreams</Option>
                   <Option value="1">Yes</Option>
                 </QuestionGroup>

@@ -6,6 +6,7 @@ import { Layout } from './Layout';
 import { useHistory } from 'react-router-dom';
 import { useRegisterMutation } from '../generated/types-and-hooks';
 import { token } from '../store/cache';
+import { login } from '../helper/login';
 
 const Register: React.FC = () => {
   const [register, { error: backendError }] = useRegisterMutation({
@@ -71,8 +72,8 @@ const Register: React.FC = () => {
         variables: { firstname, lastname, email, password }
       });
       if (data?.addUser) {
-        // TODO: auth token
         token(data.addUser);
+        login();
         history.push('/');
       } else {
         token(undefined);

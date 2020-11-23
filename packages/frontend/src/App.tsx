@@ -10,6 +10,8 @@ import { UserDataSettings } from './pages/UserDataSettings';
 import Register from './components/Register';
 import Visualize from './pages/DataVis';
 import { LoggedInHome } from './pages/HomeLoggedIn';
+import { Logout } from './components/Logout';
+import { PrivateRoute } from './components/PrivateRoute';
 
 function App() {
   return (
@@ -28,26 +30,30 @@ function App() {
               <LoggedInHome />
             </Route>
 
-            <Route exact path="/preferences">
-              {/* <Preferences /> */}
-              <UserDataSettings />
-            </Route>
-
             <Route exact path="/login">
               <Login />
-            </Route>
-
-            <Route exact path="/logdata">
-              <DataLog />
             </Route>
 
             <Route exact path="/register">
               <Register />
             </Route>
 
-            <Route exact path="/visual">
+            <PrivateRoute exact path="/logdata">
+              <DataLog />
+            </PrivateRoute>
+
+            <PrivateRoute exact path="/preferences">
+              {/* <Preferences /> */}
+              <UserDataSettings />
+            </PrivateRoute>
+
+            <PrivateRoute exact path="/visual">
               <Visualize />
-            </Route>
+            </PrivateRoute>
+
+            <PrivateRoute exact path="/logout">
+              <Logout />
+            </PrivateRoute>
 
             {/* Default route when is not found above (404 page) */}
             <Route>
