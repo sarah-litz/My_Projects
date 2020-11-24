@@ -291,9 +291,7 @@ export function useLoginMutation(
   );
 }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
-export type LoginMutationResult = ApolloReactCommon.MutationResult<
-  LoginMutation
->;
+export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
 export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LoginMutation,
   LoginMutationVariables
@@ -350,9 +348,7 @@ export function useRegisterMutation(
   >(RegisterDocument, baseOptions);
 }
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
-export type RegisterMutationResult = ApolloReactCommon.MutationResult<
-  RegisterMutation
->;
+export type RegisterMutationResult = ApolloReactCommon.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RegisterMutation,
   RegisterMutationVariables
@@ -481,9 +477,7 @@ export function useCreateSleepDataMutation(
 export type CreateSleepDataMutationHookResult = ReturnType<
   typeof useCreateSleepDataMutation
 >;
-export type CreateSleepDataMutationResult = ApolloReactCommon.MutationResult<
-  CreateSleepDataMutation
->;
+export type CreateSleepDataMutationResult = ApolloReactCommon.MutationResult<CreateSleepDataMutation>;
 export type CreateSleepDataMutationOptions = ApolloReactCommon.BaseMutationOptions<
   CreateSleepDataMutation,
   CreateSleepDataMutationVariables
@@ -603,9 +597,7 @@ export function useCreatePreferencesMutation(
 export type CreatePreferencesMutationHookResult = ReturnType<
   typeof useCreatePreferencesMutation
 >;
-export type CreatePreferencesMutationResult = ApolloReactCommon.MutationResult<
-  CreatePreferencesMutation
->;
+export type CreatePreferencesMutationResult = ApolloReactCommon.MutationResult<CreatePreferencesMutation>;
 export type CreatePreferencesMutationOptions = ApolloReactCommon.BaseMutationOptions<
   CreatePreferencesMutation,
   CreatePreferencesMutationVariables
