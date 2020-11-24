@@ -6,6 +6,23 @@ query loginToken {
 
 # User
 
+mutation changeEmail(
+  $email: String! 
+  $newEmail: String! 
+) { 
+  changeEmail(email: $email, newEmail: $newEmail)
+}
+
+mutation changePassword(
+  $password: String! 
+) { 
+  changePassword(password: $password)
+}
+
+mutation deleteAccount { 
+  deleteAccount
+}
+
 mutation login(
   $email: String!
   $password: String! # ,$rememberMe: Boolean
@@ -66,6 +83,13 @@ mutation createSleepData(
     }
   ) {
     ...SleepDataFields
+  }
+}
+
+
+query meEmail {
+  me {
+    email
   }
 }
 

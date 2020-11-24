@@ -21,6 +21,8 @@ import bcrypt from 'bcryptjs';
   // Create seed data.
   let user = new User();
   user.email = 'john@doe.com';
+  user.firstname = 'john';
+  user.lastname = 'doe';
   user.password = await bcrypt.hash('johndoe', 8);
 
   const userRepository = connection.getRepository(User);
