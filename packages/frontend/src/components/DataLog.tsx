@@ -106,13 +106,13 @@ const UserData: React.FC = () => {
               ></ReactBootstrapSlider>
             </div>
             <br></br>
+
             <div className="form-group text-center">
               <p>
                 <b>How much stress did you experience?</b>
               </p>
               <p>
-                0 = too blessed to be stressed. 10 = currently being chased by a
-                bear.
+                0 = too blessed to be stressed. 10 = currently being chased by a bear.
               </p>
               <ReactBootstrapSlider
                 min="0"
@@ -121,18 +121,20 @@ const UserData: React.FC = () => {
                 slideStop={(event) => setAnxiety(event.target.value)}
               ></ReactBootstrapSlider>
             </div>
+            <br></br>
             <div className="form-group text-center">
               <p>
                 <b>How much melatonin did you take?</b>
               </p>
               <p>Units are milligrams.</p>
               <ReactBootstrapSlider
-                min="0.1"
+                min="0"
                 max="12.0"
                 value={melatonin}
                 slideStop={(event) => setMelatonin(event.target.value)}
               ></ReactBootstrapSlider>
             </div>
+
             <div
               style={{
                 display: 'flex',
