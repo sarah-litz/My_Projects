@@ -2,7 +2,9 @@ import { gql } from '@apollo/client';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -45,7 +47,6 @@ export type Mutation = {
   createSleepData?: Maybe<SleepDatum>;
 };
 
-
 export type MutationAddUserArgs = {
   password: Scalars['String'];
   email: Scalars['String'];
@@ -53,12 +54,10 @@ export type MutationAddUserArgs = {
   firstname: Scalars['String'];
 };
 
-
 export type MutationLoginUserArgs = {
   password: Scalars['String'];
   email: Scalars['String'];
 };
-
 
 export type MutationCreateSleepDataArgs = {
   options: SleepDatumCreateInput;
@@ -74,25 +73,19 @@ export type SleepDatumCreateInput = {
   date: Scalars['DateTime'];
 };
 
+export type LoginTokenQueryVariables = Exact<{ [key: string]: never }>;
 
-export type LoginTokenQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type LoginTokenQuery = (
-  { __typename?: 'Query' }
-  & Pick<Query, 'token'>
-);
+export type LoginTokenQuery = { __typename?: 'Query' } & Pick<Query, 'token'>;
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
 
-
-export type LoginMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'loginUser'>
-);
+export type LoginMutation = { __typename?: 'Mutation' } & Pick<
+  Mutation,
+  'loginUser'
+>;
 
 export type RegisterMutationVariables = Exact<{
   firstname: Scalars['String'];
@@ -101,27 +94,28 @@ export type RegisterMutationVariables = Exact<{
   password: Scalars['String'];
 }>;
 
+export type RegisterMutation = { __typename?: 'Mutation' } & Pick<
+  Mutation,
+  'addUser'
+>;
 
-export type RegisterMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'addUser'>
-);
+export type SleepDataFieldsFragment = { __typename?: 'SleepDatum' } & Pick<
+  SleepDatum,
+  | 'id'
+  | 'totalHours'
+  | 'didDream'
+  | 'anxiety'
+  | 'caffeine'
+  | 'melatonin'
+  | 'sleepQuality'
+  | 'date'
+>;
 
-export type SleepDataFieldsFragment = (
-  { __typename?: 'SleepDatum' }
-  & Pick<SleepDatum, 'id' | 'totalHours' | 'didDream' | 'anxiety' | 'caffeine' | 'melatonin' | 'sleepQuality' | 'date'>
-);
+export type GetSleepDataQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetSleepDataQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetSleepDataQuery = (
-  { __typename?: 'Query' }
-  & { sleepData: Array<(
-    { __typename?: 'SleepDatum' }
-    & SleepDataFieldsFragment
-  )> }
-);
+export type GetSleepDataQuery = { __typename?: 'Query' } & {
+  sleepData: Array<{ __typename?: 'SleepDatum' } & SleepDataFieldsFragment>;
+};
 
 export type CreateSleepDataMutationVariables = Exact<{
   totalHours?: Maybe<Scalars['Float']>;
@@ -133,32 +127,29 @@ export type CreateSleepDataMutationVariables = Exact<{
   date: Scalars['DateTime'];
 }>;
 
-
-export type CreateSleepDataMutation = (
-  { __typename?: 'Mutation' }
-  & { createSleepData?: Maybe<(
-    { __typename?: 'SleepDatum' }
-    & SleepDataFieldsFragment
-  )> }
-);
+export type CreateSleepDataMutation = { __typename?: 'Mutation' } & {
+  createSleepData?: Maybe<
+    { __typename?: 'SleepDatum' } & SleepDataFieldsFragment
+  >;
+};
 
 export const SleepDataFieldsFragmentDoc = gql`
-    fragment SleepDataFields on SleepDatum {
-  id
-  totalHours
-  didDream
-  anxiety
-  caffeine
-  melatonin
-  sleepQuality
-  date
-}
-    `;
+  fragment SleepDataFields on SleepDatum {
+    id
+    totalHours
+    didDream
+    anxiety
+    caffeine
+    melatonin
+    sleepQuality
+    date
+  }
+`;
 export const LoginTokenDocument = gql`
-    query loginToken {
-  token @client
-}
-    `;
+  query loginToken {
+    token @client
+  }
+`;
 
 /**
  * __useLoginTokenQuery__
@@ -175,21 +166,45 @@ export const LoginTokenDocument = gql`
  *   },
  * });
  */
-export function useLoginTokenQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LoginTokenQuery, LoginTokenQueryVariables>) {
-        return ApolloReactHooks.useQuery<LoginTokenQuery, LoginTokenQueryVariables>(LoginTokenDocument, baseOptions);
-      }
-export function useLoginTokenLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LoginTokenQuery, LoginTokenQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<LoginTokenQuery, LoginTokenQueryVariables>(LoginTokenDocument, baseOptions);
-        }
-export type LoginTokenQueryHookResult = ReturnType<typeof useLoginTokenQuery>;
-export type LoginTokenLazyQueryHookResult = ReturnType<typeof useLoginTokenLazyQuery>;
-export type LoginTokenQueryResult = ApolloReactCommon.QueryResult<LoginTokenQuery, LoginTokenQueryVariables>;
-export const LoginDocument = gql`
-    mutation login($email: String!, $password: String!) {
-  loginUser(email: $email, password: $password)
+export function useLoginTokenQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    LoginTokenQuery,
+    LoginTokenQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<LoginTokenQuery, LoginTokenQueryVariables>(
+    LoginTokenDocument,
+    baseOptions
+  );
 }
-    `;
-export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, LoginMutationVariables>;
+export function useLoginTokenLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    LoginTokenQuery,
+    LoginTokenQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    LoginTokenQuery,
+    LoginTokenQueryVariables
+  >(LoginTokenDocument, baseOptions);
+}
+export type LoginTokenQueryHookResult = ReturnType<typeof useLoginTokenQuery>;
+export type LoginTokenLazyQueryHookResult = ReturnType<
+  typeof useLoginTokenLazyQuery
+>;
+export type LoginTokenQueryResult = ApolloReactCommon.QueryResult<
+  LoginTokenQuery,
+  LoginTokenQueryVariables
+>;
+export const LoginDocument = gql`
+  mutation login($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password)
+  }
+`;
+export type LoginMutationFn = ApolloReactCommon.MutationFunction<
+  LoginMutation,
+  LoginMutationVariables
+>;
 
 /**
  * __useLoginMutation__
@@ -209,23 +224,42 @@ export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, 
  *   },
  * });
  */
-export function useLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
-        return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, baseOptions);
-      }
+export function useLoginMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    LoginMutation,
+    LoginMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(
+    LoginDocument,
+    baseOptions
+  );
+}
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
-export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  LoginMutation,
+  LoginMutationVariables
+>;
 export const RegisterDocument = gql`
-    mutation register($firstname: String!, $lastname: String!, $email: String!, $password: String!) {
-  addUser(
-    firstname: $firstname
-    lastname: $lastname
-    email: $email
-    password: $password
-  )
-}
-    `;
-export type RegisterMutationFn = ApolloReactCommon.MutationFunction<RegisterMutation, RegisterMutationVariables>;
+  mutation register(
+    $firstname: String!
+    $lastname: String!
+    $email: String!
+    $password: String!
+  ) {
+    addUser(
+      firstname: $firstname
+      lastname: $lastname
+      email: $email
+      password: $password
+    )
+  }
+`;
+export type RegisterMutationFn = ApolloReactCommon.MutationFunction<
+  RegisterMutation,
+  RegisterMutationVariables
+>;
 
 /**
  * __useRegisterMutation__
@@ -247,19 +281,31 @@ export type RegisterMutationFn = ApolloReactCommon.MutationFunction<RegisterMuta
  *   },
  * });
  */
-export function useRegisterMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
-        return ApolloReactHooks.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, baseOptions);
-      }
+export function useRegisterMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    RegisterMutation,
+    RegisterMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    RegisterMutation,
+    RegisterMutationVariables
+  >(RegisterDocument, baseOptions);
+}
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = ApolloReactCommon.MutationResult<RegisterMutation>;
-export type RegisterMutationOptions = ApolloReactCommon.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export type RegisterMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  RegisterMutation,
+  RegisterMutationVariables
+>;
 export const GetSleepDataDocument = gql`
-    query getSleepData {
-  sleepData {
-    ...SleepDataFields
+  query getSleepData {
+    sleepData {
+      ...SleepDataFields
+    }
   }
-}
-    ${SleepDataFieldsFragmentDoc}`;
+  ${SleepDataFieldsFragmentDoc}
+`;
 
 /**
  * __useGetSleepDataQuery__
@@ -276,25 +322,68 @@ export const GetSleepDataDocument = gql`
  *   },
  * });
  */
-export function useGetSleepDataQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetSleepDataQuery, GetSleepDataQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetSleepDataQuery, GetSleepDataQueryVariables>(GetSleepDataDocument, baseOptions);
-      }
-export function useGetSleepDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetSleepDataQuery, GetSleepDataQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetSleepDataQuery, GetSleepDataQueryVariables>(GetSleepDataDocument, baseOptions);
-        }
-export type GetSleepDataQueryHookResult = ReturnType<typeof useGetSleepDataQuery>;
-export type GetSleepDataLazyQueryHookResult = ReturnType<typeof useGetSleepDataLazyQuery>;
-export type GetSleepDataQueryResult = ApolloReactCommon.QueryResult<GetSleepDataQuery, GetSleepDataQueryVariables>;
-export const CreateSleepDataDocument = gql`
-    mutation createSleepData($totalHours: Float, $didDream: Boolean, $anxiety: Float, $sleepQuality: Float, $caffeine: Float, $melatonin: Float, $date: DateTime!) {
-  createSleepData(
-    options: {totalHours: $totalHours, didDream: $didDream, anxiety: $anxiety, sleepQuality: $sleepQuality, caffeine: $caffeine, melatonin: $melatonin, date: $date}
-  ) {
-    ...SleepDataFields
-  }
+export function useGetSleepDataQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    GetSleepDataQuery,
+    GetSleepDataQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<
+    GetSleepDataQuery,
+    GetSleepDataQueryVariables
+  >(GetSleepDataDocument, baseOptions);
 }
-    ${SleepDataFieldsFragmentDoc}`;
-export type CreateSleepDataMutationFn = ApolloReactCommon.MutationFunction<CreateSleepDataMutation, CreateSleepDataMutationVariables>;
+export function useGetSleepDataLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    GetSleepDataQuery,
+    GetSleepDataQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    GetSleepDataQuery,
+    GetSleepDataQueryVariables
+  >(GetSleepDataDocument, baseOptions);
+}
+export type GetSleepDataQueryHookResult = ReturnType<
+  typeof useGetSleepDataQuery
+>;
+export type GetSleepDataLazyQueryHookResult = ReturnType<
+  typeof useGetSleepDataLazyQuery
+>;
+export type GetSleepDataQueryResult = ApolloReactCommon.QueryResult<
+  GetSleepDataQuery,
+  GetSleepDataQueryVariables
+>;
+export const CreateSleepDataDocument = gql`
+  mutation createSleepData(
+    $totalHours: Float
+    $didDream: Boolean
+    $anxiety: Float
+    $sleepQuality: Float
+    $caffeine: Float
+    $melatonin: Float
+    $date: DateTime!
+  ) {
+    createSleepData(
+      options: {
+        totalHours: $totalHours
+        didDream: $didDream
+        anxiety: $anxiety
+        sleepQuality: $sleepQuality
+        caffeine: $caffeine
+        melatonin: $melatonin
+        date: $date
+      }
+    ) {
+      ...SleepDataFields
+    }
+  }
+  ${SleepDataFieldsFragmentDoc}
+`;
+export type CreateSleepDataMutationFn = ApolloReactCommon.MutationFunction<
+  CreateSleepDataMutation,
+  CreateSleepDataMutationVariables
+>;
 
 /**
  * __useCreateSleepDataMutation__
@@ -319,9 +408,22 @@ export type CreateSleepDataMutationFn = ApolloReactCommon.MutationFunction<Creat
  *   },
  * });
  */
-export function useCreateSleepDataMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateSleepDataMutation, CreateSleepDataMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreateSleepDataMutation, CreateSleepDataMutationVariables>(CreateSleepDataDocument, baseOptions);
-      }
-export type CreateSleepDataMutationHookResult = ReturnType<typeof useCreateSleepDataMutation>;
+export function useCreateSleepDataMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreateSleepDataMutation,
+    CreateSleepDataMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    CreateSleepDataMutation,
+    CreateSleepDataMutationVariables
+  >(CreateSleepDataDocument, baseOptions);
+}
+export type CreateSleepDataMutationHookResult = ReturnType<
+  typeof useCreateSleepDataMutation
+>;
 export type CreateSleepDataMutationResult = ApolloReactCommon.MutationResult<CreateSleepDataMutation>;
-export type CreateSleepDataMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateSleepDataMutation, CreateSleepDataMutationVariables>;
+export type CreateSleepDataMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  CreateSleepDataMutation,
+  CreateSleepDataMutationVariables
+>;

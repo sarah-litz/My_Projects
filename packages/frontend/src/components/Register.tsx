@@ -1,5 +1,4 @@
 import React, { FormEvent, useState } from 'react';
-import './../App.css';
 import './../components/Login.css';
 import { Alert, Form } from 'react-bootstrap';
 import { Layout } from './Layout';

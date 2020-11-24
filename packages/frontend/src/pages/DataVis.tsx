@@ -1,8 +1,7 @@
 import React from 'react';
-import './../App.css';
 import '../components/Login.css';
 import './DataVis.css';
-import { Button, Container, Jumbotron } from 'react-bootstrap';
+import { Button, Col, Container, Jumbotron, Row } from 'react-bootstrap';
 import { Layout } from '../components/Layout';
 import { useGetSleepDataQuery } from '../generated/types-and-hooks';
 import {
@@ -13,7 +12,7 @@ import {
   VictoryLabel
 } from 'victory';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 
 const Visualization: React.FC = () => {
   const { data } = useGetSleepDataQuery();
@@ -89,250 +88,252 @@ const Visualization: React.FC = () => {
 
   return (
     <Layout>
+      <h1>Sleep Data:</h1>
+
       <Container>
-        <h1 className="headercent">Sleep Data:</h1>
+        <Row>
+          <Col>
+            <VictoryChart>
+              <VictoryLabel
+                text="Hours Slept"
+                x={225}
+                y={30}
+                textAnchor="middle"
+              />
+              <VictoryLine
+                interpolation="natural" // can make the plot smooth
+                labels={({ datum }) => datum.y} //label points
+                data={result}
+                style={{
+                  data: {
+                    stroke: '#02B875', // this can change line color
+                    strokeWidth: 5 // width of line
+                  }
+                }}
+              />
+            </VictoryChart>
+          </Col>
+          <Col>
+            <VictoryChart>
+              <VictoryLabel
+                text="Sleep Quality vs Average Hours of Sleep"
+                x={225}
+                y={30}
+                textAnchor="middle"
+              />
 
-        <div className="topleft">
-          <VictoryChart domain={{ y: [0, 12] }}>
-            <VictoryLabel
-              text="Hours Slept"
-              x={225}
-              y={30}
-              textAnchor="middle"
-            />
-            <VictoryLine
-              interpolation="natural" // can make the plot smooth
-              labels={({ datum }) => datum.y} //label points
-              data={result}
-              style={{
-                data: {
-                  stroke: '#02B875', // this can change line color
-                  strokeWidth: 5 // width of line
-                }
-              }}
-            />
-          </VictoryChart>
-        </div>
+              <VictoryLegend
+                x={125}
+                y={50}
+                centerTitle
+                orientation="horizontal"
+                gutter={20}
+                style={{
+                  border: { stroke: 'black' },
+                  title: { fontSize: 10 }
+                }}
+                data={[
+                  { name: 'Good sleep quality', symbol: { fill: '#02B875' } },
+                  { name: 'Poor sleep quality', symbol: { fill: '#A5685B' } }
+                ]}
+              />
+              <VictoryLine
+                interpolation="natural" // can make the plot smooth
+                labels={({ datum }) => datum.y} //label points
+                data={sleepQuality}
+                style={{
+                  data: {
+                    stroke: '#02B875', // this can change line color
+                    strokeWidth: 1 // width of line
+                  }
+                }}
+              />
 
-        <div className="topmiddle">
-          <VictoryChart domain={{ y: [0, 12] }}>
-            <VictoryLabel
-              text="Sleep Quality vs Average Hours of Sleep"
-              x={225}
-              y={30}
-              textAnchor="middle"
-            />
+              <VictoryLine
+                interpolation="natural" // can make the plot smooth
+                labels={({ datum }) => datum.y} //label points
+                data={sleepQuality}
+                style={{
+                  data: {
+                    stroke: '#A5685B', // this can change line color
+                    strokeWidth: 1 // width of line
+                  }
+                }}
+              />
+            </VictoryChart>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <VictoryChart>
+              <VictoryLabel
+                text="Cups of Coffee vs Hours of Sleep"
+                x={225}
+                y={30}
+                textAnchor="middle"
+              />
+              <VictoryScatter
+                data={caffeineSleep}
+                style={{
+                  data: {
+                    stroke: '#02B875', // this can change line color
+                    strokeWidth: 5 // width of line
+                  }
+                }}
+              />
+            </VictoryChart>
+          </Col>
+          <Col>
+            <VictoryChart>
+              <VictoryLabel
+                text="Dreaming vs Average Hours of Sleep"
+                x={225}
+                y={30}
+                textAnchor="middle"
+              />
 
-            <VictoryLegend
-              x={125}
-              y={50}
-              centerTitle
-              orientation="horizontal"
-              gutter={20}
-              style={{
-                border: { stroke: 'black' },
-                title: { fontSize: 10 }
-              }}
-              data={[
-                { name: 'Good sleep quality', symbol: { fill: '#02B875' } },
-                { name: 'Poor sleep quality', symbol: { fill: '#A5685B' } }
-              ]}
-            />
-            <VictoryLine
-              interpolation="natural" // can make the plot smooth
-              labels={({ datum }) => datum.y} //label points
-              data={sleepQuality}
-              style={{
-                data: {
-                  stroke: '#02B875', // this can change line color
-                  strokeWidth: 1 // width of line
-                }
-              }}
-            />
+              <VictoryLegend
+                x={125}
+                y={50}
+                centerTitle
+                orientation="horizontal"
+                gutter={20}
+                style={{
+                  border: { stroke: 'black' },
+                  title: { fontSize: 10 }
+                }}
+                data={[
+                  { name: 'Dream', symbol: { fill: '#02B875' } },
+                  { name: 'No Dream', symbol: { fill: '#A5685B' } }
+                ]}
+              />
+              <VictoryLine
+                interpolation="natural" // can make the plot smooth
+                labels={({ datum }) => datum.y} //label points
+                data={dreamSleep}
+                style={{
+                  data: {
+                    stroke: '#02B875', // this can change line color
+                    strokeWidth: 1 // width of line
+                  }
+                }}
+              />
 
-            <VictoryLine
-              interpolation="natural" // can make the plot smooth
-              labels={({ datum }) => datum.y} //label points
-              data={sleepQuality}
-              style={{
-                data: {
-                  stroke: '#A5685B', // this can change line color
-                  strokeWidth: 1 // width of line
-                }
-              }}
-            />
-          </VictoryChart>
-        </div>
+              <VictoryLine
+                interpolation="natural" // can make the plot smooth
+                labels={({ datum }) => datum.y} //label points
+                data={noDreamSleep}
+                style={{
+                  data: {
+                    stroke: '#A5685B', // this can change line color
+                    strokeWidth: 1 // width of line
+                  }
+                }}
+              />
+            </VictoryChart>
+          </Col>
+        </Row>
 
-        <div className="topright">
-          <VictoryChart domain={{ y: [0, 12] }}>
-            <VictoryLabel
-              text="Cups of Coffee vs Hours of Sleep"
-              x={225}
-              y={30}
-              textAnchor="middle"
-            />
-            <VictoryScatter
-              data={caffeineSleep}
-              style={{
-                data: {
-                  stroke: '#02B875', // this can change line color
-                  strokeWidth: 5 // width of line
-                }
-              }}
-            />
-          </VictoryChart>
-        </div>
+        <Row>
+          <Col>
+            <VictoryChart>
+              <VictoryLabel
+                text="Anxiety vs Average Hours of Sleep"
+                x={225}
+                y={30}
+                textAnchor="middle"
+              />
 
-        <div className="bottomleft">
-          <VictoryChart domain={{ y: [0, 12] }}>
-            <VictoryLabel
-              text="Dreaming vs Average Hours of Sleep"
-              x={225}
-              y={30}
-              textAnchor="middle"
-            />
+              <VictoryLegend
+                x={125}
+                y={50}
+                centerTitle
+                orientation="horizontal"
+                gutter={20}
+                style={{
+                  border: { stroke: 'black' },
+                  title: { fontSize: 10 }
+                }}
+                data={[
+                  { name: 'Low anxiety', symbol: { fill: '#02B875' } },
+                  { name: 'High anxiety', symbol: { fill: '#A5685B' } }
+                ]}
+              />
+              <VictoryLine
+                interpolation="natural" // can make the plot smooth
+                labels={({ datum }) => datum.y} //label points
+                data={anxiety}
+                style={{
+                  data: {
+                    stroke: '#02B875', // this can change line color
+                    strokeWidth: 1 // width of line
+                  }
+                }}
+              />
 
-            <VictoryLegend
-              x={125}
-              y={50}
-              centerTitle
-              orientation="horizontal"
-              gutter={20}
-              style={{
-                border: { stroke: 'black' },
-                title: { fontSize: 10 }
-              }}
-              data={[
-                { name: 'Dream', symbol: { fill: '#02B875' } },
-                { name: 'No Dream', symbol: { fill: '#A5685B' } }
-              ]}
-            />
-            <VictoryLine
-              interpolation="natural" // can make the plot smooth
-              labels={({ datum }) => datum.y} //label points
-              data={dreamSleep}
-              style={{
-                data: {
-                  stroke: '#02B875', // this can change line color
-                  strokeWidth: 1 // width of line
-                }
-              }}
-            />
+              <VictoryLine
+                interpolation="natural" // can make the plot smooth
+                labels={({ datum }) => datum.y} //label points
+                data={anxiety}
+                style={{
+                  data: {
+                    stroke: '#A5685B', // this can change line color
+                    strokeWidth: 1 // width of line
+                  }
+                }}
+              />
+            </VictoryChart>
+          </Col>
+          <Col>
+            <VictoryChart>
+              <VictoryLabel
+                text="Melatonin vs Average Hours of Sleep"
+                x={225}
+                y={30}
+                textAnchor="middle"
+              />
 
-            <VictoryLine
-              interpolation="natural" // can make the plot smooth
-              labels={({ datum }) => datum.y} //label points
-              data={noDreamSleep}
-              style={{
-                data: {
-                  stroke: '#A5685B', // this can change line color
-                  strokeWidth: 1 // width of line
-                }
-              }}
-            />
-          </VictoryChart>
-        </div>
+              <VictoryLegend
+                x={125}
+                y={50}
+                centerTitle
+                orientation="horizontal"
+                gutter={20}
+                style={{
+                  border: { stroke: 'black' },
+                  title: { fontSize: 10 }
+                }}
+                data={[
+                  { name: 'Longer sleep', symbol: { fill: '#02B875' } },
+                  { name: 'Shorter sleep', symbol: { fill: '#A5685B' } }
+                ]}
+              />
+              <VictoryLine
+                interpolation="natural" // can make the plot smooth
+                labels={({ datum }) => datum.y} //label points
+                data={melatonin}
+                style={{
+                  data: {
+                    stroke: '#02B875', // this can change line color
+                    strokeWidth: 1 // width of line
+                  }
+                }}
+              />
 
-        <div className="bottommiddle">
-          <VictoryChart domain={{ y: [0, 12] }}>
-            <VictoryLabel
-              text="Anxiety vs Average Hours of Sleep"
-              x={225}
-              y={30}
-              textAnchor="middle"
-            />
-
-            <VictoryLegend
-              x={125}
-              y={50}
-              centerTitle
-              orientation="horizontal"
-              gutter={20}
-              style={{
-                border: { stroke: 'black' },
-                title: { fontSize: 10 }
-              }}
-              data={[
-                { name: 'Low anxiety', symbol: { fill: '#02B875' } },
-                { name: 'High anxiety', symbol: { fill: '#A5685B' } }
-              ]}
-            />
-            <VictoryLine
-              interpolation="natural" // can make the plot smooth
-              labels={({ datum }) => datum.y} //label points
-              data={anxiety}
-              style={{
-                data: {
-                  stroke: '#02B875', // this can change line color
-                  strokeWidth: 1 // width of line
-                }
-              }}
-            />
-
-            <VictoryLine
-              interpolation="natural" // can make the plot smooth
-              labels={({ datum }) => datum.y} //label points
-              data={anxiety}
-              style={{
-                data: {
-                  stroke: '#A5685B', // this can change line color
-                  strokeWidth: 1 // width of line
-                }
-              }}
-            />
-          </VictoryChart>
-        </div>
-
-        <div className="bottomright">
-          <VictoryChart domain={{ y: [0, 12] }}>
-            <VictoryLabel
-              text="Melatonin vs Average Hours of Sleep"
-              x={225}
-              y={30}
-              textAnchor="middle"
-            />
-
-            <VictoryLegend
-              x={125}
-              y={50}
-              centerTitle
-              orientation="horizontal"
-              gutter={20}
-              style={{
-                border: { stroke: 'black' },
-                title: { fontSize: 10 }
-              }}
-              data={[
-                { name: 'Longer sleep', symbol: { fill: '#02B875' } },
-                { name: 'Shorter sleep', symbol: { fill: '#A5685B' } }
-              ]}
-            />
-            <VictoryLine
-              interpolation="natural" // can make the plot smooth
-              labels={({ datum }) => datum.y} //label points
-              data={melatonin}
-              style={{
-                data: {
-                  stroke: '#02B875', // this can change line color
-                  strokeWidth: 1 // width of line
-                }
-              }}
-            />
-
-            <VictoryLine
-              interpolation="natural" // can make the plot smooth
-              labels={({ datum }) => datum.y} //label points
-              data={melatonin}
-              style={{
-                data: {
-                  stroke: '#A5685B', // this can change line color
-                  strokeWidth: 1 // width of line
-                }
-              }}
-            />
-          </VictoryChart>
-        </div>
+              <VictoryLine
+                interpolation="natural" // can make the plot smooth
+                labels={({ datum }) => datum.y} //label points
+                data={melatonin}
+                style={{
+                  data: {
+                    stroke: '#A5685B', // this can change line color
+                    strokeWidth: 1 // width of line
+                  }
+                }}
+              />
+            </VictoryChart>
+          </Col>
+        </Row>
       </Container>
     </Layout>
   );

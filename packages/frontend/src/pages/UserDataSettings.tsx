@@ -1,6 +1,4 @@
 import React, { FormEvent } from 'react';
-// import useState from React too later
-import './../App.css';
 import { Container, Form, Button, FormGroup } from 'react-bootstrap';
 import { Layout } from '../components/Layout';
 

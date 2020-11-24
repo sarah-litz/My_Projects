@@ -1,19 +1,14 @@
 import React, { FormEvent, useState } from 'react';
 import './Login.css';
-import './../App.css';
 import { Layout } from './Layout';
 import ReactBootstrapSlider from 'react-bootstrap-slider';
-// import { useGetSleepDataQuery } from '../generated/types-and-hooks';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-slider/dist/css/bootstrap-slider.css';
 import { Test, QuestionGroup, Option } from 'react-multiple-choice';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { useCreateSleepDataMutation } from '../generated/types-and-hooks';
+import { Card } from 'react-bootstrap';
+import { gql } from '@apollo/client';
 
 const UserData: React.FC = () => {
-  // const { data } = useGetSleepDataQuery();
-
   const [sleepHours, setSleep] = useState('');
   const [sleepQuality, setSleepQuality] = useState('');
   const [didDream, setDidDream] = useState<'0' | '1'>('0');
@@ -22,13 +17,51 @@ const UserData: React.FC = () => {
   const [melatonin, setMelatonin] = useState('');
   const [date, setLogDate] = useState('');
 
-  const [createData] = useCreateSleepDataMutation();
+  const [createData] = useCreateSleepDataMutation({
+    update(cache, { data }) {
+      // create new data reference
+      const newDataRef = cache.writeFragment({
+        data: data?.createSleepData,
+        fragment: gql`
+          fragment NewSleepData on SleepDatum {
+            id
+            totalHours
+            didDream
+            anxiety
+            caffeine
+            melatonin
+            sleepQuality
+            date
+          }
+        `
+      });
+
+      // add data to cache
+      cache.modify({
+        fields: {
+          sleepData(existingData = []) {
+            return [...existingData, newDataRef];
+          }
+        }
+      });
+    }
+  });
+
+  const resetState = () => {
+    setSleep('');
+    setSleepQuality('');
+    setDidDream('0');
+    setCaffeine('');
+    setAnxiety('');
+    setMelatonin('');
+    setLogDate('');
+  };
 
   const collectData = async (event: FormEvent<HTMLFormElement>) => {
     // alert('Your data was recorded.');
     event.preventDefault(); //not sure what this does-- cpy paste from Login.tsx
 
-    createData({
+    await createData({
       variables: {
         totalHours: parseFloat(sleepHours),
         sleepQuality: parseFloat(sleepQuality),
@@ -39,16 +72,26 @@ const UserData: React.FC = () => {
         date
       }
     });
+
+    resetState();
   };
 
   //follow login in Login.tsx
   return (
     <Layout>
-      <div className="register mycard card col-12 col-lg-4 login-card hv-center">
-        <div className="container">
-          <h1>My Habits</h1>
+      <Card
+        style={{
+          background: `radial-gradient(
+           circle,
+           rgba(238, 174, 202, 0.7) 0%,
+           rgba(148, 187, 233, 0.7) 100%
+         )`
+        }}
+      >
+        <Card.Header>My Habits</Card.Header>
+        <Card.Body>
+          <Card.Text>Tell us about your day.</Card.Text>
           <form onSubmit={collectData}>
-            <p className="lead">Tell us about your day.</p>
             <div className="form-group text-center">
               <p>
                 <b>What was the date?</b>
@@ -152,8 +195,8 @@ const UserData: React.FC = () => {
               <br></br>
             </div>
           </form>
-        </div>
-      </div>
+        </Card.Body>
+      </Card>
     </Layout>
   );
 };

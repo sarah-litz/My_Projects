@@ -5,6 +5,8 @@ import * as serviceWorker from './serviceWorker';
 
 // React bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-slider/dist/css/bootstrap-slider.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 ReactDOM.render(
   <React.StrictMode>
