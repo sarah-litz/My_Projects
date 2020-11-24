@@ -31,8 +31,18 @@ mutation login(
   # login(email: $email, password: $password, rememberMe: $rememberMe)
 }
 
-mutation register($email: String!, $password: String!) {
-  addUser(email: $email, password: $password)
+mutation register(
+  $firstname: String!
+  $lastname: String!
+  $email: String!
+  $password: String!
+) {
+  addUser(
+    firstname: $firstname
+    lastname: $lastname
+    email: $email
+    password: $password
+  )
 }
 
 fragment SleepDataFields on SleepDatum {
@@ -41,7 +51,9 @@ fragment SleepDataFields on SleepDatum {
   didDream
   anxiety
   caffeine
-  feltRested
+  melatonin
+  sleepQuality
+  date
 }
 
 query getSleepData {
@@ -54,8 +66,9 @@ mutation createSleepData(
   $totalHours: Float
   $didDream: Boolean
   $anxiety: Float
-  $feltRested: Boolean
+  $sleepQuality: Float
   $caffeine: Float
+  $melatonin: Float
   $date: DateTime!
 ) {
   createSleepData(
@@ -63,8 +76,9 @@ mutation createSleepData(
       totalHours: $totalHours
       didDream: $didDream
       anxiety: $anxiety
-      feltRested: $feltRested
+      sleepQuality: $sleepQuality
       caffeine: $caffeine
+      melatonin: $melatonin
       date: $date
     }
   ) {
@@ -78,3 +92,25 @@ query meEmail {
     email
   }
 }
+
+# mutation editSleepData(
+#   $totalHours: Float
+#   $didDream: Boolean
+#   $anxiety: Float
+#   $sleepQuality: Boolean
+#   $caffeine: Float
+#   $date: DateTime!
+# ) {
+#   editSleepData(
+#     options: {
+#       totalHours: $totalHours
+#       didDream: $didDream
+#       anxiety: $anxiety
+#       sleepQuality: $sleepQuality
+#       caffeine: $caffeine
+#       date: $date
+#     }
+#   ) {
+#     ...SleepDataFields
+#   }
+# }

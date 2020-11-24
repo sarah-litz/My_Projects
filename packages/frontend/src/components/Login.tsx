@@ -5,13 +5,14 @@ import { useLoginMutation } from '../generated/types-and-hooks';
 import { token } from '../store/cache';
 import { Layout } from '../components/Layout';
 import { Alert } from 'react-bootstrap';
+import { login } from '../helper/login';
 
 // *note: put any other imports below so that CSS from your components takes precedence over default styles.
 
 function Login() {
   //          REACT COMPONENT : LOGIN PAGE
 
-  const [login, { error: loginError }] = useLoginMutation({
+  const [loginUser, { error: loginError }] = useLoginMutation({
     errorPolicy: 'all'
   });
   const history = useHistory();
@@ -62,11 +63,13 @@ function Login() {
 
     // logins in user and saves their token
     if (!error) {
-      const { data } = await login({ variables: { email, password } });
+      console.log({ email, password });
+      const { data } = await loginUser({ variables: { email, password } });
+      console.log({ variables: { email, password }, data });
 
       if (data?.loginUser) {
-        // TODO: auth token
         token(data.loginUser);
+        login();
         history.push('/');
       } else {
         token(undefined);

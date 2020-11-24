@@ -6,7 +6,7 @@ import { useLoginTokenQuery } from '../generated/types-and-hooks';
 export const Layout: React.FC = ({ children }) => {
   const { data } = useLoginTokenQuery();
 
-  const loggedIn = !!data?.token;
+  const loggedIn = !!data?.token || localStorage.getItem('loggedIn') === 'true';
 
   return (
     <>
@@ -22,9 +22,25 @@ export const Layout: React.FC = ({ children }) => {
             <Nav.Link>Home</Nav.Link>
           </LinkContainer>
 
-          <LinkContainer to="/AccountSettings">
+          {loggedIn && (
+            <>
+              <LinkContainer to="/logdata">
+                <Nav.Link>Log Data</Nav.Link>
+              </LinkContainer>
+
+              <LinkContainer to="/visual">
+                <Nav.Link>Data Visualizations</Nav.Link>
+              </LinkContainer>
+
+              <LinkContainer to="/logout">
+                <Nav.Link>Logout</Nav.Link>
+              </LinkContainer>
+                
+              <LinkContainer to="/AccountSettings">
                 <Nav.Link href="/AccountSettings">Settings</Nav.Link>
-          </LinkContainer>
+              </LinkContainer>
+            </>
+          )}
 
           {!loggedIn && (
             <>

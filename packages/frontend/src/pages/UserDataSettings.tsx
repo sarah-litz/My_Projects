@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
+// import useState from React too later
 import './../App.css';
 import { Container, Form, Button, FormGroup } from 'react-bootstrap';
 import { Layout } from '../components/Layout';
@@ -48,6 +49,10 @@ export const UserDataSettings: React.FC<{
   );
 };
 
+const selectData = async (event: FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+};
+
 class SettingsCard extends React.Component<{
   toggle?: boolean;
   qOne?: string;
@@ -62,7 +67,7 @@ class SettingsCard extends React.Component<{
       <Container>
         <p className="h2">{this.props.prompt}</p>
         <div className="container">
-          <Form>
+          <Form onSubmit={selectData}>
             <SleepMetrics toggle={this.props.toggle}>
               {this.props.qOne}
             </SleepMetrics>

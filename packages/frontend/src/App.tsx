@@ -3,11 +3,16 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import Login from './components/Login';
+import DataLog from './components/DataLog';
 import { client } from './store/apollo';
-import { UserDataSettings } from './pages/user_data_settings';
+import { HomePage } from './pages/Home';
+import { UserDataSettings } from './pages/UserDataSettings';
 import Register from './components/Register';
-import Visualize from './pages/datavis';
 import AccountSettings from './pages/AccountSettings'
+import Visualize from './pages/DataVis';
+import { LoggedInHome } from './pages/HomeLoggedIn';
+import { Logout } from './components/Logout';
+import { PrivateRoute } from './components/PrivateRoute';
 
 function App() {
   return (
@@ -18,7 +23,12 @@ function App() {
           <Switch>
             <Route exact path="/">
               {/* <HomePage /> */}
-              <UserDataSettings />
+              <HomePage />
+            </Route>
+
+            <Route exact path="/home">
+              {/* <HomePage /> */}
+              <LoggedInHome />
             </Route>
 
             <Route exact path="/login">
@@ -29,13 +39,28 @@ function App() {
               <Register />
             </Route>
 
+
             <Route exact path="/AccountSettings">
               <AccountSettings />
             </Route>
+            
+            
+            <PrivateRoute exact path="/logdata">
+              <DataLog />
+            </PrivateRoute>
 
-            <Route exact path="/visual">
+            <PrivateRoute exact path="/preferences">
+              {/* <Preferences /> */}
+              <UserDataSettings />
+            </PrivateRoute>
+
+            <PrivateRoute exact path="/visual">
               <Visualize />
-            </Route>
+            </PrivateRoute>
+
+            <PrivateRoute exact path="/logout">
+              <Logout />
+            </PrivateRoute>
 
             {/* Default route when is not found above (404 page) */}
             <Route>

@@ -18,7 +18,15 @@
 .topleft {
   position: absolute;
   top: 150px;
-  left: 100px;
+  left: 0px;
+  width: 40%;
+  height: 40%;
+}
+
+.topmiddle {
+  position: absolute;
+  top: 150px;
+  left: 500px;
   width: 40%;
   height: 40%;
 }
@@ -26,7 +34,7 @@
 .topright {
   position: absolute;
   top: 150px;
-  right: 100px;
+  right: 0px;
   width: 40%;
   height: 40%;
 }
@@ -34,7 +42,15 @@
 .bottomleft {
   position: absolute;
   bottom: 50px;
-  left: 100px;
+  left: 0px;
+  width: 40%;
+  height: 40%;
+}
+
+.bottommiddle {
+  position: absolute;
+  bottom: 50px;
+  left: 500px;
   width: 40%;
   height: 40%;
 }
@@ -42,7 +58,7 @@
 .bottomright {
   position: absolute;
   bottom: 50px;
-  right: 100px;
+  right: 0px;
   width: 40%;
   height: 40%;
 }

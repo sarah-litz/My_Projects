@@ -26,15 +26,17 @@ export const refreshAuth = async (req: Request, res: Response) => {
   const repository = getConnection().getRepository(User);
 
   // Token is valid and we can now send back an access token
-  const user = await repository.findOne({ id: payload.userId });
+  const user = await repository.findOne({ id: payload.id });
 
   if (!user) {
+    console.warn('No user.', user);
     return res.send({ ok: false, accessToken: '' });
   }
 
-  if (user.count !== payload.tokenVersion) {
-    return res.send({ ok: false, accessToken: '' });
-  }
+  // TODO:
+  // if (user.count !== payload.tokenVersion) {
+  //   return res.send({ ok: false, accessToken: '' });
+  // }
 
   sendRefreshToken(res, createRefreshToken(user));
 

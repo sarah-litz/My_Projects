@@ -6,6 +6,7 @@ import { Layout } from './Layout';
 import { useHistory } from 'react-router-dom';
 import { useRegisterMutation } from '../generated/types-and-hooks';
 import { token } from '../store/cache';
+import { login } from '../helper/login';
 
 const Register: React.FC = () => {
   const [register, { error: backendError }] = useRegisterMutation({
@@ -13,6 +14,8 @@ const Register: React.FC = () => {
   });
   const history = useHistory();
 
+  const [firstname, setFirst] = useState('');
+  const [lastname, setLast] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
@@ -65,10 +68,12 @@ const Register: React.FC = () => {
 -----------------------------------------------------------------------------------*/
     // Register/Login new user and save their token
     if (!error) {
-      const { data } = await register({ variables: { email, password } });
+      const { data } = await register({
+        variables: { firstname, lastname, email, password }
+      });
       if (data?.addUser) {
-        // TODO: auth token
         token(data.addUser);
+        login();
         history.push('/');
       } else {
         token(undefined);
@@ -85,15 +90,32 @@ const Register: React.FC = () => {
             <Alert variant="danger">{error.message}</Alert>
           ))}
           {/*Enter first and last name fields*/}
-          {/* <Form.Row className="row vertical-middle">
-              <Col>
-                <Form.Control placeholder="First name" />
-              </Col>
-              <Col>
-                <Form.Control placeholder="Last name" />
-              </Col>
-            </Form.Row>
-            <br></br> */}
+          <Form.Group controlId="formGroup">
+            <Form.Label htmlFor="firstName" srOnly>
+              First Name
+            </Form.Label>
+            <input
+              type="firstname"
+              className="form-control"
+              id="firstname"
+              placeholder="Enter first name"
+              onChange={(event) => setFirst(event.target.value)}
+              value={firstname}
+            />
+          </Form.Group>
+          <Form.Group controlId="formGroup">
+            <Form.Label htmlFor="lastName" srOnly>
+              Last Name
+            </Form.Label>
+            <input
+              type="lastname"
+              id="lastname"
+              className="form-control"
+              placeholder="Enter last name"
+              onChange={(event) => setLast(event.target.value)}
+              value={lastname}
+            />
+          </Form.Group>
           {/*Enter email field*/}
           <Form.Group controlId="formGroupEmail">
             <Form.Label htmlFor="emailAddress" srOnly>
@@ -130,7 +152,7 @@ const Register: React.FC = () => {
             </Form.Label>
             <input
               type="password"
-              placeholder="Reenter password"
+              placeholder="Re-enter password"
               id="passwordCheck"
               className="form-control"
               required
@@ -155,38 +177,3 @@ const Register: React.FC = () => {
 };
 
 export default Register;
-//          REACT COMPONENT : REGISTRATION
-/*
-    return (   //HTML (always goes inside of return statement)
-
-    <Layout>
-    <div className="mycard card col-12 col-lg-4 login-card hv-center">
-      <Form className="form-group text-center">
-        <Form.Row className="row vertical-middle">
-          <Col> 
-            < Form.Control placeholder="First name" />
-          </Col>
-          <Col>
-            < Form.Control placeholder="Last name" />
-          </Col>
-        </Form.Row>
-
-        <br></br>
-        <Form.Group controlId = "formGroupEmail">
-          <Form.Label htmlFor="emailAddress" srOnly>EmailAddress</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
-
-
-
-        </Form.Group>
-      </Form>
-    </div>
-  </Layout>
-    
-    );
-  }
-  
-
-
-
-  */
