@@ -24,14 +24,14 @@ export const createAccessToken = (user: User): string => {
   return createToken(
     user.id.toString(10),
     config.get('jwt.access.secret'),
-    config.get('jwt.refresh.duration')
+    config.get('jwt.access.duration')
   );
 };
 
 export const createRefreshToken = (user: User): string => {
   return createToken(
     user.id.toString(10),
-    config.get('jwt.access.secret'),
+    config.get('jwt.refresh.secret'),
     config.get('jwt.refresh.duration')
   );
 };

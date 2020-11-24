@@ -46,7 +46,7 @@ export const UserDataSettings: React.FC = () => {
                   <input
                     type="checkbox"
                     className="custom-control-input"
-                    id="customSwitch1"
+                    id="customSwitches"
                     value={trackCaffeine}
                     onChange={(event) => setTrackCaffeine(event.target.value)}
                   />

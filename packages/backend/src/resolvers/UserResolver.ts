@@ -87,7 +87,7 @@ export class UserResolver {
 
     // TODO:
     // if (rememberMe) {
-    sendRefreshToken(context.res, createAccessToken(user));
+    sendRefreshToken(context.res, createRefreshToken(user));
     // }
 
     return createAccessToken(user);

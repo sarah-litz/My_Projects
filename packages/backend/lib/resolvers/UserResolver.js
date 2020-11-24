@@ -55,6 +55,7 @@ let UserResolver = class UserResolver {
                 lastname,
                 email,
                 password: hashedPassword,
+                preferences: [],
                 sleepData: []
             });
             const user = yield repository.save(userValues);
@@ -74,7 +75,7 @@ let UserResolver = class UserResolver {
             if (!passValid) {
                 throw new apollo_server_express_1.AuthenticationError('Invalid login or password.');
             }
-            auth_1.sendRefreshToken(context.res, auth_1.createAccessToken(user));
+            auth_1.sendRefreshToken(context.res, auth_1.createRefreshToken(user));
             return auth_1.createAccessToken(user);
         });
     }
