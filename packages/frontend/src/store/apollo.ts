@@ -9,11 +9,13 @@ import {
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { token } from './cache';
+import { login, logout } from '../helper/login';
 
 const getAccessToken = async () => {
   // TODO: production url
   const res = await fetch('http://localhost:4000/refresh_token', {
-    method: 'POST'
+    method: 'POST',
+    credentials: 'include'
   });
 
   const data = await res.json();
@@ -21,11 +23,13 @@ const getAccessToken = async () => {
   if (data.ok) {
     // Set new access token
     token(data.accessToken);
+    login();
     return data.accessToken;
   }
   // Invalid refresh token, remove token
   token(undefined);
-  return;
+  logout();
+  return undefined;
 };
 
 const refreshTokenLink = onError(({ forward, operation, graphQLErrors }) => {
@@ -36,12 +40,13 @@ const refreshTokenLink = onError(({ forward, operation, graphQLErrors }) => {
         'Access denied! You need to be authorized to perform this action!'
         // error.extensions?.code === 'UNAUTHENTICATED'
       ) {
-        return (
-          fromPromise(getAccessToken())
-            .filter((value) => !!value)
-            // retry initial operation if access token was reset
-            .flatMap(() => forward(operation))
-        );
+        if (localStorage.getItem('loggedIn') === 'true')
+          return (
+            fromPromise(getAccessToken())
+              .filter((value) => !!value)
+              // retry initial operation if access token was reset
+              .flatMap(() => forward(operation))
+          );
       }
     }
   }

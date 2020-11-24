@@ -39,11 +39,13 @@ const startServer = async () => {
   // Avoid timezone issues
   process.env.TZ = 'UTC';
 
-  const app = express();
-
   // Create connection to postgresql
   const conn = await superCreateConnection();
   console.log(chalk.green('PG connected.'));
+
+  const app = express();
+
+  app.use(cookieParser()); //utilizing cookie parser to make distinguishing access and refresh tokens easy
 
   app.use(
     // cors = cross origin resource sharing
@@ -54,7 +56,6 @@ const startServer = async () => {
     })
   );
 
-  app.use(cookieParser()); //utilizing cookie parser to make distinguishing access and refresh tokens easy
   app.post('/refresh_token', refreshAuth);
 
   const apolloServer = await createApolloServer();
