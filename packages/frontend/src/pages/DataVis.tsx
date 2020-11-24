@@ -12,7 +12,7 @@ import {
   VictoryLabel
 } from 'victory';
 import moment from 'moment';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Visualization: React.FC = () => {
   const { data } = useGetSleepDataQuery();
