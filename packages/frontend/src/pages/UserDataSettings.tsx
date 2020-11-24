@@ -46,13 +46,74 @@ export const UserDataSettings: React.FC = () => {
                   <input
                     type="checkbox"
                     className="custom-control-input"
-                    id="customSwitches"
+                    id="customSwitch1"
                     value={trackCaffeine}
                     onChange={(event) => setTrackCaffeine(event.target.value)}
                   />
                   <label
                     className="custom-control-label"
-                    htmlFor="customSwitches"
+                    htmlFor="customSwitch1"
+                  >
+                    Track this metric
+                  </label>
+                </div>
+              </div>
+              <div className="form-group text-center">
+                <p>
+                  <b>Hours of sleep each night</b>
+                </p>
+                <div className="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    className="custom-control-input"
+                    id="customSwitch2"
+                    value={trackBedtime}
+                    onChange={(event) => setTrackBedtime(event.target.value)}
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor="customSwitch2"
+                  >
+                    Track this metric
+                  </label>
+                </div>
+              </div>
+
+              <div className="form-group text-center">
+                <p>
+                  <b>Dreaming</b>
+                </p>
+                <div className="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    className="custom-control-input"
+                    id="customSwitch3"
+                    value={trackDreams}
+                    onChange={(event) => setTrackDreams(event.target.value)}
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor="customSwitch3"
+                  >
+                    Track this metric
+                  </label>
+                </div>
+              </div>
+              <div className="form-group text-center">
+                <p>
+                  <b>Melatonin use</b>
+                </p>
+                <div className="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    className="custom-control-input"
+                    id="customSwitch4"
+                    value={trackMelatonin}
+                    onChange={(event) => setTrackMelatonin(event.target.value)}
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor="customSwitch4"
                   >
                     Track this metric
                   </label>
