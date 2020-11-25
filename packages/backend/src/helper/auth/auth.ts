@@ -35,5 +35,3 @@ export const createRefreshToken = (user: User): string => {
     config.get('jwt.refresh.duration')
   );
 };
-
-
