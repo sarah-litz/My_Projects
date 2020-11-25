@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import './../App.css';
-import { Container, Form, FormGroup } from 'react-bootstrap';
+import { Container, Form } from 'react-bootstrap';
 import { Layout } from '../components/Layout';
 
 export const UserDataSettings: React.FC = () => {

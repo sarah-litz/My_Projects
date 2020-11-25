@@ -64,6 +64,50 @@ let UserResolver = class UserResolver {
             return auth_1.createAccessToken(user);
         });
     }
+    changeEmail(email, newEmail, context) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const repository = typeorm_1.getConnection().getRepository(User_1.User);
+            const alreadyExists = yield repository.findOne({ email: newEmail });
+            if (alreadyExists) {
+                console.log('email already exists');
+                throw new apollo_server_express_1.UserInputError('This email is already being used for an account.');
+            }
+            else {
+                const currentUser = yield repository.findOne({ email: email });
+                if (currentUser) {
+                    const userUpdate = yield repository.update({ id: currentUser.id }, { email: newEmail });
+                    auth_1.sendRefreshToken(context.res, auth_1.createAccessToken(currentUser));
+                    return auth_1.createAccessToken(currentUser);
+                }
+                else {
+                    console.log('Could not find user with email', email);
+                    throw new apollo_server_express_1.UserInputError('Sorry, it seems there was an error.');
+                }
+            }
+        });
+    }
+    changePassword(password, context) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const repository = typeorm_1.getConnection().getRepository(User_1.User);
+            const user = yield repository.findOne(context.me.id);
+            if (!user) {
+                throw new apollo_server_express_1.AuthenticationError('Invalid user.');
+            }
+            yield repository.update({ id: user.id }, { password: password });
+            return 'change password returned value';
+        });
+    }
+    deleteAccount(context) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const repository = typeorm_1.getConnection().getRepository(User_1.User);
+            const user = yield repository.findOne(context.me.id);
+            if (!user) {
+                throw new apollo_server_express_1.AuthenticationError('Invalid user.');
+            }
+            yield repository.delete(user);
+            return 'delete account returned value';
+        });
+    }
     loginUser(email, password, context) {
         return __awaiter(this, void 0, void 0, function* () {
             const repository = typeorm_1.getConnection().getRepository(User_1.User);
@@ -103,6 +147,30 @@ __decorate([
     __metadata("design:paramtypes", [String, String, String, String, Object]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "addUser", null);
+__decorate([
+    type_graphql_1.Mutation(() => String),
+    __param(0, type_graphql_1.Arg('email')),
+    __param(1, type_graphql_1.Arg('newEmail')),
+    __param(2, type_graphql_1.Ctx()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, Object]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "changeEmail", null);
+__decorate([
+    type_graphql_1.Mutation(() => String),
+    __param(0, type_graphql_1.Arg('password')),
+    __param(1, type_graphql_1.Ctx()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "changePassword", null);
+__decorate([
+    type_graphql_1.Mutation(() => String),
+    __param(0, type_graphql_1.Ctx()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "deleteAccount", null);
 __decorate([
     type_graphql_1.Mutation(() => String),
     __param(0, type_graphql_1.Arg('email')),
