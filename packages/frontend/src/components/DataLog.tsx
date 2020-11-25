@@ -112,7 +112,8 @@ const UserData: React.FC = () => {
                 <b>How much stress did you experience?</b>
               </p>
               <p>
-                0 = too blessed to be stressed. 10 = currently being chased by a bear.
+                0 = too blessed to be stressed. 10 = currently being chased by a
+                bear.
               </p>
               <ReactBootstrapSlider
                 min="0"
