@@ -77,17 +77,7 @@ function Login() {
     }
   };
 
-  /*Checklist
-    1. visual stuff in general
-    2. add forgot password button
-    3. set up for back end stuff 
-    (done) 4. set up for whereto next when signin/register get clicked (onclick event) 
-    5. remember my password button 
-    6. password requirements 
-    7. edge cases (not an email, wrong password, etc.)
 
-    Later: 
-*/
 
   return (
     //              HTML (always goes inside of return statement)
