@@ -6,6 +6,23 @@ query loginToken {
 
 # User
 
+mutation changeEmail(
+  $email: String! 
+  $newEmail: String! 
+) { 
+  changeEmail(email: $email, newEmail: $newEmail)
+}
+
+mutation changePassword(
+  $password: String! 
+) { 
+  changePassword(password: $password)
+}
+
+mutation deleteAccount { 
+  deleteAccount
+}
+
 mutation login(
   $email: String!
   $password: String! # ,$rememberMe: Boolean
@@ -69,35 +86,10 @@ mutation createSleepData(
   }
 }
 
-fragment PreferenceFields on Preferences {
-  id
-  trackCaffeine
-  trackAnxiety
-  trackDreams
-  trackMelatonin
-}
 
-query getPreferences {
-  preferences {
-    ...PreferenceFields
-  }
-}
-
-mutation createPreferences(
-  $trackCaffeine: Boolean
-  $trackAnxiety: Boolean
-  $trackDreams: Boolean
-  $trackMelatonin: Boolean
-) {
-  createPreferences(
-    options: {
-      trackCaffeine: $trackCaffeine
-      trackAnxiety: $trackAnxiety
-      trackDreams: $trackDreams
-      trackMelatonin: $trackMelatonin
-    }
-  ) {
-    ...PreferenceFields
+query meEmail {
+  me {
+    email
   }
 }
 

@@ -8,6 +8,7 @@ import { client } from './store/apollo';
 import { HomePage } from './pages/Home';
 import UserDataSettings from './pages/UserDataSettings';
 import Register from './components/Register';
+import AccountSettings from './pages/AccountSettings'
 import Visualize from './pages/DataVis';
 import { LoggedInHome } from './pages/HomeLoggedIn';
 import { Logout } from './components/Logout';
@@ -38,6 +39,12 @@ function App() {
               <Register />
             </Route>
 
+
+            <Route exact path="/AccountSettings">
+              <AccountSettings />
+            </Route>
+            
+            
             <PrivateRoute exact path="/logdata">
               <DataLog />
             </PrivateRoute>

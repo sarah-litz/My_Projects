@@ -2,9 +2,7 @@ import { gql } from '@apollo/client';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -53,10 +51,14 @@ export type SleepDatum = {
 export type Mutation = {
   __typename?: 'Mutation';
   addUser: Scalars['String'];
+  changeEmail: Scalars['String'];
+  changePassword: Scalars['String'];
+  deleteAccount: Scalars['String'];
   loginUser: Scalars['String'];
   createPreferences?: Maybe<Preferences>;
   createSleepData?: Maybe<SleepDatum>;
 };
+
 
 export type MutationAddUserArgs = {
   password: Scalars['String'];
@@ -65,14 +67,28 @@ export type MutationAddUserArgs = {
   firstname: Scalars['String'];
 };
 
+
+export type MutationChangeEmailArgs = {
+  newEmail: Scalars['String'];
+  email: Scalars['String'];
+};
+
+
+export type MutationChangePasswordArgs = {
+  password: Scalars['String'];
+};
+
+
 export type MutationLoginUserArgs = {
   password: Scalars['String'];
   email: Scalars['String'];
 };
 
+
 export type MutationCreatePreferencesArgs = {
   options: PreferencesCreateInput;
 };
+
 
 export type MutationCreateSleepDataArgs = {
   options: SleepDatumCreateInput;
@@ -95,19 +111,54 @@ export type SleepDatumCreateInput = {
   date: Scalars['DateTime'];
 };
 
-export type LoginTokenQueryVariables = Exact<{ [key: string]: never }>;
 
-export type LoginTokenQuery = { __typename?: 'Query' } & Pick<Query, 'token'>;
+export type LoginTokenQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LoginTokenQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'token'>
+);
+
+export type ChangeEmailMutationVariables = Exact<{
+  email: Scalars['String'];
+  newEmail: Scalars['String'];
+}>;
+
+
+export type ChangeEmailMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'changeEmail'>
+);
+
+export type ChangePasswordMutationVariables = Exact<{
+  password: Scalars['String'];
+}>;
+
+
+export type ChangePasswordMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'changePassword'>
+);
+
+export type DeleteAccountMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DeleteAccountMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteAccount'>
+);
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
 
-export type LoginMutation = { __typename?: 'Mutation' } & Pick<
-  Mutation,
-  'loginUser'
->;
+
+export type LoginMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'loginUser'>
+);
 
 export type RegisterMutationVariables = Exact<{
   firstname: Scalars['String'];
@@ -116,28 +167,27 @@ export type RegisterMutationVariables = Exact<{
   password: Scalars['String'];
 }>;
 
-export type RegisterMutation = { __typename?: 'Mutation' } & Pick<
-  Mutation,
-  'addUser'
->;
 
-export type SleepDataFieldsFragment = { __typename?: 'SleepDatum' } & Pick<
-  SleepDatum,
-  | 'id'
-  | 'totalHours'
-  | 'didDream'
-  | 'anxiety'
-  | 'caffeine'
-  | 'melatonin'
-  | 'sleepQuality'
-  | 'date'
->;
+export type RegisterMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'addUser'>
+);
 
-export type GetSleepDataQueryVariables = Exact<{ [key: string]: never }>;
+export type SleepDataFieldsFragment = (
+  { __typename?: 'SleepDatum' }
+  & Pick<SleepDatum, 'id' | 'totalHours' | 'didDream' | 'anxiety' | 'caffeine' | 'melatonin' | 'sleepQuality' | 'date'>
+);
 
-export type GetSleepDataQuery = { __typename?: 'Query' } & {
-  sleepData: Array<{ __typename?: 'SleepDatum' } & SleepDataFieldsFragment>;
-};
+export type GetSleepDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSleepDataQuery = (
+  { __typename?: 'Query' }
+  & { sleepData: Array<(
+    { __typename?: 'SleepDatum' }
+    & SleepDataFieldsFragment
+  )> }
+);
 
 export type CreateSleepDataMutationVariables = Exact<{
   totalHours?: Maybe<Scalars['Float']>;
@@ -149,62 +199,43 @@ export type CreateSleepDataMutationVariables = Exact<{
   date: Scalars['DateTime'];
 }>;
 
-export type CreateSleepDataMutation = { __typename?: 'Mutation' } & {
-  createSleepData?: Maybe<
-    { __typename?: 'SleepDatum' } & SleepDataFieldsFragment
-  >;
-};
 
-export type PreferenceFieldsFragment = { __typename?: 'Preferences' } & Pick<
-  Preferences,
-  'id' | 'trackCaffeine' | 'trackAnxiety' | 'trackDreams' | 'trackMelatonin'
->;
+export type CreateSleepDataMutation = (
+  { __typename?: 'Mutation' }
+  & { createSleepData?: Maybe<(
+    { __typename?: 'SleepDatum' }
+    & SleepDataFieldsFragment
+  )> }
+);
 
-export type GetPreferencesQueryVariables = Exact<{ [key: string]: never }>;
+export type MeEmailQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetPreferencesQuery = { __typename?: 'Query' } & {
-  preferences: Array<{ __typename?: 'Preferences' } & PreferenceFieldsFragment>;
-};
 
-export type CreatePreferencesMutationVariables = Exact<{
-  trackCaffeine?: Maybe<Scalars['Boolean']>;
-  trackAnxiety?: Maybe<Scalars['Boolean']>;
-  trackDreams?: Maybe<Scalars['Boolean']>;
-  trackMelatonin?: Maybe<Scalars['Boolean']>;
-}>;
-
-export type CreatePreferencesMutation = { __typename?: 'Mutation' } & {
-  createPreferences?: Maybe<
-    { __typename?: 'Preferences' } & PreferenceFieldsFragment
-  >;
-};
+export type MeEmailQuery = (
+  { __typename?: 'Query' }
+  & { me: (
+    { __typename?: 'SafeUser' }
+    & Pick<SafeUser, 'email'>
+  ) }
+);
 
 export const SleepDataFieldsFragmentDoc = gql`
-  fragment SleepDataFields on SleepDatum {
-    id
-    totalHours
-    didDream
-    anxiety
-    caffeine
-    melatonin
-    sleepQuality
-    date
-  }
-`;
-export const PreferenceFieldsFragmentDoc = gql`
-  fragment PreferenceFields on Preferences {
-    id
-    trackCaffeine
-    trackAnxiety
-    trackDreams
-    trackMelatonin
-  }
-`;
+    fragment SleepDataFields on SleepDatum {
+  id
+  totalHours
+  didDream
+  anxiety
+  caffeine
+  melatonin
+  sleepQuality
+  date
+}
+    `;
 export const LoginTokenDocument = gql`
-  query loginToken {
-    token @client
-  }
-`;
+    query loginToken {
+  token @client
+}
+    `;
 
 /**
  * __useLoginTokenQuery__
@@ -221,45 +252,111 @@ export const LoginTokenDocument = gql`
  *   },
  * });
  */
-export function useLoginTokenQuery(
-  baseOptions?: ApolloReactHooks.QueryHookOptions<
-    LoginTokenQuery,
-    LoginTokenQueryVariables
-  >
-) {
-  return ApolloReactHooks.useQuery<LoginTokenQuery, LoginTokenQueryVariables>(
-    LoginTokenDocument,
-    baseOptions
-  );
-}
-export function useLoginTokenLazyQuery(
-  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
-    LoginTokenQuery,
-    LoginTokenQueryVariables
-  >
-) {
-  return ApolloReactHooks.useLazyQuery<
-    LoginTokenQuery,
-    LoginTokenQueryVariables
-  >(LoginTokenDocument, baseOptions);
-}
+export function useLoginTokenQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<LoginTokenQuery, LoginTokenQueryVariables>) {
+        return ApolloReactHooks.useQuery<LoginTokenQuery, LoginTokenQueryVariables>(LoginTokenDocument, baseOptions);
+      }
+export function useLoginTokenLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<LoginTokenQuery, LoginTokenQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<LoginTokenQuery, LoginTokenQueryVariables>(LoginTokenDocument, baseOptions);
+        }
 export type LoginTokenQueryHookResult = ReturnType<typeof useLoginTokenQuery>;
-export type LoginTokenLazyQueryHookResult = ReturnType<
-  typeof useLoginTokenLazyQuery
->;
-export type LoginTokenQueryResult = ApolloReactCommon.QueryResult<
-  LoginTokenQuery,
-  LoginTokenQueryVariables
->;
+export type LoginTokenLazyQueryHookResult = ReturnType<typeof useLoginTokenLazyQuery>;
+export type LoginTokenQueryResult = ApolloReactCommon.QueryResult<LoginTokenQuery, LoginTokenQueryVariables>;
+export const ChangeEmailDocument = gql`
+    mutation changeEmail($email: String!, $newEmail: String!) {
+  changeEmail(email: $email, newEmail: $newEmail)
+}
+    `;
+export type ChangeEmailMutationFn = ApolloReactCommon.MutationFunction<ChangeEmailMutation, ChangeEmailMutationVariables>;
+
+/**
+ * __useChangeEmailMutation__
+ *
+ * To run a mutation, you first call `useChangeEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeEmailMutation, { data, loading, error }] = useChangeEmailMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      newEmail: // value for 'newEmail'
+ *   },
+ * });
+ */
+export function useChangeEmailMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangeEmailMutation, ChangeEmailMutationVariables>) {
+        return ApolloReactHooks.useMutation<ChangeEmailMutation, ChangeEmailMutationVariables>(ChangeEmailDocument, baseOptions);
+      }
+export type ChangeEmailMutationHookResult = ReturnType<typeof useChangeEmailMutation>;
+export type ChangeEmailMutationResult = ApolloReactCommon.MutationResult<ChangeEmailMutation>;
+export type ChangeEmailMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangeEmailMutation, ChangeEmailMutationVariables>;
+export const ChangePasswordDocument = gql`
+    mutation changePassword($password: String!) {
+  changePassword(password: $password)
+}
+    `;
+export type ChangePasswordMutationFn = ApolloReactCommon.MutationFunction<ChangePasswordMutation, ChangePasswordMutationVariables>;
+
+/**
+ * __useChangePasswordMutation__
+ *
+ * To run a mutation, you first call `useChangePasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangePasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changePasswordMutation, { data, loading, error }] = useChangePasswordMutation({
+ *   variables: {
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useChangePasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ChangePasswordMutation, ChangePasswordMutationVariables>) {
+        return ApolloReactHooks.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, baseOptions);
+      }
+export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
+export type ChangePasswordMutationResult = ApolloReactCommon.MutationResult<ChangePasswordMutation>;
+export type ChangePasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
+export const DeleteAccountDocument = gql`
+    mutation deleteAccount {
+  deleteAccount
+}
+    `;
+export type DeleteAccountMutationFn = ApolloReactCommon.MutationFunction<DeleteAccountMutation, DeleteAccountMutationVariables>;
+
+/**
+ * __useDeleteAccountMutation__
+ *
+ * To run a mutation, you first call `useDeleteAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAccountMutation, { data, loading, error }] = useDeleteAccountMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDeleteAccountMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteAccountMutation, DeleteAccountMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteAccountMutation, DeleteAccountMutationVariables>(DeleteAccountDocument, baseOptions);
+      }
+export type DeleteAccountMutationHookResult = ReturnType<typeof useDeleteAccountMutation>;
+export type DeleteAccountMutationResult = ApolloReactCommon.MutationResult<DeleteAccountMutation>;
+export type DeleteAccountMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteAccountMutation, DeleteAccountMutationVariables>;
 export const LoginDocument = gql`
-  mutation login($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password)
-  }
-`;
-export type LoginMutationFn = ApolloReactCommon.MutationFunction<
-  LoginMutation,
-  LoginMutationVariables
->;
+    mutation login($email: String!, $password: String!) {
+  loginUser(email: $email, password: $password)
+}
+    `;
+export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**
  * __useLoginMutation__
@@ -279,42 +376,23 @@ export type LoginMutationFn = ApolloReactCommon.MutationFunction<
  *   },
  * });
  */
-export function useLoginMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<
-    LoginMutation,
-    LoginMutationVariables
-  >
-) {
-  return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(
-    LoginDocument,
-    baseOptions
-  );
-}
+export function useLoginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, baseOptions);
+      }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
-export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  LoginMutation,
-  LoginMutationVariables
->;
+export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const RegisterDocument = gql`
-  mutation register(
-    $firstname: String!
-    $lastname: String!
-    $email: String!
-    $password: String!
-  ) {
-    addUser(
-      firstname: $firstname
-      lastname: $lastname
-      email: $email
-      password: $password
-    )
-  }
-`;
-export type RegisterMutationFn = ApolloReactCommon.MutationFunction<
-  RegisterMutation,
-  RegisterMutationVariables
->;
+    mutation register($firstname: String!, $lastname: String!, $email: String!, $password: String!) {
+  addUser(
+    firstname: $firstname
+    lastname: $lastname
+    email: $email
+    password: $password
+  )
+}
+    `;
+export type RegisterMutationFn = ApolloReactCommon.MutationFunction<RegisterMutation, RegisterMutationVariables>;
 
 /**
  * __useRegisterMutation__
@@ -336,31 +414,19 @@ export type RegisterMutationFn = ApolloReactCommon.MutationFunction<
  *   },
  * });
  */
-export function useRegisterMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<
-    RegisterMutation,
-    RegisterMutationVariables
-  >
-) {
-  return ApolloReactHooks.useMutation<
-    RegisterMutation,
-    RegisterMutationVariables
-  >(RegisterDocument, baseOptions);
-}
+export function useRegisterMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
+        return ApolloReactHooks.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, baseOptions);
+      }
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = ApolloReactCommon.MutationResult<RegisterMutation>;
-export type RegisterMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  RegisterMutation,
-  RegisterMutationVariables
->;
+export type RegisterMutationOptions = ApolloReactCommon.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const GetSleepDataDocument = gql`
-  query getSleepData {
-    sleepData {
-      ...SleepDataFields
-    }
+    query getSleepData {
+  sleepData {
+    ...SleepDataFields
   }
-  ${SleepDataFieldsFragmentDoc}
-`;
+}
+    ${SleepDataFieldsFragmentDoc}`;
 
 /**
  * __useGetSleepDataQuery__
@@ -377,68 +443,25 @@ export const GetSleepDataDocument = gql`
  *   },
  * });
  */
-export function useGetSleepDataQuery(
-  baseOptions?: ApolloReactHooks.QueryHookOptions<
-    GetSleepDataQuery,
-    GetSleepDataQueryVariables
-  >
-) {
-  return ApolloReactHooks.useQuery<
-    GetSleepDataQuery,
-    GetSleepDataQueryVariables
-  >(GetSleepDataDocument, baseOptions);
-}
-export function useGetSleepDataLazyQuery(
-  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
-    GetSleepDataQuery,
-    GetSleepDataQueryVariables
-  >
-) {
-  return ApolloReactHooks.useLazyQuery<
-    GetSleepDataQuery,
-    GetSleepDataQueryVariables
-  >(GetSleepDataDocument, baseOptions);
-}
-export type GetSleepDataQueryHookResult = ReturnType<
-  typeof useGetSleepDataQuery
->;
-export type GetSleepDataLazyQueryHookResult = ReturnType<
-  typeof useGetSleepDataLazyQuery
->;
-export type GetSleepDataQueryResult = ApolloReactCommon.QueryResult<
-  GetSleepDataQuery,
-  GetSleepDataQueryVariables
->;
-export const CreateSleepDataDocument = gql`
-  mutation createSleepData(
-    $totalHours: Float
-    $didDream: Boolean
-    $anxiety: Float
-    $sleepQuality: Float
-    $caffeine: Float
-    $melatonin: Float
-    $date: DateTime!
-  ) {
-    createSleepData(
-      options: {
-        totalHours: $totalHours
-        didDream: $didDream
-        anxiety: $anxiety
-        sleepQuality: $sleepQuality
-        caffeine: $caffeine
-        melatonin: $melatonin
-        date: $date
+export function useGetSleepDataQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetSleepDataQuery, GetSleepDataQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetSleepDataQuery, GetSleepDataQueryVariables>(GetSleepDataDocument, baseOptions);
       }
-    ) {
-      ...SleepDataFields
-    }
+export function useGetSleepDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetSleepDataQuery, GetSleepDataQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetSleepDataQuery, GetSleepDataQueryVariables>(GetSleepDataDocument, baseOptions);
+        }
+export type GetSleepDataQueryHookResult = ReturnType<typeof useGetSleepDataQuery>;
+export type GetSleepDataLazyQueryHookResult = ReturnType<typeof useGetSleepDataLazyQuery>;
+export type GetSleepDataQueryResult = ApolloReactCommon.QueryResult<GetSleepDataQuery, GetSleepDataQueryVariables>;
+export const CreateSleepDataDocument = gql`
+    mutation createSleepData($totalHours: Float, $didDream: Boolean, $anxiety: Float, $sleepQuality: Float, $caffeine: Float, $melatonin: Float, $date: DateTime!) {
+  createSleepData(
+    options: {totalHours: $totalHours, didDream: $didDream, anxiety: $anxiety, sleepQuality: $sleepQuality, caffeine: $caffeine, melatonin: $melatonin, date: $date}
+  ) {
+    ...SleepDataFields
   }
-  ${SleepDataFieldsFragmentDoc}
-`;
-export type CreateSleepDataMutationFn = ApolloReactCommon.MutationFunction<
-  CreateSleepDataMutation,
-  CreateSleepDataMutationVariables
->;
+}
+    ${SleepDataFieldsFragmentDoc}`;
+export type CreateSleepDataMutationFn = ApolloReactCommon.MutationFunction<CreateSleepDataMutation, CreateSleepDataMutationVariables>;
 
 /**
  * __useCreateSleepDataMutation__
@@ -463,142 +486,41 @@ export type CreateSleepDataMutationFn = ApolloReactCommon.MutationFunction<
  *   },
  * });
  */
-export function useCreateSleepDataMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<
-    CreateSleepDataMutation,
-    CreateSleepDataMutationVariables
-  >
-) {
-  return ApolloReactHooks.useMutation<
-    CreateSleepDataMutation,
-    CreateSleepDataMutationVariables
-  >(CreateSleepDataDocument, baseOptions);
-}
-export type CreateSleepDataMutationHookResult = ReturnType<
-  typeof useCreateSleepDataMutation
->;
+export function useCreateSleepDataMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateSleepDataMutation, CreateSleepDataMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateSleepDataMutation, CreateSleepDataMutationVariables>(CreateSleepDataDocument, baseOptions);
+      }
+export type CreateSleepDataMutationHookResult = ReturnType<typeof useCreateSleepDataMutation>;
 export type CreateSleepDataMutationResult = ApolloReactCommon.MutationResult<CreateSleepDataMutation>;
-export type CreateSleepDataMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  CreateSleepDataMutation,
-  CreateSleepDataMutationVariables
->;
-export const GetPreferencesDocument = gql`
-  query getPreferences {
-    preferences {
-      ...PreferenceFields
-    }
+export type CreateSleepDataMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateSleepDataMutation, CreateSleepDataMutationVariables>;
+export const MeEmailDocument = gql`
+    query meEmail {
+  me {
+    email
   }
-  ${PreferenceFieldsFragmentDoc}
-`;
+}
+    `;
 
 /**
- * __useGetPreferencesQuery__
+ * __useMeEmailQuery__
  *
- * To run a query within a React component, call `useGetPreferencesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPreferencesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMeEmailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeEmailQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetPreferencesQuery({
+ * const { data, loading, error } = useMeEmailQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetPreferencesQuery(
-  baseOptions?: ApolloReactHooks.QueryHookOptions<
-    GetPreferencesQuery,
-    GetPreferencesQueryVariables
-  >
-) {
-  return ApolloReactHooks.useQuery<
-    GetPreferencesQuery,
-    GetPreferencesQueryVariables
-  >(GetPreferencesDocument, baseOptions);
-}
-export function useGetPreferencesLazyQuery(
-  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
-    GetPreferencesQuery,
-    GetPreferencesQueryVariables
-  >
-) {
-  return ApolloReactHooks.useLazyQuery<
-    GetPreferencesQuery,
-    GetPreferencesQueryVariables
-  >(GetPreferencesDocument, baseOptions);
-}
-export type GetPreferencesQueryHookResult = ReturnType<
-  typeof useGetPreferencesQuery
->;
-export type GetPreferencesLazyQueryHookResult = ReturnType<
-  typeof useGetPreferencesLazyQuery
->;
-export type GetPreferencesQueryResult = ApolloReactCommon.QueryResult<
-  GetPreferencesQuery,
-  GetPreferencesQueryVariables
->;
-export const CreatePreferencesDocument = gql`
-  mutation createPreferences(
-    $trackCaffeine: Boolean
-    $trackAnxiety: Boolean
-    $trackDreams: Boolean
-    $trackMelatonin: Boolean
-  ) {
-    createPreferences(
-      options: {
-        trackCaffeine: $trackCaffeine
-        trackAnxiety: $trackAnxiety
-        trackDreams: $trackDreams
-        trackMelatonin: $trackMelatonin
+export function useMeEmailQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeEmailQuery, MeEmailQueryVariables>) {
+        return ApolloReactHooks.useQuery<MeEmailQuery, MeEmailQueryVariables>(MeEmailDocument, baseOptions);
       }
-    ) {
-      ...PreferenceFields
-    }
-  }
-  ${PreferenceFieldsFragmentDoc}
-`;
-export type CreatePreferencesMutationFn = ApolloReactCommon.MutationFunction<
-  CreatePreferencesMutation,
-  CreatePreferencesMutationVariables
->;
-
-/**
- * __useCreatePreferencesMutation__
- *
- * To run a mutation, you first call `useCreatePreferencesMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreatePreferencesMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createPreferencesMutation, { data, loading, error }] = useCreatePreferencesMutation({
- *   variables: {
- *      trackCaffeine: // value for 'trackCaffeine'
- *      trackAnxiety: // value for 'trackAnxiety'
- *      trackDreams: // value for 'trackDreams'
- *      trackMelatonin: // value for 'trackMelatonin'
- *   },
- * });
- */
-export function useCreatePreferencesMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<
-    CreatePreferencesMutation,
-    CreatePreferencesMutationVariables
-  >
-) {
-  return ApolloReactHooks.useMutation<
-    CreatePreferencesMutation,
-    CreatePreferencesMutationVariables
-  >(CreatePreferencesDocument, baseOptions);
-}
-export type CreatePreferencesMutationHookResult = ReturnType<
-  typeof useCreatePreferencesMutation
->;
-export type CreatePreferencesMutationResult = ApolloReactCommon.MutationResult<CreatePreferencesMutation>;
-export type CreatePreferencesMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  CreatePreferencesMutation,
-  CreatePreferencesMutationVariables
->;
+export function useMeEmailLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeEmailQuery, MeEmailQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MeEmailQuery, MeEmailQueryVariables>(MeEmailDocument, baseOptions);
+        }
+export type MeEmailQueryHookResult = ReturnType<typeof useMeEmailQuery>;
+export type MeEmailLazyQueryHookResult = ReturnType<typeof useMeEmailLazyQuery>;
+export type MeEmailQueryResult = ApolloReactCommon.QueryResult<MeEmailQuery, MeEmailQueryVariables>;
