@@ -18,6 +18,7 @@ import {
   createAccessToken
 } from '../helper/auth/auth';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
+import { logout } from '../../../frontend/src/helper/login'
 
 @ObjectType()
 class SafeUser {
@@ -27,7 +28,6 @@ class SafeUser {
 
 @Resolver()
 export class UserResolver {
-  
   @Mutation(() => String)
   async addUser(
     @Arg('firstname') firstname: string,
@@ -63,73 +63,75 @@ export class UserResolver {
     return createAccessToken(user);
   }
 
-
   //  CHANGE EMAIL (used by AccountSettings.tsx)
   @Mutation(() => String)
   async changeEmail(
-    @Arg('email') email: string, 
-    @Arg('newEmail') newEmail: string, 
+    @Arg('email') email: string,
+    @Arg('newEmail') newEmail: string,
     @Ctx() context: ContextType
-  ): Promise<string> { 
+  ): Promise<string> {
+    const repository = getConnection().getRepository(User);
+    const alreadyExists = await repository.findOne({ email: newEmail });
 
-    const repository = getConnection().getRepository(User); 
-    const alreadyExists = await repository.findOne({ email: newEmail }); 
-
-    if( alreadyExists ) { 
-      console.log('email already exists'); 
-      throw new UserInputError('This email is already being used for an account.');
-    } 
-    
-    else { 
-      const currentUser = await repository.findOne( { email: email });  //find User with <oldEmail> and change to <newEmail>
-      if( currentUser ) {
-       // const newUser = currentUser; 
-       // newUser.email = newEmail;
-        const userUpdate = await repository.update( {id: currentUser.id }, { email: newEmail });
-        //repository.remove(currentUser); 
+    if (alreadyExists) {
+      console.log('email already exists');
+      throw new UserInputError(
+        'This email is already being used for an account.'
+      );
+    } else {
+      const currentUser = await repository.findOne({ email: email }); //find User with <oldEmail> and change to <newEmail>
+      if (currentUser) {
+        // const newUser = currentUser;
+        // newUser.email = newEmail;
+        const userUpdate = await repository.update(
+          { id: currentUser.id },
+          { email: newEmail }
+        );
+        //repository.remove(currentUser);
         //console.log('New Email Set to: ' , userUpdate.email);
-        sendRefreshToken(context.res, createAccessToken( currentUser ));
-        return createAccessToken( currentUser );
-      } else { 
-        console.log('Could not find user with email', email)
-        throw new UserInputError('Sorry, it seems there was an error.'); 
+        sendRefreshToken(context.res, createAccessToken(currentUser));
+        return createAccessToken(currentUser);
+      } else {
+        console.log('Could not find user with email', email);
+        throw new UserInputError('Sorry, it seems there was an error.');
       }
     }
-  }; 
-
+  }
 
   //  CHANGE PASSWORD (used by AccountSettings.tsx)
-  @Mutation(() => String) 
+  @Mutation(() => String)
   async changePassword(
-    @Arg('password') password: string, 
+    @Arg('password') password: string,
     @Ctx() context: ContextType
-  ): Promise<string> { 
-    const repository = getConnection().getRepository(User); 
-    const user = await repository.findOne(context.me!.id); 
+  ): Promise<string> {
+    const repository = getConnection().getRepository(User);
+    const user = await repository.findOne(context.me!.id);
     if (!user) {
       throw new AuthenticationError('Invalid user.');
     }
-    await repository.update( { id: user.id }, { password: password }); 
-    return 'change password returned value'
+    console.log( user.email, user.password ); 
+    const hashedPassword = await bcrypt.hash(password, 10); // encrypting password
+    await repository.update({ id: user.id }, { password: hashedPassword });
+    console.log( user.email, user.password ); 
+    sendRefreshToken(context.res, createAccessToken( user ));
+    return createAccessToken( user );
+    return 'change password returned value';
   }
 
   @Mutation(() => String)
-  async deleteAccount(
-    @Ctx() context: ContextType
-  ): Promise<string>{
-    const repository = getConnection().getRepository(User); 
-    const user = await repository.findOne(context.me!.id); 
+  async deleteAccount(@Ctx() context: ContextType): Promise<string> {
+    const repository = getConnection().getRepository(User);
+    const user = await repository.findOne(context.me!.id);
     if (!user) {
       throw new AuthenticationError('Invalid user.');
     }
-    //TODO: 
+    //TODO:
     //logout user
     //get rid of token (i think?)
     //delete user account
-    await repository.delete(user); 
+    await repository.delete(user);
     return 'delete account returned value';
   }
-
 
   @Mutation(() => String)
   async loginUser(

@@ -77,8 +77,6 @@ function Login() {
     }
   };
 
-
-
   return (
     //              HTML (always goes inside of return statement)
 
@@ -98,7 +96,7 @@ function Login() {
               placeholder="Enter email"
               onChange={(event) => setEmail(event.target.value)}
               value={email}
-            />
+            /> 
             <label htmlFor="inputPassword" className="sr-only">
               Password
             </label>
@@ -118,17 +116,17 @@ function Login() {
             </label>
           )}
           <div id="idParent">
-            <div id="idChild">
-              <button className="button btn btn-md btn-primary" type="submit">
+            <div id="idChild" className="text-center">
+              <button className="button btn mb-4 btn-primary" type="submit">
                 Sign in
               </button>
             </div>
 
-            <div id="idChild">
+            {/*<div id="idChild">
               <Link className="button btn btn-sm btn-primary" to="/register">
                 Create Account
               </Link>
-            </div>
+          </div>*/}
           </div>
         </form>
       </div>
