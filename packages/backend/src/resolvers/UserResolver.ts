@@ -51,6 +51,7 @@ export class UserResolver {
       lastname,
       email,
       password: hashedPassword, // encrypted
+      preferences: [],
       sleepData: []
     });
 
@@ -109,13 +110,14 @@ export class UserResolver {
     if (!user) {
       throw new AuthenticationError('Invalid user.');
     }
+
     console.log( user.email, user.password ); 
     const hashedPassword = await bcrypt.hash(password, 10); // encrypting password
     await repository.update({ id: user.id }, { password: hashedPassword });
     console.log( user.email, user.password ); 
     sendRefreshToken(context.res, createAccessToken( user ));
     return createAccessToken( user );
-    return 'change password returned value';
+
   }
 
   @Mutation(() => String)

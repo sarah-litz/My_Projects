@@ -1,107 +1,136 @@
-import React, { FormEvent } from 'react';
-// import useState from React too later
+import React, { FormEvent, useState } from 'react';
 import './../App.css';
-import { Container, Form, Button, FormGroup } from 'react-bootstrap';
+import { Container, Form } from 'react-bootstrap';
 import { Layout } from '../components/Layout';
 
-var AlwaysAsk = {
-  prompt: "We'll always try to track a couple of items:",
-  qOne: 'Hours of sleep in a night',
-  qTwo: 'How well did you sleep last night?'
-};
+export const UserDataSettings: React.FC = () => {
+  const [trackCaffeine, setTrackCaffeine] = useState('');
+  const [trackBedtime, setTrackBedtime] = useState('');
+  const [trackDreams, setTrackDreams] = useState('');
+  const [trackMelatonin, setTrackMelatonin] = useState('');
 
-var SometimesAsk = {
-  prompt: "Here are the other metrics you've opted into:",
-  qOne: 'Caffeine intake during the day',
-  qTwo: 'What time did you go to sleep last night?',
-  qThree: 'Did you have dreams?',
-  qFour: 'Did you take melatonin?',
-  qFive: 'Rate your stress.',
-  toggle: true
-};
-
-// const keys = Object.keys(SometimesAsk);
-// const items : any[]=[];
-// for (let key of keys){
-//     items.push(
-//       <FormGroup>
-//           <p>{key}</p>
-//           {/* {this.props.toggle && <button>Stop Tracking</button>} */}
-//       </FormGroup>
-//     )
-// }
-
-export const UserDataSettings: React.FC<{
-  prompt?: string;
-}> = () => {
+  const selectData = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
   return (
     <Layout>
-      <div className="container">
-        <h1>My Habits</h1>
-        <p className="lead">Here are the metrics you're currently tracking:</p>
-        <SettingsCard {...AlwaysAsk}></SettingsCard>
-        <SettingsCard {...SometimesAsk}></SettingsCard>
-        <p>
-          <Button variant="primary">Add Metrics</Button>
-        </p>
+      <div className="register mycard card col-12 col-lg-4 login-card hv-center">
+        <div className="container">
+          <h1>My Habits</h1>
+          <p className="lead">
+            Here are the metrics you're currently tracking:
+          </p>
+          <Container>
+            <p className="h2">We'll always try to track a couple of items:</p>
+            <div className="form-group text-center">
+              <p>
+                <b>Hours of sleep in a night</b>
+              </p>
+            </div>
+            <div className="form-group text-center">
+              <p>
+                <b>How well did you sleep last night?</b>
+              </p>
+            </div>
+          </Container>
+          <Container>
+            <p className="lead">
+              Here are the other metrics you've opted into:
+            </p>
+            <Form onSubmit={selectData}>
+              <div className="form-group text-center">
+                <p>
+                  <b>Caffeine intake during the day</b>
+                </p>
+                <div className="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    className="custom-control-input"
+                    id="customSwitches"
+                    value={trackCaffeine}
+                    onChange={(event) => setTrackCaffeine(event.target.value)}
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor="customSwitch1"
+                  >
+                    Track this metric
+                  </label>
+                </div>
+              </div>
+              <div className="form-group text-center">
+                <p>
+                  <b>Hours of sleep each night</b>
+                </p>
+                <div className="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    className="custom-control-input"
+                    id="customSwitch2"
+                    value={trackBedtime}
+                    onChange={(event) => setTrackBedtime(event.target.value)}
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor="customSwitch2"
+                  >
+                    Track this metric
+                  </label>
+                </div>
+              </div>
+
+              <div className="form-group text-center">
+                <p>
+                  <b>Dreaming</b>
+                </p>
+                <div className="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    className="custom-control-input"
+                    id="customSwitch3"
+                    value={trackDreams}
+                    onChange={(event) => setTrackDreams(event.target.value)}
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor="customSwitch3"
+                  >
+                    Track this metric
+                  </label>
+                </div>
+              </div>
+              <div className="form-group text-center">
+                <p>
+                  <b>Melatonin use</b>
+                </p>
+                <div className="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    className="custom-control-input"
+                    id="customSwitch4"
+                    value={trackMelatonin}
+                    onChange={(event) => setTrackMelatonin(event.target.value)}
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor="customSwitch4"
+                  >
+                    Track this metric
+                  </label>
+                </div>
+              </div>
+              <button
+                className="button btn btn-md btn-primary"
+                type="submit"
+                value="Submit"
+              >
+                Store Settings
+              </button>
+            </Form>
+          </Container>
+        </div>
       </div>
     </Layout>
   );
 };
-
-const selectData = async (event: FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-};
-
-class SettingsCard extends React.Component<{
-  toggle?: boolean;
-  qOne?: string;
-  qTwo?: string;
-  qThree?: string;
-  qFour?: string;
-  qFive?: string;
-  prompt?: string;
-}> {
-  render() {
-    return (
-      <Container>
-        <p className="h2">{this.props.prompt}</p>
-        <div className="container">
-          <Form onSubmit={selectData}>
-            <SleepMetrics toggle={this.props.toggle}>
-              {this.props.qOne}
-            </SleepMetrics>
-            <SleepMetrics toggle={this.props.toggle}>
-              {this.props.qTwo}
-            </SleepMetrics>
-            <SleepMetrics toggle={this.props.toggle}>
-              {this.props.qThree}
-            </SleepMetrics>
-            <SleepMetrics toggle={this.props.toggle}>
-              {this.props.qFour}
-            </SleepMetrics>
-            <SleepMetrics toggle={this.props.toggle}>
-              {this.props.qFive}
-            </SleepMetrics>
-          </Form>
-        </div>
-      </Container>
-    );
-  }
-}
-
-class SleepMetrics extends React.Component<{
-  toggle?: boolean;
-  qOne?: string;
-}> {
-  render() {
-    return (
-      <Container>
-        <FormGroup>
-          <p>{this.props.children}</p>
-          {this.props.toggle && <button>Stop Tracking</button>}
-        </FormGroup>
-      </Container>
-    );
-  }
-}
+export default UserDataSettings;

@@ -6,7 +6,7 @@ import Login from './components/Login';
 import DataLog from './components/DataLog';
 import { client } from './store/apollo';
 import { HomePage } from './pages/Home';
-import { UserDataSettings } from './pages/UserDataSettings';
+import UserDataSettings from './pages/UserDataSettings';
 import Register from './components/Register';
 import AccountSettings from './pages/AccountSettings';
 import Visualize from './pages/DataVis';

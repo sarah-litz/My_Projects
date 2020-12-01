@@ -42,6 +42,10 @@ export const Layout: React.FC = ({ children }) => {
             </>
           )}
 
+          <LinkContainer to="/preferences">
+            <Nav.Link>Preferences</Nav.Link>
+          </LinkContainer>
+
           {!loggedIn && (
             <>
               <LinkContainer to="/login">
