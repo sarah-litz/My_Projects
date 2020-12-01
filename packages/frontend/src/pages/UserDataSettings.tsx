@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import './../App.css';
+// import './../App.css';
 import { Container, Form, Button, FormGroup } from 'react-bootstrap';
 import { Layout } from '../components/Layout';
 
@@ -38,16 +38,16 @@ export const UserDataSettings: React.FC = () => {
               Here are the other metrics you've opted into:
             </p>
             <Form onSubmit={selectData}>
+
               <div className="form-group text-center">
                 <p>
                   <b>Caffeine intake during the day</b>
                 </p>
-
                 <div className="custom-control custom-switch">
                   <input
                     type="checkbox"
                     className="custom-control-input"
-                    id="customSwitches"
+                    id="customSwitch1"
                     value={trackCaffeine}
                     onChange={(event) => setTrackCaffeine(event.target.value)}
                   />
@@ -59,6 +59,7 @@ export const UserDataSettings: React.FC = () => {
                   </label>
                 </div>
               </div>
+
               <div className="form-group text-center">
                 <p>
                   <b>Hours of sleep each night</b>
