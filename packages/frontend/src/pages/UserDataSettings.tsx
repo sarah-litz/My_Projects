@@ -42,6 +42,7 @@ export const UserDataSettings: React.FC = () => {
                 <p>
                   <b>Caffeine intake during the day</b>
                 </p>
+
                 <div className="custom-control custom-switch">
                   <input
                     type="checkbox"
