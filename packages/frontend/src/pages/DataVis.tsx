@@ -9,7 +9,8 @@ import {
   VictoryScatter,
   VictoryLine,
   VictoryLegend,
-  VictoryLabel
+  VictoryLabel,
+  VictoryAxis
 } from 'victory';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
@@ -94,6 +95,13 @@ const Visualization: React.FC = () => {
         <Row>
           <Col>
             <VictoryChart>
+              <VictoryAxis dependentAxis
+                //label={"Hours of Sleep"} 
+                
+              />
+              <VictoryAxis 
+                label={"Day of Week"}  
+              />
               <VictoryLabel
                 text="Hours Slept"
                 x={225}
@@ -101,71 +109,58 @@ const Visualization: React.FC = () => {
                 textAnchor="middle"
               />
               <VictoryLine
-                interpolation="natural" // can make the plot smooth
-                labels={({ datum }) => datum.y} //label points
+                //interpolation="natural" // can make the plot smooth
+                //labels={({ datum }) => datum.y} //label points
                 data={result}
                 style={{
                   data: {
                     stroke: '#02B875', // this can change line color
-                    strokeWidth: 5 // width of line
+                    strokeWidth: 3 // width of line
                   }
                 }}
               />
+              
             </VictoryChart>
           </Col>
           <Col>
             <VictoryChart>
+            <VictoryAxis dependentAxis
+                //label={"Hours of Sleep"}  
+              />
+              <VictoryAxis 
+                label={"Sleep Quality"}  
+              />
               <VictoryLabel
                 text="Sleep Quality vs Average Hours of Sleep"
                 x={225}
                 y={30}
                 textAnchor="middle"
               />
-
-              <VictoryLegend
-                x={125}
-                y={50}
-                centerTitle
-                orientation="horizontal"
-                gutter={20}
-                style={{
-                  border: { stroke: 'black' },
-                  title: { fontSize: 10 }
-                }}
-                data={[
-                  { name: 'Good sleep quality', symbol: { fill: '#02B875' } },
-                  { name: 'Poor sleep quality', symbol: { fill: '#A5685B' } }
-                ]}
-              />
+            
               <VictoryLine
-                interpolation="natural" // can make the plot smooth
-                labels={({ datum }) => datum.y} //label points
+                //interpolation="natural" // can make the plot smooth
+                //labels={({ datum }) => datum.y} //label points
                 data={sleepQuality}
                 style={{
                   data: {
                     stroke: '#02B875', // this can change line color
-                    strokeWidth: 1 // width of line
+                    strokeWidth: 3 // width of line
                   }
                 }}
               />
 
-              <VictoryLine
-                interpolation="natural" // can make the plot smooth
-                labels={({ datum }) => datum.y} //label points
-                data={sleepQuality}
-                style={{
-                  data: {
-                    stroke: '#A5685B', // this can change line color
-                    strokeWidth: 1 // width of line
-                  }
-                }}
-              />
             </VictoryChart>
           </Col>
         </Row>
         <Row>
           <Col>
             <VictoryChart>
+            <VictoryAxis dependentAxis
+                //label={"Hours of Sleep"}  
+              />
+              <VictoryAxis 
+                label={"Cups of Coffee"}  
+              />
               <VictoryLabel
                 text="Cups of Coffee vs Hours of Sleep"
                 x={225}
@@ -177,7 +172,7 @@ const Visualization: React.FC = () => {
                 style={{
                   data: {
                     stroke: '#02B875', // this can change line color
-                    strokeWidth: 5 // width of line
+                    strokeWidth: 3 // width of line
                   }
                 }}
               />
@@ -185,6 +180,12 @@ const Visualization: React.FC = () => {
           </Col>
           <Col>
             <VictoryChart>
+            <VictoryAxis dependentAxis
+                //label={"Hours of Sleep"}  
+              />
+              <VictoryAxis 
+                label={"Day of Week"}  
+              />
               <VictoryLabel
                 text="Dreaming vs Average Hours of Sleep"
                 x={225}
@@ -208,25 +209,25 @@ const Visualization: React.FC = () => {
                 ]}
               />
               <VictoryLine
-                interpolation="natural" // can make the plot smooth
-                labels={({ datum }) => datum.y} //label points
+                //interpolation="natural" // can make the plot smooth
+                //labels={({ datum }) => datum.y} //label points
                 data={dreamSleep}
                 style={{
                   data: {
                     stroke: '#02B875', // this can change line color
-                    strokeWidth: 1 // width of line
+                    strokeWidth: 3 // width of line
                   }
                 }}
               />
 
               <VictoryLine
-                interpolation="natural" // can make the plot smooth
-                labels={({ datum }) => datum.y} //label points
+                //interpolation="natural" // can make the plot smooth
+                //labels={({ datum }) => datum.y} //label points
                 data={noDreamSleep}
                 style={{
                   data: {
                     stroke: '#A5685B', // this can change line color
-                    strokeWidth: 1 // width of line
+                    strokeWidth: 3 // width of line
                   }
                 }}
               />
@@ -237,6 +238,12 @@ const Visualization: React.FC = () => {
         <Row>
           <Col>
             <VictoryChart>
+            <VictoryAxis dependentAxis
+                //label={"Hours of Sleep"}  
+              />
+              <VictoryAxis 
+                label={"Anxiety Level"}  
+              />
               <VictoryLabel
                 text="Anxiety vs Average Hours of Sleep"
                 x={225}
@@ -244,48 +251,30 @@ const Visualization: React.FC = () => {
                 textAnchor="middle"
               />
 
-              <VictoryLegend
-                x={125}
-                y={50}
-                centerTitle
-                orientation="horizontal"
-                gutter={20}
-                style={{
-                  border: { stroke: 'black' },
-                  title: { fontSize: 10 }
-                }}
-                data={[
-                  { name: 'Low anxiety', symbol: { fill: '#02B875' } },
-                  { name: 'High anxiety', symbol: { fill: '#A5685B' } }
-                ]}
-              />
+
               <VictoryLine
-                interpolation="natural" // can make the plot smooth
-                labels={({ datum }) => datum.y} //label points
+                //interpolation="natural" // can make the plot smooth
+                //labels={({ datum }) => datum.y} //label points
                 data={anxiety}
                 style={{
                   data: {
                     stroke: '#02B875', // this can change line color
-                    strokeWidth: 1 // width of line
+                    strokeWidth: 3 // width of line
                   }
                 }}
               />
 
-              <VictoryLine
-                interpolation="natural" // can make the plot smooth
-                labels={({ datum }) => datum.y} //label points
-                data={anxiety}
-                style={{
-                  data: {
-                    stroke: '#A5685B', // this can change line color
-                    strokeWidth: 1 // width of line
-                  }
-                }}
-              />
+
             </VictoryChart>
           </Col>
           <Col>
             <VictoryChart>
+            <VictoryAxis dependentAxis
+                //label={"Hours of Sleep"}  
+              />
+              <VictoryAxis 
+                label={"Melatonin Intake (mg)"}  
+              />
               <VictoryLabel
                 text="Melatonin vs Average Hours of Sleep"
                 x={225}
@@ -293,44 +282,18 @@ const Visualization: React.FC = () => {
                 textAnchor="middle"
               />
 
-              <VictoryLegend
-                x={125}
-                y={50}
-                centerTitle
-                orientation="horizontal"
-                gutter={20}
-                style={{
-                  border: { stroke: 'black' },
-                  title: { fontSize: 10 }
-                }}
-                data={[
-                  { name: 'Longer sleep', symbol: { fill: '#02B875' } },
-                  { name: 'Shorter sleep', symbol: { fill: '#A5685B' } }
-                ]}
-              />
               <VictoryLine
-                interpolation="natural" // can make the plot smooth
-                labels={({ datum }) => datum.y} //label points
+                //interpolation="natural" // can make the plot smooth
+                //labels={({ datum }) => datum.y} //label points
                 data={melatonin}
                 style={{
                   data: {
                     stroke: '#02B875', // this can change line color
-                    strokeWidth: 1 // width of line
+                    strokeWidth: 3 // width of line
                   }
                 }}
               />
 
-              <VictoryLine
-                interpolation="natural" // can make the plot smooth
-                labels={({ datum }) => datum.y} //label points
-                data={melatonin}
-                style={{
-                  data: {
-                    stroke: '#A5685B', // this can change line color
-                    strokeWidth: 1 // width of line
-                  }
-                }}
-              />
             </VictoryChart>
           </Col>
         </Row>

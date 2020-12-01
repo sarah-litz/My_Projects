@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import './Login.css';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useLoginMutation } from '../generated/types-and-hooks';
 import { token } from '../store/cache';
 import { Layout } from '../components/Layout';
