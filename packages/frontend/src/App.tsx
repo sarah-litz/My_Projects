@@ -10,7 +10,6 @@ import UserDataSettings from './pages/UserDataSettings';
 import Register from './components/Register';
 import AccountSettings from './pages/AccountSettings';
 import Visualize from './pages/DataVis';
-import { LoggedInHome } from './pages/HomeLoggedIn';
 import { Logout } from './components/Logout';
 import { PrivateRoute } from './components/PrivateRoute';
 
@@ -22,13 +21,7 @@ function App() {
           {/* Like a regular switch statement for routes */}
           <Switch>
             <Route exact path="/">
-              {/* <HomePage /> */}
               <HomePage />
-            </Route>
-
-            <Route exact path="/home">
-              {/* <HomePage /> */}
-              <LoggedInHome />
             </Route>
 
             <Route exact path="/login">
