@@ -7,4 +7,5 @@ export const login = () => {
 export const logout = () => {
   localStorage.setItem('loggedIn', 'false');
   client.resetStore();
+  console.log("logout called in login.ts")
 };
