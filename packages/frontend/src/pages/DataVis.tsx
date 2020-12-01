@@ -95,13 +95,11 @@ const Visualization: React.FC = () => {
         <Row>
           <Col>
             <VictoryChart>
-              <VictoryAxis dependentAxis
-                //label={"Hours of Sleep"} 
-                
+              <VictoryAxis
+                dependentAxis
+                //label={"Hours of Sleep"}
               />
-              <VictoryAxis 
-                label={"Day of Week"}  
-              />
+              <VictoryAxis label={'Day of Week'} />
               <VictoryLabel
                 text="Hours Slept"
                 x={225}
@@ -119,24 +117,22 @@ const Visualization: React.FC = () => {
                   }
                 }}
               />
-              
             </VictoryChart>
           </Col>
           <Col>
             <VictoryChart>
-            <VictoryAxis dependentAxis
-                //label={"Hours of Sleep"}  
+              <VictoryAxis
+                dependentAxis
+                //label={"Hours of Sleep"}
               />
-              <VictoryAxis 
-                label={"Sleep Quality"}  
-              />
+              <VictoryAxis label={'Sleep Quality'} />
               <VictoryLabel
                 text="Sleep Quality vs Average Hours of Sleep"
                 x={225}
                 y={30}
                 textAnchor="middle"
               />
-            
+
               <VictoryLine
                 //interpolation="natural" // can make the plot smooth
                 //labels={({ datum }) => datum.y} //label points
@@ -148,19 +144,17 @@ const Visualization: React.FC = () => {
                   }
                 }}
               />
-
             </VictoryChart>
           </Col>
         </Row>
         <Row>
           <Col>
             <VictoryChart>
-            <VictoryAxis dependentAxis
-                //label={"Hours of Sleep"}  
+              <VictoryAxis
+                dependentAxis
+                //label={"Hours of Sleep"}
               />
-              <VictoryAxis 
-                label={"Cups of Coffee"}  
-              />
+              <VictoryAxis label={'Cups of Coffee'} />
               <VictoryLabel
                 text="Cups of Coffee vs Hours of Sleep"
                 x={225}
@@ -180,12 +174,11 @@ const Visualization: React.FC = () => {
           </Col>
           <Col>
             <VictoryChart>
-            <VictoryAxis dependentAxis
-                //label={"Hours of Sleep"}  
+              <VictoryAxis
+                dependentAxis
+                //label={"Hours of Sleep"}
               />
-              <VictoryAxis 
-                label={"Day of Week"}  
-              />
+              <VictoryAxis label={'Day of Week'} />
               <VictoryLabel
                 text="Dreaming vs Average Hours of Sleep"
                 x={225}
@@ -238,19 +231,17 @@ const Visualization: React.FC = () => {
         <Row>
           <Col>
             <VictoryChart>
-            <VictoryAxis dependentAxis
-                //label={"Hours of Sleep"}  
+              <VictoryAxis
+                dependentAxis
+                //label={"Hours of Sleep"}
               />
-              <VictoryAxis 
-                label={"Anxiety Level"}  
-              />
+              <VictoryAxis label={'Anxiety Level'} />
               <VictoryLabel
                 text="Anxiety vs Average Hours of Sleep"
                 x={225}
                 y={30}
                 textAnchor="middle"
               />
-
 
               <VictoryLine
                 //interpolation="natural" // can make the plot smooth
@@ -263,18 +254,15 @@ const Visualization: React.FC = () => {
                   }
                 }}
               />
-
-
             </VictoryChart>
           </Col>
           <Col>
             <VictoryChart>
-            <VictoryAxis dependentAxis
-                //label={"Hours of Sleep"}  
+              <VictoryAxis
+                dependentAxis
+                //label={"Hours of Sleep"}
               />
-              <VictoryAxis 
-                label={"Melatonin Intake (mg)"}  
-              />
+              <VictoryAxis label={'Melatonin Intake (mg)'} />
               <VictoryLabel
                 text="Melatonin vs Average Hours of Sleep"
                 x={225}
@@ -293,7 +281,6 @@ const Visualization: React.FC = () => {
                   }
                 }}
               />
-
             </VictoryChart>
           </Col>
         </Row>
