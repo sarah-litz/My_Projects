@@ -5,13 +5,13 @@
 Install the following:
 
 - [nodejs](https://nodejs.org/en/download/)
-  - This will install node (which runs javascript on your computer) and [npm](https://docs.npmjs.com/about-npm/) a tool for installing javascript libraries.
+  - This will install node (which runs javascript on your computer) and [yarn](https://classic.yarnpkg.com/en/docs/install/) a tool for installing javascript libraries.
 
 Then run the following to install all the libraries for the frontend and backend:
 
 ```
-npm install
-npm run bootstrap
+yarn install
+yarn bootstrap
 ```
 
 **Note:** This setup is using lerna to manage multiple packages (known as a monorepo). Learn more [here](https://github.com/lerna/lerna).
@@ -21,7 +21,7 @@ npm run bootstrap
 Then in this root folder run the following to run both the frontend and backend.
 
 ```
-npm start
+yarn start
 ```
 
 Then open up `localhost:3000` in the browser for the frontend or `localhost:4000` for the backend!
