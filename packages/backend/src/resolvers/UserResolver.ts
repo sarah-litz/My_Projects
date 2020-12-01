@@ -19,6 +19,7 @@ import {
 } from '../helper/auth/auth';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
 import { logout } from '../../../frontend/src/helper/login';
+import Preferences from '../models/Preferences';
 
 @ObjectType()
 class SafeUser {
@@ -46,12 +47,20 @@ export class UserResolver {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10); // encrypting password
+    const prefs = new Preferences();
+
+    // Initialize all of these to true at user creation
+    prefs.trackAnxiety = true;
+    prefs.trackCaffeine = true;
+    prefs.trackDreams = true;
+    prefs.trackMelatonin = true;
+
     const userValues = repository.create({
       firstname,
       lastname,
       email,
       password: hashedPassword, // encrypted
-      preferences: [],
+      preferences: prefs,
       sleepData: []
     });
 

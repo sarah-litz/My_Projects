@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from 'type-graphql';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './User';
 
 @ObjectType()
@@ -25,6 +25,6 @@ export default class Preferences {
   @Column({ nullable: true })
   public trackMelatonin?: boolean;
 
-  @ManyToOne(() => User, (user) => user.preferences)
+  @OneToOne(() => User, (user) => user.preferences)
   public user!: User;
 }

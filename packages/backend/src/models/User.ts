@@ -1,4 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn
+} from 'typeorm';
 import Preferences from './Preferences';
 import SleepDatum from './SleepDatum';
 
@@ -22,8 +28,8 @@ export class User {
   @Column({ type: 'int', default: 0 })
   public count!: number;
 
-  @OneToMany(() => Preferences, (preferences) => preferences.user)
-  public preferences!: Preferences[];
+  @OneToOne(() => Preferences, (preferences) => preferences.user)
+  public preferences!: Preferences;
 
   @OneToMany(() => SleepDatum, (datum) => datum.user)
   public sleepData!: SleepDatum[];

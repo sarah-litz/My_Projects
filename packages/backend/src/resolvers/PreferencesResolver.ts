@@ -14,26 +14,10 @@ import { User } from '../models/User';
 import { ContextType } from '../type';
 import { AuthenticationError } from 'apollo-server-express';
 
-// Used to create in sleep data (notice this does not the id and user since we handle creating that)
-@InputType()
-class PreferencesCreateInput {
-  @Field({ nullable: true })
-  public trackCaffeine?: boolean;
-
-  @Field({ nullable: true })
-  public trackAnxiety?: boolean;
-
-  @Field({ nullable: true })
-  public trackDreams?: boolean;
-
-  @Field({ nullable: true })
-  public trackMelatonin?: boolean;
-}
-
 @Resolver(() => Preferences)
 export class PreferencesResolver {
   @Authorized()
-  @Query(() => [Preferences])
+  @Query(() => Preferences)
   async preferences(
     @Ctx() context: ContextType // who is current user
   ): Promise<Preferences[]> {
@@ -48,11 +32,13 @@ export class PreferencesResolver {
 
   @Authorized()
   @Mutation(() => Preferences, { nullable: true })
-  async createPreferences(
-    @Arg('options', () => PreferencesCreateInput)
-    options: PreferencesCreateInput,
+  async updatePreferences(
+    @Arg('newTrackAnxiety') newTrackAnxiety: boolean,
+    @Arg('newTrackCaffiene') newTrackCaffiene: boolean,
+    @Arg('newTrackDreams') newTrackDreams: boolean,
+    @Arg('newTrackMelatonin') newTrackMelatonin: boolean,
     @Ctx() context: ContextType // who is current user
-  ): Promise<Preferences> {
+  ): Promise<void> {
     const userRepository = getConnection().getRepository(User);
     const user = await userRepository.findOne(context.me!.id);
     //get user by id: if not, throw error
@@ -60,14 +46,17 @@ export class PreferencesResolver {
       throw new AuthenticationError('User not found ahhhh!');
     }
 
-    //link user to preferences
     const repository = getConnection().getRepository(Preferences);
-    const data = repository.create({
-      ...options,
-      user
-    });
 
-    //save to database
-    return await repository.save(data);
+    await repository.update({ id: user.id }, { trackAnxiety: newTrackAnxiety });
+    await repository.update(
+      { id: user.id },
+      { trackCaffeine: newTrackCaffiene }
+    );
+    await repository.update({ id: user.id }, { trackDreams: newTrackDreams });
+    await repository.update(
+      { id: user.id },
+      { trackMelatonin: newTrackMelatonin }
+    );
   }
 }

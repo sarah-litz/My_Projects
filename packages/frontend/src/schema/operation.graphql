@@ -87,6 +87,36 @@ query meEmail {
   }
 }
 
+fragment PreferenceFields on Preferences {
+  id
+  trackDreams
+  trackAnxiety
+  trackCaffeine
+  trackMelatonin
+}
+
+query getPreferences {
+  preferences {
+    ...PreferenceFields
+  }
+}
+
+mutation updatePreferences(
+  $newTrackAnxiety: Boolean!
+  $newTrackCaffiene: Boolean!
+  $newTrackDreams: Boolean!
+  $newTrackMelatonin: Boolean!
+) {
+  updatePreferences(
+    newTrackAnxiety: $newTrackAnxiety
+    newTrackCaffiene: $newTrackCaffiene
+    newTrackDreams: $newTrackDreams
+    newTrackMelatonin: $newTrackMelatonin
+  ) {
+    ...PreferenceFields
+  }
+}
+
 # mutation editSleepData(
 #   $totalHours: Float
 #   $didDream: Boolean
