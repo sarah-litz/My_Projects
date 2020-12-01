@@ -1,6 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import './../App.css';
-import { Container, Form, Button, FormGroup } from 'react-bootstrap';
+import { Container, Form, Button, FormGroup, Card } from 'react-bootstrap';
 import { Layout } from '../components/Layout';
 
 export const UserDataSettings: React.FC = () => {
@@ -14,8 +13,16 @@ export const UserDataSettings: React.FC = () => {
   };
   return (
     <Layout>
-      <div className="register mycard card col-12 col-lg-4 login-card hv-center">
-        <div className="container">
+      <Card
+        style={{
+          background: `radial-gradient(
+           circle,
+           rgba(238, 174, 202, 0.7) 0%,
+           rgba(148, 187, 233, 0.7) 100%
+         )`
+        }}
+      >
+        <Container>
           <h1>My Habits</h1>
           <p className="lead">
             Here are the metrics you're currently tracking:
@@ -128,8 +135,8 @@ export const UserDataSettings: React.FC = () => {
               </button>
             </Form>
           </Container>
-        </div>
-      </div>
+        </Container>
+      </Card>
     </Layout>
   );
 };

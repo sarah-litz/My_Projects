@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import './../App.css';
+// import './../App.css';
 import '../components/Login.css';
 import { Layout } from '../components/Layout';
 import { Form, Button, Collapse, Modal } from 'react-bootstrap';
@@ -15,12 +15,13 @@ import { Redirect } from 'react-router-dom';
 import { logout } from '../helper/login';
 import { useLoginTokenQuery } from '../generated/types-and-hooks';
 
-
 function Settings() {
   //TODO: return values of mutation?? rn they are set to strings and i just return a random word cuz didn't know what to return.
   const history = useHistory();
 
-  const loggedIn = !!useLoginTokenQuery().data?.token || localStorage.getItem('loggedIn') === 'true'; //is user logged in true/false
+  const loggedIn =
+    !!useLoginTokenQuery().data?.token ||
+    localStorage.getItem('loggedIn') === 'true'; //is user logged in true/false
 
   const [changeEmail, { error: emailError }] = useChangeEmailMutation({
     errorPolicy: 'all'
@@ -114,7 +115,7 @@ function Settings() {
       setError('The passwords you entered do not match.');
       return;
     }
-    console.log('validate password called'); 
+    console.log('validate password called');
     if (!error) {
       // await changePassword !
       await changePassword({ variables: { password } });
@@ -125,25 +126,23 @@ function Settings() {
 
   //          DELETE ACCOUNT
   const deleteMyAccount = async (event: FormEvent<HTMLFormElement>) => {
-    console.log('delete my account called'); 
-    if(!loggedIn) { 
-      console.log('you must be logged in to delete your account!'); 
-      return <Redirect to="/" />; 
+    console.log('delete my account called');
+    if (!loggedIn) {
+      console.log('you must be logged in to delete your account!');
+      return <Redirect to="/" />;
     }
-    logout(); 
+    logout();
     await deleteAccount();
     console.log('deleteAccount mutation called.');
     //TODO: success message
-    return <Redirect to="/" />; 
+    return <Redirect to="/" />;
   };
 
-
-    //      LOGOUT AND REDIRECT USER TO HOMEPAGE
-  const Logout = async (event: FormEvent<HTMLFormElement>) => { 
-    logout(); 
+  //      LOGOUT AND REDIRECT USER TO HOMEPAGE
+  const Logout = async (event: FormEvent<HTMLFormElement>) => {
+    logout();
     return <Redirect to="/" />;
-  }; 
-
+  };
 
   return (
     //  HTML
@@ -212,7 +211,7 @@ function Settings() {
               aria-controls="example-collapse-text"
               aria-expanded={openPassword}
             >
-              Change Password 
+              Change Password
             </Button>
             <Collapse in={openPassword}>
               <div>
@@ -294,11 +293,8 @@ function Settings() {
               <Button variant="secondary" onClick={handleClose}>
                 Go Back
               </Button>
-              <form onSubmit = {deleteMyAccount}>
-                <Button
-                  variant="primary"
-                  type="submit"
-                >
+              <form onSubmit={deleteMyAccount}>
+                <Button variant="primary" type="submit">
                   {deleteAccountError && (
                     <Alert variant="danger">{deleteAccountError.message}</Alert>
                   )}
@@ -311,12 +307,11 @@ function Settings() {
         <br></br>
 
         <div>
-          <form onSubmit = {Logout}>
+          <form onSubmit={Logout}>
             <Button variant="light" type="submit">
               Logout
             </Button>
           </form>
-
         </div>
         <br></br>
       </div>
