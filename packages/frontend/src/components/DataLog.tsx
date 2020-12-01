@@ -58,7 +58,6 @@ const UserData: React.FC = () => {
   };
 
   const collectData = async (event: FormEvent<HTMLFormElement>) => {
-    // alert('Your data was recorded.');
     event.preventDefault(); //not sure what this does-- cpy paste from Login.tsx
 
     await createData({
@@ -76,7 +75,6 @@ const UserData: React.FC = () => {
     resetState();
   };
 
-  //follow login in Login.tsx
   return (
     <Layout>
       <Card
@@ -151,6 +149,7 @@ const UserData: React.FC = () => {
               ></ReactBootstrapSlider>
             </div>
             <br></br>
+
             <div className="form-group text-center">
               <p>
                 <b>How much stress did you experience?</b>
@@ -166,18 +165,20 @@ const UserData: React.FC = () => {
                 slideStop={(event) => setAnxiety(event.target.value)}
               ></ReactBootstrapSlider>
             </div>
+            <br></br>
             <div className="form-group text-center">
               <p>
                 <b>How much melatonin did you take?</b>
               </p>
               <p>Units are milligrams.</p>
               <ReactBootstrapSlider
-                min="0.1"
+                min="0"
                 max="12.0"
                 value={melatonin}
                 slideStop={(event) => setMelatonin(event.target.value)}
               ></ReactBootstrapSlider>
             </div>
+
             <div
               style={{
                 display: 'flex',
@@ -202,22 +203,3 @@ const UserData: React.FC = () => {
 };
 
 export default UserData;
-
-// class Slider extends React.Component<{
-//     currentValue?: number;
-//     qOne?: string;
-//   }>{
-//     render() {}
-//         return (<ReactBootstrapSlider
-//             value={this.state.currentValue}
-//             change={this.changeValue}
-//             slideStop={this.changeValue}
-//             step={this.state.step}
-//             max={this.state.max}
-//             min={this.state.min}
-//             orientation="vertical"
-//             reversed={true}
-//             disabled="disabled" />
-//     );
-// }
-// }

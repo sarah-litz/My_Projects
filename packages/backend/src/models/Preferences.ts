@@ -15,7 +15,7 @@ export default class Preferences {
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  public trackBedtime?: boolean;
+  public trackAnxiety?: boolean;
 
   @Field({ nullable: true })
   @Column({ nullable: true })
