@@ -71,7 +71,7 @@ function Settings() {
 
     if (newEmail === '') {
       //empty email field
-      setError('You have not entered a valid email.');
+      setError('Enter an email');
     } else if (!newEmail.match(emailAddressRX)) {
       //entered an invalid email
       setError('You have not entered a valid email.');
