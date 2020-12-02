@@ -62,7 +62,7 @@ function Settings() {
 
   //        CHANGE EMAIL
   const validateEmail = async (event: FormEvent<HTMLFormElement>) => {
-   // event.preventDefault();
+    // event.preventDefault();
     setError(''); //empty error message from any past messages
 
     const emailAddressRX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; //const for regex to validate email
@@ -81,15 +81,14 @@ function Settings() {
       await changeEmail({ variables: { email, newEmail } });
       //update the current user's email, mutation needed.
       console.log(data.me.email); //TODO: not updating user's email here?
-  
+
       /*setEmail(newEmail);
       setNewEmail('');*/
 
-      await logout(); 
+      await logout();
       //history.push("/");
-      //logout(); 
+      //logout();
       return <Redirect to="/" />;
-
     }
   };
 
@@ -116,12 +115,12 @@ function Settings() {
     }
     console.log('new password is valid');
     //if (!error) {
-      await changePassword({ variables: { password } });
-      
-      console.log('changePassword mutation called. ');
-      logout(); 
-      return <Redirect to="/" />;
-      console.log('redirect to home')
+    await changePassword({ variables: { password } });
+
+    console.log('changePassword mutation called. ');
+    logout();
+    return <Redirect to="/" />;
+    console.log('redirect to home');
     //}
   };
 
