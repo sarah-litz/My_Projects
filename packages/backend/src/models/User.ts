@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import Preferences from './Preferences';
 import SleepDatum from './SleepDatum';
 
@@ -27,4 +27,10 @@ export class User {
 
   @OneToMany(() => SleepDatum, (datum) => datum.user)
   public sleepData!: SleepDatum[];
+
+/*  @ManyToOne(() => User , (preferences) => preferences.user , {
+      onDelete: 'CASCADE' 
+  })
+  public user!: User[]; */
+
 }

@@ -47,6 +47,6 @@ export default class SleepDatum {
   @Column({ type: 'date' })
   public date!: Date;
 
-  @ManyToOne(() => User, (user) => user.sleepData)
+  @ManyToOne(() => User, (user) => user.sleepData, {onDelete: 'CASCADE'})
   public user!: User;
 }
