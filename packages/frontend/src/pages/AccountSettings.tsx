@@ -131,8 +131,9 @@ function Settings() {
       console.log('you must be logged in to delete your account!');
       return <Redirect to="/" />;
     }
-    logout();
+
     await deleteAccount();
+    logout();
     console.log('deleteAccount mutation called.');
     //TODO: success message
     return <Redirect to="/" />;

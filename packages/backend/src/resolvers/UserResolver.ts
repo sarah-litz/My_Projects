@@ -123,6 +123,7 @@ export class UserResolver {
     const repository = getConnection().getRepository(User);
     const user = await repository.findOne(context.me!.id);
     if (!user) {
+      console.log('invalid user');
       throw new AuthenticationError('Invalid user.');
     }
     //TODO:
@@ -130,6 +131,7 @@ export class UserResolver {
     //get rid of token (i think?)
     //delete user account
     await repository.delete(user);
+    console.log('repository.delete(user) called'); 
     return 'delete account returned value';
   }
 

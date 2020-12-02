@@ -25,6 +25,6 @@ export default class Preferences {
   @Column({ nullable: true })
   public trackMelatonin?: boolean;
 
-  @ManyToOne(() => User, (user) => user.preferences)
+  @ManyToOne(() => User, (user) => user.preferences, {onDelete: 'CASCADE'})
   public user!: User;
 }
