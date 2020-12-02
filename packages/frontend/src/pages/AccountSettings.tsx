@@ -17,7 +17,7 @@ import { useLoginTokenQuery } from '../generated/types-and-hooks';
 
 function Settings() {
   //TODO: return values of mutation?? rn they are set to strings and i just return a random word cuz didn't know what to return.
-  const history = useHistory();
+  //const history = useHistory();
 
   const loggedIn =
     !!useLoginTokenQuery().data?.token ||
@@ -120,7 +120,7 @@ function Settings() {
     console.log('changePassword mutation called. ');
     logout();
     return <Redirect to="/" />;
-    console.log('redirect to home');
+    //console.log('redirect to home');
     //}
   };
 
