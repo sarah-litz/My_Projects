@@ -27,10 +27,4 @@ export class User {
 
   @OneToMany(() => SleepDatum, (datum) => datum.user)
   public sleepData!: SleepDatum[];
-
-/*  @ManyToOne(() => User , (preferences) => preferences.user , {
-      onDelete: 'CASCADE' 
-  })
-  public user!: User[]; */
-
 }
