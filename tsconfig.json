@@ -10,5 +10,6 @@
     "lib": ["esnext", "dom"],
     "esModuleInterop": true
   },
-  "exclude": ["node_modules", "**/dist", "**/build", "**/*.spec.ts"]
+  "exclude": ["node_modules", "**/dist", "**/build", "**/*.spec.ts"],
+  "files": []
 }

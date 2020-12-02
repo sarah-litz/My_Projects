@@ -18,7 +18,6 @@ import {
   createAccessToken
 } from '../helper/auth/auth';
 import { AuthenticationError, UserInputError } from 'apollo-server-express';
-import { logout } from '../../../frontend/src/helper/login';
 
 @ObjectType()
 class SafeUser {
