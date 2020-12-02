@@ -96,7 +96,7 @@ function Login() {
               placeholder="Enter email"
               onChange={(event) => setEmail(event.target.value)}
               value={email}
-            /> 
+            />
             <label htmlFor="inputPassword" className="sr-only">
               Password
             </label>
