@@ -67,12 +67,12 @@ export class UserResolver {
   }
 
   //  CHANGE EMAIL (used by AccountSettings.tsx)
-  @Mutation(() => String)
+  @Mutation(() => Boolean)
   async changeEmail(
     @Arg('email') email: string,
     @Arg('newEmail') newEmail: string,
     @Ctx() context: ContextType
-  ): Promise<string> {
+  ): Promise<boolean> {
     const repository = getConnection().getRepository(User);
     const alreadyExists = await repository.findOne({ email: newEmail });
 
@@ -93,7 +93,7 @@ export class UserResolver {
         //repository.remove(currentUser);
         //console.log('New Email Set to: ' , userUpdate.email);
         sendRefreshToken(context.res, createAccessToken(currentUser));
-        return createAccessToken(currentUser);
+        return true;
       } else {
         console.log('Could not find user with email', email);
         throw new UserInputError('Sorry, it seems there was an error.');
@@ -102,28 +102,30 @@ export class UserResolver {
   }
 
   //  CHANGE PASSWORD (used by AccountSettings.tsx)
-  @Mutation(() => String)
+  @Mutation(() => Boolean)
   async changePassword(
     @Arg('password') password: string,
     @Ctx() context: ContextType
-  ): Promise<string> {
+  ): Promise<boolean> {
     const repository = getConnection().getRepository(User);
     const user = await repository.findOne(context.me!.id);
+    console.log('line112'); 
     if (!user) {
       throw new AuthenticationError('Invalid user.');
     }
 
-    console.log(user.email, user.password);
     const hashedPassword = await bcrypt.hash(password, 10); // encrypting password
     await repository.update({ id: user.id }, { password: hashedPassword });
     console.log(user.email, user.password);
+    console.log('line120 UserResolver.ts');
     //sendRefreshToken(context.res, createAccessToken(user));
     //return 'changePassword called in UserResolver.ts';
-    return createAccessToken(user);
+    //return createAccessToken(user);
+    return true; 
   }
 
-  @Mutation(() => String)
-  async deleteAccount(@Ctx() context: ContextType): Promise<string> {
+  @Mutation(() => Boolean)
+  async deleteAccount(@Ctx() context: ContextType): Promise<boolean> {
     const repository = getConnection().getRepository(User);
     const user = await repository.findOne(context.me!.id);
     if (!user) {
@@ -136,7 +138,7 @@ export class UserResolver {
     //delete user account
     await repository.delete(user);
     console.log('repository.delete(user) called');
-    return 'delete account returned value';
+    return true;
   }
 
   @Mutation(() => String)

@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 // import './../App.css';
 import '../components/Login.css';
 import { Layout } from '../components/Layout';
@@ -17,7 +17,7 @@ import { useLoginTokenQuery } from '../generated/types-and-hooks';
 
 function Settings() {
   //TODO: return values of mutation?? rn they are set to strings and i just return a random word cuz didn't know what to return.
-  //const history = useHistory();
+  const history = useHistory();
 
   const loggedIn =
     !!useLoginTokenQuery().data?.token ||
@@ -62,7 +62,7 @@ function Settings() {
 
   //        CHANGE EMAIL
   const validateEmail = async (event: FormEvent<HTMLFormElement>) => {
-    // event.preventDefault();
+    event.preventDefault();
     setError(''); //empty error message from any past messages
 
     const emailAddressRX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; //const for regex to validate email
@@ -84,17 +84,16 @@ function Settings() {
 
       /*setEmail(newEmail);
       setNewEmail('');*/
-
-      await logout();
-      //history.push("/");
-      //logout();
-      return <Redirect to="/" />;
+      //TODO: add if (!emailError) so user is not logged out if the newEmail is an email already in use.
+      logout();
+      history.push("/");
     }
   };
 
   //              CHANGE PASSWORD
   const validatePassword = async (event: FormEvent<HTMLFormElement>) => {
-    //event.preventDefault();
+    event.preventDefault();
+    
     setError(''); //empty error message from any past messages
     const minLength = 6; //const for regex to validate password;  check minimum 6 characters    //(note for sarah) const lowerCaseLetters = /[a-z]/g; // regex for lowerCaseLetters, g=global
 
@@ -114,18 +113,18 @@ function Settings() {
       return;
     }
     console.log('new password is valid');
-    //if (!error) {
+  
     await changePassword({ variables: { password } });
 
     console.log('changePassword mutation called. ');
     logout();
-    return <Redirect to="/" />;
-    //console.log('redirect to home');
-    //}
+    history.push("/"); 
   };
 
   //          DELETE ACCOUNT
   const deleteMyAccount = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     console.log('delete my account called');
     if (!loggedIn) {
       console.log('you must be logged in to delete your account!');
@@ -135,11 +134,13 @@ function Settings() {
     await deleteAccount();
     logout();
     console.log('deleteAccount mutation called.');
-    return <Redirect to="/" />;
+    history.push("/"); 
   };
 
   //      LOGOUT AND REDIRECT USER TO HOMEPAGE
   const Logout = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     logout();
     return <Redirect to="/" />;
   };
