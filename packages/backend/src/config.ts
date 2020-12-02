@@ -120,7 +120,7 @@ const base = {
 };
 
 export const typeOrmConfig: PostgresConnectionOptions =
-  config.get('db.url') !== 'false'
+  config.get('environment') === 'production'
     ? {
         ...base,
         url: config.get('db.url')
