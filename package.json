@@ -6,7 +6,7 @@
     "start": "lerna run --parallel start",
     "build": "lerna run build",
     "pretty": "prettier --write .",
-    "clean": "lerna clean --yes && rm package-lock.json && rm packages/frontend/package-lock.json && rm packages/backend/package-lock.json"
+    "clean": "lerna clean --yes && rm yarn.lock && rm packages/frontend/yarn.lock && rm packages/backend/yarn.lock"
   },
   "devDependencies": {
     "@types/ms": "0.7.31",
