@@ -62,7 +62,7 @@ function Settings() {
 
   //        CHANGE EMAIL
   const validateEmail = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+   // event.preventDefault();
     setError(''); //empty error message from any past messages
 
     const emailAddressRX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; //const for regex to validate email
@@ -81,22 +81,21 @@ function Settings() {
       await changeEmail({ variables: { email, newEmail } });
       //update the current user's email, mutation needed.
       console.log(data.me.email); //TODO: not updating user's email here?
-      // if(dataNewEmail?.loginUser) {
-      console.log('no error, changeEmail mutation called.');
-      history.push('/AccountSettings');
+  
+      /*setEmail(newEmail);
+      setNewEmail('');*/
 
-      setEmail(newEmail);
-      setNewEmail('');
-      //} else {
-      console.log(' changeEmail mutation error ');
-      //}
-      // TODO popup that says *success! your email has now been changed to: newemail
+      await logout(); 
+      //history.push("/");
+      //logout(); 
+      return <Redirect to="/" />;
+
     }
   };
 
   //              CHANGE PASSWORD
   const validatePassword = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    //event.preventDefault();
     setError(''); //empty error message from any past messages
     const minLength = 6; //const for regex to validate password;  check minimum 6 characters    //(note for sarah) const lowerCaseLetters = /[a-z]/g; // regex for lowerCaseLetters, g=global
 
@@ -115,13 +114,15 @@ function Settings() {
       setError('The passwords you entered do not match.');
       return;
     }
-    console.log('validate password called');
-    if (!error) {
-      // await changePassword !
+    console.log('new password is valid');
+    //if (!error) {
       await changePassword({ variables: { password } });
+      
       console.log('changePassword mutation called. ');
-      // TODO: success message, and fix mutation so it works properly.
-    }
+      logout(); 
+      return <Redirect to="/" />;
+      console.log('redirect to home')
+    //}
   };
 
   //          DELETE ACCOUNT
@@ -135,7 +136,6 @@ function Settings() {
     await deleteAccount();
     logout();
     console.log('deleteAccount mutation called.');
-    //TODO: success message
     return <Redirect to="/" />;
   };
 
