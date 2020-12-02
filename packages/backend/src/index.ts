@@ -52,7 +52,10 @@ const startServer = async () => {
     // cors = cross origin resource sharing
     cors({
       // TODO: production
-      origin: 'http://localhost:3000',
+      origin:
+        config.get('environment') === 'production'
+          ? 'https://glootie.surge.sh'
+          : 'http://localhost:3000',
       credentials: true
     })
   );
