@@ -72,11 +72,10 @@ export const client = new ApolloClient({
     refreshTokenLink,
     authLink,
     new HttpLink({
-      uri: 'http://localhost:4000/graphql',
-      // TODO: production url
-      // process.env.NODE_ENV === 'production'
-      //   ? 'https://api.com/graphql'
-      //   : 'http://localhost:4000/graphql',
+      uri:
+        process.env.NODE_ENV === 'production'
+          ? 'https://glootie-api.herokuapp.com/graphql'
+          : 'http://localhost:4000/graphql',
       fetch,
       credentials: 'include'
     })

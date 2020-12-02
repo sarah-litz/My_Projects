@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { Container, Form, Button, FormGroup, Card } from 'react-bootstrap';
+import { Container, Form, Card } from 'react-bootstrap';
 import { Layout } from '../components/Layout';
 
 export const UserDataSettings: React.FC = () => {

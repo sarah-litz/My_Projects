@@ -6,7 +6,10 @@
     "start": "lerna run --parallel start",
     "build": "lerna run build",
     "pretty": "prettier --write .",
-    "clean": "lerna clean --yes && rm package-lock.json && rm packages/frontend/package-lock.json && rm packages/backend/package-lock.json"
+    "clean": "lerna clean --yes && rm yarn.lock && rm packages/frontend/yarn.lock && rm packages/backend/yarn.lock",
+    "build:frontend": "lerna run build --scope=@glootie/frontend",
+    "build:backend": "lerna run build --scope=@glootie/backend",
+    "heroku-postbuild": "yarn bootstrap && yarn build:backend"
   },
   "devDependencies": {
     "@types/ms": "0.7.31",
@@ -14,6 +17,9 @@
     "lerna": "3.22.1",
     "prettier": "2.2.0",
     "typescript": "4.1.2"
+  },
+  "resolutions": {
+    "@types/react": "17.0.0"
   },
   "husky": {
     "hooks": {
