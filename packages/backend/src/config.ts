@@ -1,6 +1,5 @@
 import convict from 'convict';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import Preferences from './models/Preferences';
 import SleepDatum from './models/SleepDatum';
 import { User } from './models/User';
 
@@ -116,7 +115,7 @@ const base = {
 
   synchronize: true,
   logging: false,
-  entities: [User, Preferences, SleepDatum]
+  entities: [User, SleepDatum]
 };
 
 export const typeOrmConfig: PostgresConnectionOptions =

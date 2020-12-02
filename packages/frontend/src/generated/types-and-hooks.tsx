@@ -2,15 +2,9 @@ import { gql } from '@apollo/client';
 import * as ApolloReactCommon from '@apollo/client';
 import * as ApolloReactHooks from '@apollo/client';
 export type Maybe<T> = T | null;
-
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
-
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -25,23 +19,17 @@ export type Scalars = {
 export type Query = {
   __typename?: 'Query';
   me: SafeUser;
-  preferences: Array<Preferences>;
   sleepData: Array<SleepDatum>;
   token: Scalars['String'];
+  trackingAnxiety: Scalars['Boolean'];
+  trackingCaffiene: Scalars['Boolean'];
+  trackingDreams: Scalars['Boolean'];
+  trackingMelatonin: Scalars['Boolean'];
 };
 
 export type SafeUser = {
   __typename?: 'SafeUser';
   email: Scalars['String'];
-};
-
-export type Preferences = {
-  __typename?: 'Preferences';
-  id: Scalars['ID'];
-  trackCaffeine?: Maybe<Scalars['Boolean']>;
-  trackAnxiety?: Maybe<Scalars['Boolean']>;
-  trackDreams?: Maybe<Scalars['Boolean']>;
-  trackMelatonin?: Maybe<Scalars['Boolean']>;
 };
 
 export type SleepDatum = {
@@ -63,7 +51,7 @@ export type Mutation = {
   changePassword: Scalars['String'];
   deleteAccount: Scalars['String'];
   loginUser: Scalars['String'];
-  createPreferences?: Maybe<Preferences>;
+  updatePreferences: Scalars['String'];
   createSleepData?: Maybe<SleepDatum>;
 };
 
@@ -88,19 +76,15 @@ export type MutationLoginUserArgs = {
   email: Scalars['String'];
 };
 
-export type MutationCreatePreferencesArgs = {
-  options: PreferencesCreateInput;
+export type MutationUpdatePreferencesArgs = {
+  newTrackMelatonin: Scalars['Boolean'];
+  newTrackDreams: Scalars['Boolean'];
+  newTrackCaffiene: Scalars['Boolean'];
+  newTrackAnxiety: Scalars['Boolean'];
 };
 
 export type MutationCreateSleepDataArgs = {
   options: SleepDatumCreateInput;
-};
-
-export type PreferencesCreateInput = {
-  trackCaffeine?: Maybe<Scalars['Boolean']>;
-  trackAnxiety?: Maybe<Scalars['Boolean']>;
-  trackDreams?: Maybe<Scalars['Boolean']>;
-  trackMelatonin?: Maybe<Scalars['Boolean']>;
 };
 
 export type SleepDatumCreateInput = {
@@ -165,6 +149,18 @@ export type RegisterMutation = { __typename?: 'Mutation' } & Pick<
   'addUser'
 >;
 
+export type UpdatePreferencesMutationVariables = Exact<{
+  newTrackAnxiety: Scalars['Boolean'];
+  newTrackCaffiene: Scalars['Boolean'];
+  newTrackDreams: Scalars['Boolean'];
+  newTrackMelatonin: Scalars['Boolean'];
+}>;
+
+export type UpdatePreferencesMutation = { __typename?: 'Mutation' } & Pick<
+  Mutation,
+  'updatePreferences'
+>;
+
 export type SleepDataFieldsFragment = { __typename?: 'SleepDatum' } & Pick<
   SleepDatum,
   | 'id'
@@ -204,6 +200,34 @@ export type MeEmailQueryVariables = Exact<{ [key: string]: never }>;
 export type MeEmailQuery = { __typename?: 'Query' } & {
   me: { __typename?: 'SafeUser' } & Pick<SafeUser, 'email'>;
 };
+
+export type UserTracksAnxietyQueryVariables = Exact<{ [key: string]: never }>;
+
+export type UserTracksAnxietyQuery = { __typename?: 'Query' } & Pick<
+  Query,
+  'trackingAnxiety'
+>;
+
+export type UserTracksCaffieneQueryVariables = Exact<{ [key: string]: never }>;
+
+export type UserTracksCaffieneQuery = { __typename?: 'Query' } & Pick<
+  Query,
+  'trackingCaffiene'
+>;
+
+export type UserTracksDreamsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type UserTracksDreamsQuery = { __typename?: 'Query' } & Pick<
+  Query,
+  'trackingDreams'
+>;
+
+export type UserTracksMelatoninQueryVariables = Exact<{ [key: string]: never }>;
+
+export type UserTracksMelatoninQuery = { __typename?: 'Query' } & Pick<
+  Query,
+  'trackingMelatonin'
+>;
 
 export const SleepDataFieldsFragmentDoc = gql`
   fragment SleepDataFields on SleepDatum {
@@ -508,6 +532,65 @@ export type RegisterMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RegisterMutation,
   RegisterMutationVariables
 >;
+export const UpdatePreferencesDocument = gql`
+  mutation updatePreferences(
+    $newTrackAnxiety: Boolean!
+    $newTrackCaffiene: Boolean!
+    $newTrackDreams: Boolean!
+    $newTrackMelatonin: Boolean!
+  ) {
+    updatePreferences(
+      newTrackAnxiety: $newTrackAnxiety
+      newTrackCaffiene: $newTrackCaffiene
+      newTrackDreams: $newTrackDreams
+      newTrackMelatonin: $newTrackMelatonin
+    )
+  }
+`;
+export type UpdatePreferencesMutationFn = ApolloReactCommon.MutationFunction<
+  UpdatePreferencesMutation,
+  UpdatePreferencesMutationVariables
+>;
+
+/**
+ * __useUpdatePreferencesMutation__
+ *
+ * To run a mutation, you first call `useUpdatePreferencesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePreferencesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePreferencesMutation, { data, loading, error }] = useUpdatePreferencesMutation({
+ *   variables: {
+ *      newTrackAnxiety: // value for 'newTrackAnxiety'
+ *      newTrackCaffiene: // value for 'newTrackCaffiene'
+ *      newTrackDreams: // value for 'newTrackDreams'
+ *      newTrackMelatonin: // value for 'newTrackMelatonin'
+ *   },
+ * });
+ */
+export function useUpdatePreferencesMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    UpdatePreferencesMutation,
+    UpdatePreferencesMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    UpdatePreferencesMutation,
+    UpdatePreferencesMutationVariables
+  >(UpdatePreferencesDocument, baseOptions);
+}
+export type UpdatePreferencesMutationHookResult = ReturnType<
+  typeof useUpdatePreferencesMutation
+>;
+export type UpdatePreferencesMutationResult = ApolloReactCommon.MutationResult<UpdatePreferencesMutation>;
+export type UpdatePreferencesMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  UpdatePreferencesMutation,
+  UpdatePreferencesMutationVariables
+>;
 export const GetSleepDataDocument = gql`
   query getSleepData {
     sleepData {
@@ -687,4 +770,216 @@ export type MeEmailLazyQueryHookResult = ReturnType<typeof useMeEmailLazyQuery>;
 export type MeEmailQueryResult = ApolloReactCommon.QueryResult<
   MeEmailQuery,
   MeEmailQueryVariables
+>;
+export const UserTracksAnxietyDocument = gql`
+  query userTracksAnxiety {
+    trackingAnxiety
+  }
+`;
+
+/**
+ * __useUserTracksAnxietyQuery__
+ *
+ * To run a query within a React component, call `useUserTracksAnxietyQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserTracksAnxietyQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserTracksAnxietyQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserTracksAnxietyQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    UserTracksAnxietyQuery,
+    UserTracksAnxietyQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<
+    UserTracksAnxietyQuery,
+    UserTracksAnxietyQueryVariables
+  >(UserTracksAnxietyDocument, baseOptions);
+}
+export function useUserTracksAnxietyLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    UserTracksAnxietyQuery,
+    UserTracksAnxietyQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    UserTracksAnxietyQuery,
+    UserTracksAnxietyQueryVariables
+  >(UserTracksAnxietyDocument, baseOptions);
+}
+export type UserTracksAnxietyQueryHookResult = ReturnType<
+  typeof useUserTracksAnxietyQuery
+>;
+export type UserTracksAnxietyLazyQueryHookResult = ReturnType<
+  typeof useUserTracksAnxietyLazyQuery
+>;
+export type UserTracksAnxietyQueryResult = ApolloReactCommon.QueryResult<
+  UserTracksAnxietyQuery,
+  UserTracksAnxietyQueryVariables
+>;
+export const UserTracksCaffieneDocument = gql`
+  query userTracksCaffiene {
+    trackingCaffiene
+  }
+`;
+
+/**
+ * __useUserTracksCaffieneQuery__
+ *
+ * To run a query within a React component, call `useUserTracksCaffieneQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserTracksCaffieneQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserTracksCaffieneQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserTracksCaffieneQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    UserTracksCaffieneQuery,
+    UserTracksCaffieneQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<
+    UserTracksCaffieneQuery,
+    UserTracksCaffieneQueryVariables
+  >(UserTracksCaffieneDocument, baseOptions);
+}
+export function useUserTracksCaffieneLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    UserTracksCaffieneQuery,
+    UserTracksCaffieneQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    UserTracksCaffieneQuery,
+    UserTracksCaffieneQueryVariables
+  >(UserTracksCaffieneDocument, baseOptions);
+}
+export type UserTracksCaffieneQueryHookResult = ReturnType<
+  typeof useUserTracksCaffieneQuery
+>;
+export type UserTracksCaffieneLazyQueryHookResult = ReturnType<
+  typeof useUserTracksCaffieneLazyQuery
+>;
+export type UserTracksCaffieneQueryResult = ApolloReactCommon.QueryResult<
+  UserTracksCaffieneQuery,
+  UserTracksCaffieneQueryVariables
+>;
+export const UserTracksDreamsDocument = gql`
+  query userTracksDreams {
+    trackingDreams
+  }
+`;
+
+/**
+ * __useUserTracksDreamsQuery__
+ *
+ * To run a query within a React component, call `useUserTracksDreamsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserTracksDreamsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserTracksDreamsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserTracksDreamsQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    UserTracksDreamsQuery,
+    UserTracksDreamsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<
+    UserTracksDreamsQuery,
+    UserTracksDreamsQueryVariables
+  >(UserTracksDreamsDocument, baseOptions);
+}
+export function useUserTracksDreamsLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    UserTracksDreamsQuery,
+    UserTracksDreamsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    UserTracksDreamsQuery,
+    UserTracksDreamsQueryVariables
+  >(UserTracksDreamsDocument, baseOptions);
+}
+export type UserTracksDreamsQueryHookResult = ReturnType<
+  typeof useUserTracksDreamsQuery
+>;
+export type UserTracksDreamsLazyQueryHookResult = ReturnType<
+  typeof useUserTracksDreamsLazyQuery
+>;
+export type UserTracksDreamsQueryResult = ApolloReactCommon.QueryResult<
+  UserTracksDreamsQuery,
+  UserTracksDreamsQueryVariables
+>;
+export const UserTracksMelatoninDocument = gql`
+  query userTracksMelatonin {
+    trackingMelatonin
+  }
+`;
+
+/**
+ * __useUserTracksMelatoninQuery__
+ *
+ * To run a query within a React component, call `useUserTracksMelatoninQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserTracksMelatoninQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserTracksMelatoninQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserTracksMelatoninQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    UserTracksMelatoninQuery,
+    UserTracksMelatoninQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<
+    UserTracksMelatoninQuery,
+    UserTracksMelatoninQueryVariables
+  >(UserTracksMelatoninDocument, baseOptions);
+}
+export function useUserTracksMelatoninLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    UserTracksMelatoninQuery,
+    UserTracksMelatoninQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    UserTracksMelatoninQuery,
+    UserTracksMelatoninQueryVariables
+  >(UserTracksMelatoninDocument, baseOptions);
+}
+export type UserTracksMelatoninQueryHookResult = ReturnType<
+  typeof useUserTracksMelatoninQuery
+>;
+export type UserTracksMelatoninLazyQueryHookResult = ReturnType<
+  typeof useUserTracksMelatoninLazyQuery
+>;
+export type UserTracksMelatoninQueryResult = ApolloReactCommon.QueryResult<
+  UserTracksMelatoninQuery,
+  UserTracksMelatoninQueryVariables
 >;
