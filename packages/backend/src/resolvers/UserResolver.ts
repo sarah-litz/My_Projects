@@ -50,7 +50,10 @@ export class UserResolver {
       lastname,
       email,
       password: hashedPassword, // encrypted
-      preferences: [],
+      trackAnxiety: true,
+      trackCaffiene: true,
+      trackDreams: true,
+      trackMelatonin: true,
       sleepData: []
     });
 
@@ -174,5 +177,86 @@ export class UserResolver {
     return {
       email: user.email
     };
+  }
+
+  @Authorized()
+  @Query(() => Boolean)
+  async trackingAnxiety(
+    @Ctx() context: ContextType
+  ): Promise<Boolean | undefined> {
+    const repository = getConnection().getRepository(User);
+    const user = await repository.findOne(context.me!.id);
+    if (!user) {
+      throw new AuthenticationError('Invalid user.');
+    }
+    return user.trackAnxiety;
+  }
+
+  @Authorized()
+  @Query(() => Boolean)
+  async trackingCaffiene(
+    @Ctx() context: ContextType
+  ): Promise<Boolean | undefined> {
+    const repository = getConnection().getRepository(User);
+    const user = await repository.findOne(context.me!.id);
+    if (!user) {
+      throw new AuthenticationError('Invalid user.');
+    }
+    return user.trackCaffiene;
+  }
+
+  @Authorized()
+  @Query(() => Boolean)
+  async trackingDreams(
+    @Ctx() context: ContextType
+  ): Promise<Boolean | undefined> {
+    const repository = getConnection().getRepository(User);
+    const user = await repository.findOne(context.me!.id);
+    if (!user) {
+      throw new AuthenticationError('Invalid user.');
+    }
+    return user.trackDreams;
+  }
+
+  @Authorized()
+  @Query(() => Boolean)
+  async trackingMelatonin(
+    @Ctx() context: ContextType
+  ): Promise<Boolean | undefined> {
+    const repository = getConnection().getRepository(User);
+    const user = await repository.findOne(context.me!.id);
+    if (!user) {
+      throw new AuthenticationError('Invalid user.');
+    }
+    return user.trackMelatonin;
+  }
+
+  @Authorized()
+  @Mutation(() => String)
+  async updatePreferences(
+    @Arg('newTrackAnxiety') newTrackAnxiety: boolean,
+    @Arg('newTrackCaffiene') newTrackCaffiene: boolean,
+    @Arg('newTrackDreams') newTrackDreams: boolean,
+    @Arg('newTrackMelatonin') newTrackMelatonin: boolean,
+    @Ctx() context: ContextType // who is current user
+  ): Promise<String> {
+    const repository = getConnection().getRepository(User);
+    const curUser = await repository.findOne(context.me!.id);
+    //get user by id: if not, throw error
+    if (!curUser) {
+      throw new AuthenticationError('User not found ahhhh!');
+    }
+    await repository.update(
+      { id: curUser.id },
+      {
+        trackAnxiety: newTrackAnxiety,
+        trackCaffiene: newTrackCaffiene,
+        trackDreams: newTrackDreams,
+        trackMelatonin: newTrackMelatonin
+      }
+    );
+    return 'Updated user preferences';
+    // If we want to return the updated user, it's going to involve a bit more work here
+    //return repository.findOne({ id: curUser.id });
   }
 }

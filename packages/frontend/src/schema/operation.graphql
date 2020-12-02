@@ -40,6 +40,20 @@ mutation register(
   )
 }
 
+mutation updatePreferences(
+  $newTrackAnxiety: Boolean!
+  $newTrackCaffiene: Boolean!
+  $newTrackDreams: Boolean!
+  $newTrackMelatonin: Boolean!
+) {
+  updatePreferences(
+    newTrackAnxiety: $newTrackAnxiety
+    newTrackCaffiene: $newTrackCaffiene
+    newTrackDreams: $newTrackDreams
+    newTrackMelatonin: $newTrackMelatonin
+  )
+}
+
 fragment SleepDataFields on SleepDatum {
   id
   totalHours
@@ -85,6 +99,22 @@ query meEmail {
   me {
     email
   }
+}
+
+query userTracksAnxiety {
+  trackingAnxiety
+}
+
+query userTracksCaffiene {
+  trackingCaffiene
+}
+
+query userTracksDreams {
+  trackingDreams
+}
+
+query userTracksMelatonin {
+  trackingMelatonin
 }
 
 # mutation editSleepData(

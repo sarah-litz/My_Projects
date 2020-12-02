@@ -12,14 +12,13 @@ import { buildSchema } from 'type-graphql';
 import { UserResolver } from './resolvers/UserResolver';
 import { getMe } from './helper/auth/get-me';
 import { refreshAuth } from './helper/auth/refresh-auth';
-import { PreferencesResolver } from './resolvers/PreferencesResolver';
 import { SleepDataResolver } from './resolvers/SleepDataResolver';
 import { authChecker } from './helper/auth/auth-checker';
 
 const createApolloServer = async () => {
   return new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UserResolver, PreferencesResolver, SleepDataResolver],
+      resolvers: [UserResolver, SleepDataResolver],
       // Checks user is logged in (used for @Authorized annotation for queries and mutations)
       authChecker,
       // Tell type-graphql to valid incoming arguments based on `class-validator` library annotations (like @Min and @Max)
