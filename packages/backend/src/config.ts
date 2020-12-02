@@ -8,6 +8,7 @@ interface Config {
   environment: 'production' | 'development';
   port: number;
   db: {
+    url: string;
     host: string;
     port: number;
     username: string;
@@ -34,6 +35,13 @@ export const config = convict<Config>({
     env: 'PORT'
   },
   db: {
+    url: {
+      sensitive: true,
+      doc: 'The database url',
+      format: String,
+      default: 'false',
+      env: 'DATABASE_URL'
+    },
     host: {
       sensitive: true,
       doc: 'The database host.',
@@ -47,6 +55,7 @@ export const config = convict<Config>({
       default: 5432,
       env: 'POSTGRESQL_PORT'
     },
+
     username: {
       sensitive: true,
       doc: 'The database username.',
@@ -102,14 +111,25 @@ export const config = convict<Config>({
   }
 });
 
-export const typeOrmConfig: PostgresConnectionOptions = {
-  type: 'postgres',
-  host: config.get('db.host'),
-  port: config.get('db.port'),
-  username: config.get('db.username'),
-  password: config.get('db.password'),
-  database: config.get('db.database'),
+const base = {
+  type: 'postgres' as const,
+
   synchronize: true,
   logging: false,
   entities: [User, Preferences, SleepDatum]
 };
+
+export const typeOrmConfig: PostgresConnectionOptions =
+  config.get('db.url') !== 'false'
+    ? {
+        ...base,
+        url: config.get('db.url')
+      }
+    : {
+        ...base,
+        host: config.get('db.host'),
+        port: config.get('db.port'),
+        username: config.get('db.username') as string,
+        password: config.get('db.password') as string,
+        database: config.get('db.database') as string
+      };
