@@ -86,14 +86,14 @@ function Settings() {
       setNewEmail('');*/
       //TODO: add if (!emailError) so user is not logged out if the newEmail is an email already in use.
       logout();
-      history.push("/");
+      history.push('/');
     }
   };
 
   //              CHANGE PASSWORD
   const validatePassword = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+
     setError(''); //empty error message from any past messages
     const minLength = 6; //const for regex to validate password;  check minimum 6 characters    //(note for sarah) const lowerCaseLetters = /[a-z]/g; // regex for lowerCaseLetters, g=global
 
@@ -113,12 +113,12 @@ function Settings() {
       return;
     }
     console.log('new password is valid');
-  
+
     await changePassword({ variables: { password } });
 
     console.log('changePassword mutation called. ');
     logout();
-    history.push("/"); 
+    history.push('/');
   };
 
   //          DELETE ACCOUNT
@@ -134,7 +134,7 @@ function Settings() {
     await deleteAccount();
     logout();
     console.log('deleteAccount mutation called.');
-    history.push("/"); 
+    history.push('/');
   };
 
   //      LOGOUT AND REDIRECT USER TO HOMEPAGE

@@ -109,7 +109,7 @@ export class UserResolver {
   ): Promise<boolean> {
     const repository = getConnection().getRepository(User);
     const user = await repository.findOne(context.me!.id);
-    console.log('line112'); 
+    console.log('line112');
     if (!user) {
       throw new AuthenticationError('Invalid user.');
     }
@@ -121,7 +121,7 @@ export class UserResolver {
     //sendRefreshToken(context.res, createAccessToken(user));
     //return 'changePassword called in UserResolver.ts';
     //return createAccessToken(user);
-    return true; 
+    return true;
   }
 
   @Mutation(() => Boolean)
